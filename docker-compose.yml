@@ -1,0 +1,34 @@
+services:
+  controlled-target:
+    image: node:20-alpine
+    working_dir: /workspace
+    command: sh -c "npm ci && npm run target:start"
+    environment:
+      TARGET_PORT: 4300
+      TEST_USER_EMAIL: ${TEST_USER_EMAIL:-seed.user@example.test}
+      TEST_USER_PASSWORD: ${TEST_USER_PASSWORD:-Password123!}
+      TEST_USER_USERNAME: ${TEST_USER_USERNAME:-seeduser}
+    ports:
+      - '4300:4300'
+    volumes:
+      - .:/workspace
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.102.1
+    profiles: ['observability']
+    command: ['--config=/etc/otelcol-contrib/config.yml']
+    volumes:
+      - ./observability/otel-collector.yml:/etc/otelcol-contrib/config.yml:ro
+    ports:
+      - '4318:4318'
+    depends_on:
+      - jaeger
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    profiles: ['observability']
+    environment:
+      COLLECTOR_OTLP_ENABLED: 'true'
+    ports:
+      - '16686:16686'
+      - '4317:4317'

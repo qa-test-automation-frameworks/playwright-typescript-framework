@@ -1,0 +1,94 @@
+{
+  "name": "playwright-typescript-framework",
+  "version": "1.0.0",
+  "description": "Playwright + TypeScript framework for Conduit RealWorld application checks",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test --project=api",
+    "test:e2e": "playwright test --project=chromium-authenticated --project=chromium-anonymous",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:visual": "playwright test --project=visual",
+    "test:accessibility": "playwright test --project=accessibility",
+    "test:cross-browser": "playwright test --project=firefox-smoke --project=webkit-smoke --project=mobile-chrome-smoke",
+    "test:e2e:shard": "node scripts/run-shard.js e2e",
+    "test:visual:shard": "node scripts/run-shard.js visual",
+    "test:update-snapshots": "playwright test --project=visual --update-snapshots",
+    "test:ui": "playwright test --ui",
+    "target:start": "node scripts/target-runner.js",
+    "target:seed": "node scripts/target-seed.js",
+    "with:target": "node scripts/target-runner.js",
+    "verify:target": "node scripts/target-runner.js npm run verify",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "clean": "node -e \"for (const dir of ['.auth','allure-report','allure-results','playwright-report','test-results']) require('fs').rmSync(dir,{recursive:true,force:true})\"",
+    "check:runtime": "node scripts/check-runtime.js",
+    "check:env": "ts-node scripts/check-environment.ts",
+    "check:secrets": "node scripts/check-secrets.js",
+    "check:anti-patterns": "node scripts/check-anti-patterns.js",
+    "observability:up": "docker compose --profile observability up -d",
+    "observability:down": "docker compose --profile observability down",
+    "test:otel": "cross-env OTEL_ENABLED=true playwright test --project=api --project=chromium-authenticated",
+    "verify:otel": "npm run observability:up && npm run test:otel && npm run observability:down",
+    "verify": "npm run check:runtime && npm run format:check && npm run lint && npm run type-check && npm run check:secrets && npm run check:anti-patterns && npm run check:env && npm run test:api && npm run test:e2e && npm run test:visual && npm run test:accessibility && npm run test:cross-browser",
+    "lint": "eslint . --ext .ts,.js --max-warnings 0",
+    "lint:fix": "eslint . --ext .ts,.js --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "tsc --noEmit",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "automation",
+    "testing",
+    "realworld",
+    "conduit"
+  ],
+  "author": "prayagv",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "dependencies": {
+    "@faker-js/faker": "9.2.0",
+    "@opentelemetry/api": "1.9.0",
+    "@opentelemetry/exporter-trace-otlp-http": "0.57.2",
+    "@opentelemetry/resources": "1.30.1",
+    "@opentelemetry/sdk-trace-base": "1.30.1",
+    "@opentelemetry/sdk-trace-node": "1.30.1",
+    "@opentelemetry/semantic-conventions": "1.28.0",
+    "dotenv": "16.4.5",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.3",
+    "@commitlint/cli": "19.6.0",
+    "@commitlint/config-conventional": "19.6.0",
+    "@playwright/test": "1.60.0",
+    "@types/node": "20.17.6",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "allure-playwright": "3.9.0",
+    "cross-env": "7.0.3",
+    "eslint": "8.57.0",
+    "eslint-plugin-playwright": "1.6.0",
+    "husky": "9.1.7",
+    "lint-staged": "15.2.10",
+    "prettier": "3.8.3",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix --max-warnings 0",
+      "prettier --write"
+    ],
+    "*.{json,md,yml}": [
+      "prettier --write"
+    ]
+  }
+}

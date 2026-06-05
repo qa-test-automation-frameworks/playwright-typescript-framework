@@ -1,0 +1,17 @@
+export const testIds = {
+  articleCard: 'article-card',
+  articleBody: 'article-body',
+  articleAuthor: 'article-author',
+  articleDate: 'article-date',
+  articleDescription: 'article-description',
+  articleTitle: 'article-title',
+  articleTag: 'article-tag',
+  commentCard: 'comment-card',
+  commentText: 'comment-text',
+  errors: 'errors',
+  errorItem: 'error-item',
+  profileBio: 'profile-bio',
+  profileHeading: 'profile-heading',
+  profileLink: 'profile-link',
+  sidebarTagList: 'sidebar-tag-list',
+} as const;

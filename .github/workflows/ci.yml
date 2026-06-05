@@ -1,0 +1,177 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1-5'
+
+env:
+  CI: 'true'
+  TEST_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+
+jobs:
+  lint-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm run check:secrets
+      - run: npm run check:anti-patterns
+      - run: npm run with:target -- npm run check:env
+
+  test-api:
+    needs: lint-typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run with:target -- npm run test:api
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-api
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/
+
+  test-e2e:
+    needs: lint-typecheck
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shard: '1/2'
+            shard_id: '1-of-2'
+          - shard: '2/2'
+            shard_id: '2-of-2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=${{ matrix.shard }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-e2e-${{ matrix.shard_id }}
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/
+
+  test-visual:
+    needs: lint-typecheck
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shard: '1/2'
+            shard_id: '1-of-2'
+          - shard: '2/2'
+            shard_id: '2-of-2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run with:target -- npx playwright test --project=visual --shard=${{ matrix.shard }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-visual-${{ matrix.shard_id }}
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/
+
+  test-accessibility:
+    needs: lint-typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run with:target -- npm run test:accessibility
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-accessibility
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/
+
+  test-cross-browser:
+    needs: lint-typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run with:target -- npm run test:cross-browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-cross-browser
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/
+
+  publish-allure-report:
+    needs: [test-api, test-e2e, test-visual, test-accessibility, test-cross-browser]
+    if: success() && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: reports-*
+          merge-multiple: true
+          path: merged-reports
+      - run: mkdir -p allure-results && find merged-reports -path '*/allure-results/*' -type f -exec cp {} allure-results/ \;
+      - uses: simple-elf/allure-report-action@v1.7
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history

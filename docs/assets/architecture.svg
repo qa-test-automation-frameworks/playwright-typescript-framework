@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="720" viewBox="0 0 1180 720" role="img" aria-labelledby="title desc">
+  <title id="title">Playwright TypeScript framework architecture</title>
+  <desc id="desc">Architecture diagram showing configuration validation, typed API clients, builders, fixtures, page objects, observability, Playwright projects, CI, and reports.</desc>
+  <style>
+    .bg { fill: #f8fafc; }
+    .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
+    .group { fill: #eef6ff; stroke: #2563eb; stroke-width: 2; rx: 8; }
+    .accent { fill: #ecfdf5; stroke: #059669; stroke-width: 2; rx: 8; }
+    .report { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; rx: 8; }
+    .text { fill: #0f172a; font-family: Arial, sans-serif; font-size: 18px; font-weight: 700; }
+    .small { fill: #334155; font-family: Arial, sans-serif; font-size: 14px; }
+    .line { stroke: #475569; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#475569" />
+    </marker>
+  </defs>
+  <rect class="bg" width="1180" height="720" />
+  <rect class="group" x="40" y="40" width="250" height="120" />
+  <text class="text" x="70" y="82">Config Validation</text>
+  <text class="small" x="70" y="112">dotenv + Zod schemas</text>
+  <text class="small" x="70" y="136">BASE_URL, API_URL, users</text>
+
+  <rect class="box" x="360" y="40" width="250" height="120" />
+  <text class="text" x="390" y="82">Playwright Config</text>
+  <text class="small" x="390" y="112">projects, retries, traces</text>
+  <text class="small" x="390" y="136">controlled target support</text>
+
+  <rect class="accent" x="690" y="40" width="210" height="120" />
+  <text class="text" x="720" y="82">CI Pipeline</text>
+  <text class="small" x="720" y="112">quality gates</text>
+  <text class="small" x="720" y="136">sharded test jobs</text>
+
+  <rect class="box" x="40" y="230" width="230" height="120" />
+  <text class="text" x="70" y="272">Builders</text>
+  <text class="small" x="70" y="302">users, articles, comments</text>
+  <text class="small" x="70" y="326">updates, malformed payloads</text>
+
+  <rect class="box" x="330" y="230" width="230" height="120" />
+  <text class="text" x="360" y="272">Typed API Clients</text>
+  <text class="small" x="360" y="302">auth, articles, comments</text>
+  <text class="small" x="360" y="326">profiles + Zod responses</text>
+
+  <rect class="box" x="620" y="230" width="230" height="120" />
+  <text class="text" x="650" y="272">Fixtures</text>
+  <text class="small" x="650" y="302">clients, auth state</text>
+  <text class="small" x="650" y="326">scenarios, cleanup</text>
+
+  <rect class="box" x="910" y="230" width="230" height="120" />
+  <text class="text" x="940" y="272">Page Objects</text>
+  <text class="small" x="940" y="302">locator-first APIs</text>
+  <text class="small" x="940" y="326">components + routes</text>
+
+  <rect class="group" x="330" y="430" width="250" height="120" />
+  <text class="text" x="360" y="472">Playwright Projects</text>
+  <text class="small" x="360" y="502">API, E2E, visual</text>
+  <text class="small" x="360" y="526">accessibility, browsers</text>
+
+  <rect class="accent" x="660" y="430" width="230" height="120" />
+  <text class="text" x="690" y="472">Observability</text>
+  <text class="small" x="690" y="502">observed steps</text>
+  <text class="small" x="690" y="526">OpenTelemetry spans</text>
+
+  <rect class="report" x="950" y="430" width="190" height="120" />
+  <text class="text" x="980" y="472">Reports</text>
+  <text class="small" x="980" y="502">HTML, Allure</text>
+  <text class="small" x="980" y="526">screenshots, traces</text>
+
+  <path class="line" d="M290 100 H360" />
+  <path class="line" d="M610 100 H690" />
+  <path class="line" d="M155 160 V230" />
+  <path class="line" d="M270 290 H330" />
+  <path class="line" d="M560 290 H620" />
+  <path class="line" d="M850 290 H910" />
+  <path class="line" d="M735 350 V430" />
+  <path class="line" d="M445 350 V430" />
+  <path class="line" d="M580 490 H660" />
+  <path class="line" d="M890 490 H950" />
+  <path class="line" d="M795 160 V230" />
+</svg>

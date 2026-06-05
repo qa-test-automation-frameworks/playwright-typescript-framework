@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #222;
+  background: #f7f7f7;
+}
+.navbar {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 14px 9%;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+.navbar-brand {
+  color: #2f7d32;
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  margin-right: auto;
+}
+.nav-link {
+  color: #555;
+  text-decoration: none;
+}
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  background: #fff;
+  min-height: 80vh;
+}
+.banner {
+  background: #2f7d32;
+  color: #fff;
+  margin: -32px -20px 24px;
+  padding: 32px 20px;
+}
+.banner a {
+  color: #fff;
+}
+.feed-toggle,
+.article-meta,
+.tag-list {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.active {
+  color: #2f7d32;
+  font-weight: 700;
+}
+.article-preview {
+  border-top: 1px solid #ddd;
+  padding: 20px 0;
+}
+.article-preview h1 {
+  font-size: 24px;
+}
+.btn,
+button {
+  border: 1px solid #2f7d32;
+  color: #2f7d32;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-primary,
+button[type='submit'] {
+  background: #2f7d32;
+  color: #fff;
+}
+.btn-outline-danger {
+  border-color: #9f2d2d;
+  color: #9f2d2d;
+}
+input,
+textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+textarea {
+  min-height: 140px;
+}
+.error-messages {
+  color: #9f2d2d;
+}
+.tag-default,
+.tag-pill {
+  border: 1px solid #555;
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: #555;
+  text-decoration: none;
+}
+.user-info {
+  text-align: center;
+  background: #eee;
+  margin: -32px -20px 24px;
+  padding: 28px;
+}
+.article-content {
+  margin: 24px 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.card {
+  border: 1px solid #ddd;
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 4px;
+}
