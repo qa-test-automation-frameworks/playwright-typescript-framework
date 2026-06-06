@@ -135,6 +135,10 @@ npm run observability:down
 
 `OTEL_ENABLED=true` starts per-test root spans, observed Playwright step spans, API request spans, and cleanup spans. Each test result includes an `otel-trace-context.txt` attachment with the trace and span identifiers. Jaeger is available at `http://127.0.0.1:16686` when the observability profile is running.
 
+## Flakiness Analytics
+
+Run `npm run flake:report` after a Playwright JSON result is available to write `test-results/flake-report.md`. The report summarizes retries and unexpected outcomes for review. See [Flakiness policy](docs/flakiness-policy.md).
+
 ## Reports
 
 - Playwright HTML: `playwright-report/`
@@ -210,6 +214,7 @@ npm run allure:generate
 - [Writing tests](docs/writing-tests.md)
 - [Portfolio review guide](docs/portfolio-review-guide.md)
 - [Engineering history](docs/engineering-history.md)
+- [Flakiness policy](docs/flakiness-policy.md)
 - [Contributing guide](docs/CONTRIBUTING.md)
 - [Controlled test environment](docs/CONTROLLED_TEST_ENVIRONMENT.md)
 - [Test strategy matrix](docs/test-strategy-matrix.md)

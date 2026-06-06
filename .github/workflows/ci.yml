@@ -45,6 +45,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run with:target -- npm run test:api
+      - run: npm run flake:report
+        if: always()
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -75,6 +77,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=${{ matrix.shard }}
+      - run: npm run flake:report
+        if: always()
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -104,6 +108,8 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium
       - run: npm run with:target -- npx playwright test --project=visual --shard=${{ matrix.shard }}
+      - run: npm run flake:report
+        if: always()
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -126,6 +132,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run with:target -- npm run test:accessibility
+      - run: npm run flake:report
+        if: always()
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -148,6 +156,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run with:target -- npm run test:contracts
+      - run: npm run flake:report
+        if: always()
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -170,6 +180,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run with:target -- npm run test:cross-browser
+      - run: npm run flake:report
+        if: always()
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -197,6 +209,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run with:target -- npx playwright test --project=${{ matrix.project }}
+      - run: npm run flake:report
+        if: always()
       - uses: actions/upload-artifact@v4
         if: always()
         with:
