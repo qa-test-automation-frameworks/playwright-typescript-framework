@@ -30,6 +30,11 @@ export class ArticleEditorPage extends BasePage {
     return this.page.getByRole('button', { name: /publish|update/i });
   }
 
+  public override async waitForPageLoad(): Promise<void> {
+    await this.titleInput.waitFor({ state: 'visible', timeout: 10_000 });
+    await this.publishButton.waitFor({ state: 'visible', timeout: 10_000 });
+  }
+
   public async fillTitle(title: string): Promise<void> {
     await this.titleInput.fill(title);
   }
@@ -49,10 +54,12 @@ export class ArticleEditorPage extends BasePage {
 
   public async submit(): Promise<void> {
     await this.publishButton.click();
+    await this.page.waitForURL(/\/article\/[^/]+$/);
   }
 
   public async update(): Promise<void> {
     await this.publishButton.click();
+    await this.page.waitForURL(/\/article\/[^/]+$/);
   }
 
   public async getValidationErrors(): Promise<string[]> {

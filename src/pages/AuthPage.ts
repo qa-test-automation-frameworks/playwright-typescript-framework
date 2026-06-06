@@ -35,6 +35,11 @@ export class AuthPage extends BasePage {
     return this.notifications.errorContainer;
   }
 
+  public override async waitForPageLoad(): Promise<void> {
+    await this.emailInput.waitFor({ state: 'visible', timeout: 10_000 });
+    await this.passwordInput.waitFor({ state: 'visible', timeout: 10_000 });
+  }
+
   public async navigateToLogin(): Promise<void> {
     await this.page.goto('/login');
     await this.waitForPageLoad();
@@ -51,11 +56,21 @@ export class AuthPage extends BasePage {
     await this.signInButton.click();
   }
 
+  public async loginUserAndWaitForSession(credentials: LoginRequest): Promise<void> {
+    await this.loginUser(credentials);
+    await this.header.profileLink.waitFor({ state: 'visible', timeout: 10_000 });
+  }
+
   public async registerUser(user: RegisterRequest): Promise<void> {
     await this.usernameInput.fill(user.user.username);
     await this.emailInput.fill(user.user.email);
     await this.passwordInput.fill(user.user.password);
     await this.signUpButton.click();
+  }
+
+  public async registerUserAndWaitForSession(user: RegisterRequest): Promise<void> {
+    await this.registerUser(user);
+    await this.header.profileLink.waitFor({ state: 'visible', timeout: 10_000 });
   }
 
   public async getValidationErrors(): Promise<string[]> {

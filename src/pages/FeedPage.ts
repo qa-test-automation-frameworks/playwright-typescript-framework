@@ -62,6 +62,10 @@ export class FeedPage extends BasePage {
     return this.articleCardForTitle(title).favoriteBtn;
   }
 
+  public override async waitForPageLoad(): Promise<void> {
+    await this.feedContentReady();
+  }
+
   private articleCardForTitle(title: string): ArticleCardComponent {
     return new ArticleCardComponent(this.articleCard(title));
   }

@@ -24,6 +24,11 @@ export class SettingsPage extends BasePage {
       .or(this.page.getByRole('button', { name: /click here to logout/i }));
   }
 
+  public override async waitForPageLoad(): Promise<void> {
+    await this.bioInput.waitFor({ state: 'visible', timeout: 10_000 });
+    await this.submitButton.waitFor({ state: 'visible', timeout: 10_000 });
+  }
+
   public async updateBio(bio: string): Promise<void> {
     await this.bioInput.fill(bio);
   }

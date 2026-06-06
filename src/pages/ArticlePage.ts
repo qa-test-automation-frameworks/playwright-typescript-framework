@@ -75,6 +75,11 @@ export class ArticlePage extends BasePage {
     return this.articleMeta.getByRole('button', { name: /^unfavorite/i });
   }
 
+  public override async waitForPageLoad(): Promise<void> {
+    await this.titleHeading.waitFor({ state: 'visible', timeout: 10_000 });
+    await this.bodyContent.waitFor({ state: 'visible', timeout: 10_000 });
+  }
+
   public async postComment(text: string): Promise<void> {
     await this.commentTextarea.fill(text);
     await this.postCommentButton.focus();

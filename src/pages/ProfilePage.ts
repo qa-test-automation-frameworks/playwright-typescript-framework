@@ -42,6 +42,11 @@ export class ProfilePage extends BasePage {
     await this.waitForPageLoad();
   }
 
+  public override async waitForPageLoad(): Promise<void> {
+    await this.usernameHeading.waitFor({ state: 'visible', timeout: 10_000 });
+    await this.profileArticlesReady();
+  }
+
   public async showMyArticles(): Promise<void> {
     await this.myArticlesTab.click();
     await this.profileArticlesReady();
