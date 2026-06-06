@@ -44,7 +44,6 @@ export default defineConfig({
     {
       name: 'api',
       testMatch: /tests\/api\/.*\.spec\.ts/,
-      workers: 1,
       use: {
         ...devices['Desktop Chrome'],
       },
@@ -71,9 +70,29 @@ export default defineConfig({
       dependencies: ['setup'],
     },
     {
+      name: 'firefox-regression',
+      testIgnore: /tests\/e2e\/auth\.spec\.ts/,
+      testMatch: /tests\/e2e\/.*\.spec\.ts/,
+      use: {
+        ...devices['Desktop Firefox'],
+        storageState: '.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
+    {
       name: 'webkit-smoke',
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       grep: /@smoke/,
+      use: {
+        ...devices['Desktop Safari'],
+        storageState: '.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
+    {
+      name: 'webkit-regression',
+      testIgnore: /tests\/e2e\/auth\.spec\.ts/,
+      testMatch: /tests\/e2e\/.*\.spec\.ts/,
       use: {
         ...devices['Desktop Safari'],
         storageState: '.auth/user.json',
@@ -111,9 +130,28 @@ export default defineConfig({
       dependencies: ['setup'],
     },
     {
+      name: 'selector-contract',
+      testMatch: /tests\/contracts\/.*\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: '.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
+    {
       name: 'mobile-chrome-smoke',
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       grep: /@smoke/,
+      use: {
+        ...devices['Pixel 5'],
+        storageState: '.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
+    {
+      name: 'mobile-chrome-regression',
+      testIgnore: /tests\/e2e\/auth\.spec\.ts/,
+      testMatch: /tests\/e2e\/.*\.spec\.ts/,
       use: {
         ...devices['Pixel 5'],
         storageState: '.auth/user.json',
