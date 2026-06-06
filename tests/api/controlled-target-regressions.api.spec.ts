@@ -92,10 +92,9 @@ test.describe('API: controlled target regressions', { tag: ['@api'] }, () => {
     );
   });
 
-  test('returns 400 for malformed JSON bodies', async ({ request, userToken }) => {
-    const response = await request.post('/api/articles', {
-      headers: { authorization: `Token ${userToken}`, 'content-type': 'application/json' },
-      data: Buffer.from('{"article":'),
+  test('returns 400 for malformed JSON bodies', async ({ authenticatedApiClient }) => {
+    const response = await authenticatedApiClient.rawPost('/articles', Buffer.from('{"article":'), {
+      'content-type': 'application/json',
     });
 
     expect(response.status()).toBe(400);

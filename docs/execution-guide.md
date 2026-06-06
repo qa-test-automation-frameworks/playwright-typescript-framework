@@ -12,6 +12,17 @@ cp .env.example .env
 
 For the repo-owned target, prefer `npm run verify:target`; the wrapper injects fixture-only target values. Use `.env` only for external exploratory targets.
 
+To run the repo-owned target through Docker Compose instead of the wrapper:
+
+```bash
+TEST_USER_EMAIL=seed.user@example.test \
+TEST_USER_PASSWORD=replace-with-local-only-seed-password \
+TEST_USER_USERNAME=seeduser \
+docker compose up -d
+```
+
+Then point `BASE_URL` to `http://127.0.0.1:4300` and `API_URL` to `http://127.0.0.1:4300/api`.
+
 ## Full Verification
 
 ```bash
@@ -30,6 +41,7 @@ npm run test:smoke
 npm run test:visual
 npm run test:accessibility
 npm run test:cross-browser
+npm run test:cross-browser:full
 ```
 
 ## Observability
@@ -71,6 +83,8 @@ CI shards E2E and visual jobs directly through Playwright's `--shard` option.
 
 ## Visual Snapshots
 
+Visual baselines are committed as Chromium `win32` snapshots, and CI runs the visual job on `windows-latest` to consume the same baseline family. Regenerate visual snapshots from Windows or a deliberately updated visual runtime; do not mix Linux-generated snapshots with the current committed baselines.
+
 Update snapshots only after reviewing the diff:
 
 ```bash
@@ -93,6 +107,8 @@ Serve raw Allure results directly:
 ```bash
 npm run allure:serve
 ```
+
+The `CI` workflow publishes Allure history from green default-branch controlled-target runs to `gh-pages`. The `Allure Report Deploy` workflow can republish the same report path manually.
 
 ## Cleanup
 

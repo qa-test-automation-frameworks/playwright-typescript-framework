@@ -1,4 +1,4 @@
-import { APIRequestContext } from '@playwright/test';
+import { APIRequestContext, APIResponse } from '@playwright/test';
 import { ZodSchema } from 'zod';
 import { Logger } from '../utils/logger';
 import { config } from '../utils/config';
@@ -189,5 +189,34 @@ export class BaseApiClient {
     },
   ): Promise<T> {
     return this.executeRequest<T>('DELETE', url, schema, options);
+  }
+
+  public async rawRequest(
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    url: string,
+    options: {
+      data?: string | Buffer;
+      headers?: Record<string, string>;
+      params?: Record<string, string | number | boolean>;
+    } = {},
+  ): Promise<APIResponse> {
+    const fullUrl = url.startsWith('http') ? url : `${config.API_URL}${url}`;
+    return this.requestContext.fetch(fullUrl, {
+      method,
+      headers: this.getHeaders(options.headers),
+      ...(options.data !== undefined ? { data: options.data } : {}),
+      ...(options.params !== undefined ? { params: options.params } : {}),
+    });
+  }
+
+  public async rawPost(
+    url: string,
+    data: string | Buffer,
+    headers?: Record<string, string>,
+  ): Promise<APIResponse> {
+    return this.rawRequest('POST', url, {
+      data,
+      ...(headers !== undefined ? { headers } : {}),
+    });
   }
 }

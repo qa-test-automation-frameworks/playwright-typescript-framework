@@ -15,7 +15,7 @@ test.describe('E2E: Authentication', { tag: ['@ui'] }, () => {
 
       // Act
       await authPage.navigateToRegister();
-      await authPage.registerUser(user);
+      await authPage.registerUserAndWaitForSession(user);
 
       // Assert
       await expect(authPage.header.profileLink).toBeVisible({ timeout: 10000 });
@@ -32,7 +32,7 @@ test.describe('E2E: Authentication', { tag: ['@ui'] }, () => {
     async ({ authPage }) => {
       // Act
       await authPage.navigateToLogin();
-      await authPage.loginUser({
+      await authPage.loginUserAndWaitForSession({
         user: {
           email: config.TEST_USER_EMAIL,
           password: config.TEST_USER_PASSWORD,
@@ -67,7 +67,7 @@ test.describe('E2E: Authentication', { tag: ['@ui'] }, () => {
   test('User can logout and is redirected to home @ui', async ({ authPage, settingsPage }) => {
     // Arrange: Perform login
     await authPage.navigateToLogin();
-    await authPage.loginUser({
+    await authPage.loginUserAndWaitForSession({
       user: {
         email: config.TEST_USER_EMAIL,
         password: config.TEST_USER_PASSWORD,

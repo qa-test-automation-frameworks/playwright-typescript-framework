@@ -6,6 +6,11 @@ import { CommentApiClient } from '../api/clients/CommentApiClient';
 import { ProfileApiClient } from '../api/clients/ProfileApiClient';
 
 export type ApiFixtures = {
+  anonymousApiClient: BaseApiClient;
+  anonymousAuthApi: AuthApiClient;
+  createAnonymousAuthApi: () => AuthApiClient;
+  authenticatedApiClient: BaseApiClient;
+  authenticatedAuthApi: AuthApiClient;
   baseApiClient: BaseApiClient;
   authApi: AuthApiClient;
   articleApi: ArticleApiClient;
@@ -14,24 +19,44 @@ export type ApiFixtures = {
 };
 
 export const apiFixtures = authFixtures.extend<ApiFixtures>({
+  anonymousApiClient: async ({ request }, use) => {
+    await use(new BaseApiClient(request));
+  },
+
+  anonymousAuthApi: async ({ anonymousApiClient }, use) => {
+    await use(new AuthApiClient(anonymousApiClient));
+  },
+
+  createAnonymousAuthApi: async ({ request }, use) => {
+    await use(() => new AuthApiClient(new BaseApiClient(request)));
+  },
+
+  authenticatedApiClient: async ({ request, userToken }, use) => {
+    await use(new BaseApiClient(request, userToken));
+  },
+
+  authenticatedAuthApi: async ({ authenticatedApiClient }, use) => {
+    await use(new AuthApiClient(authenticatedApiClient));
+  },
+
   baseApiClient: async ({ request, userToken }, use) => {
     const client = new BaseApiClient(request, userToken);
     await use(client);
   },
 
-  authApi: async ({ baseApiClient }, use) => {
-    await use(new AuthApiClient(baseApiClient));
+  authApi: async ({ anonymousAuthApi }, use) => {
+    await use(anonymousAuthApi);
   },
 
-  articleApi: async ({ baseApiClient }, use) => {
-    await use(new ArticleApiClient(baseApiClient));
+  articleApi: async ({ authenticatedApiClient }, use) => {
+    await use(new ArticleApiClient(authenticatedApiClient));
   },
 
-  commentApi: async ({ baseApiClient }, use) => {
-    await use(new CommentApiClient(baseApiClient));
+  commentApi: async ({ authenticatedApiClient }, use) => {
+    await use(new CommentApiClient(authenticatedApiClient));
   },
 
-  profileApi: async ({ baseApiClient }, use) => {
-    await use(new ProfileApiClient(baseApiClient));
+  profileApi: async ({ authenticatedApiClient }, use) => {
+    await use(new ProfileApiClient(authenticatedApiClient));
   },
 });

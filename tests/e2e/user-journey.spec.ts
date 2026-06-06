@@ -49,11 +49,15 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
       async ({ authPage }) => {
         const userPayload = new UserBuilder().build();
 
-        await authPage.navigateToRegister();
-        await authPage.registerUserAndWaitForSession(userPayload);
+        await observedStep('Register a new anonymous user through UI', async () => {
+          await authPage.navigateToRegister();
+          await authPage.registerUserAndWaitForSession(userPayload);
+        });
 
-        await expect(authPage.header.profileLink).toBeVisible({ timeout: 10_000 });
-        await expect(authPage.header.profileLink).toContainText(userPayload.user.username);
+        await observedStep('Verify authenticated header state', async () => {
+          await expect(authPage.header.profileLink).toBeVisible({ timeout: 10_000 });
+          await expect(authPage.header.profileLink).toContainText(userPayload.user.username);
+        });
       },
     );
 
@@ -68,15 +72,21 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
       const userPayload = new UserBuilder().build();
       const articlePayload = new ArticleBuilder().build();
 
-      await authPage.navigateToRegister();
-      await authPage.registerUserAndWaitForSession(userPayload);
-      await expect(authPage.header.profileLink).toBeVisible({ timeout: 10_000 });
+      await observedStep('Register an author through UI', async () => {
+        await authPage.navigateToRegister();
+        await authPage.registerUserAndWaitForSession(userPayload);
+        await expect(authPage.header.profileLink).toBeVisible({ timeout: 10_000 });
+      });
 
-      await authPage.header.navigateToNewArticle();
-      await publishArticleThroughUi(page, articleEditorPage, articlePayload);
+      await observedStep('Publish tagged article through UI', async () => {
+        await authPage.header.navigateToNewArticle();
+        await publishArticleThroughUi(page, articleEditorPage, articlePayload);
+      });
 
-      await expect(articlePage.titleHeading).toBeVisible({ timeout: 10_000 });
-      await expect(articlePage.titleHeading).toHaveText(articlePayload.article.title);
+      await observedStep('Verify published article page', async () => {
+        await expect(articlePage.titleHeading).toBeVisible({ timeout: 10_000 });
+        await expect(articlePage.titleHeading).toHaveText(articlePayload.article.title);
+      });
 
       const slug = articlePage.getUrl().split('/').pop() || '';
       if (slug) {
@@ -118,11 +128,17 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
   }) => {
     const comment = new CommentBuilder().build();
 
-    await page.goto(appRoutes.article(publishedArticle.slug));
-    await articlePage.waitForPageLoad();
-    await articlePage.postComment(comment.comment.body);
+    await observedStep('Open seeded article and post comment', async () => {
+      await page.goto(appRoutes.article(publishedArticle.slug));
+      await articlePage.waitForPageLoad();
+      await articlePage.postComment(comment.comment.body);
+    });
 
-    await expect(articlePage.commentTexts.filter({ hasText: comment.comment.body })).toBeVisible();
+    await observedStep('Verify posted comment is visible', async () => {
+      await expect(
+        articlePage.commentTexts.filter({ hasText: comment.comment.body }),
+      ).toBeVisible();
+    });
   });
 
   test('profile visibility shows authored article @ui', async ({
@@ -130,14 +146,18 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
     publishedArticle,
     profilePage,
   }) => {
-    await page.goto(appRoutes.profile(publishedArticle.author.username));
-    await profilePage.waitForPageLoad();
-    await profilePage.showMyArticles();
+    await observedStep('Open author profile and select authored articles', async () => {
+      await page.goto(appRoutes.profile(publishedArticle.author.username));
+      await profilePage.waitForPageLoad();
+      await profilePage.showMyArticles();
+    });
 
-    await expect(profilePage.usernameHeading).toContainText(publishedArticle.author.username);
-    await expect(
-      profilePage.articleTitles.filter({ hasText: publishedArticle.title }),
-    ).toBeVisible();
+    await observedStep('Verify profile article visibility', async () => {
+      await expect(profilePage.usernameHeading).toContainText(publishedArticle.author.username);
+      await expect(
+        profilePage.articleTitles.filter({ hasText: publishedArticle.title }),
+      ).toBeVisible();
+    });
   });
 
   test('followed author article appears in personal feed @ui @critical', async ({
@@ -145,12 +165,18 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
     followerPair,
     feedPage,
   }) => {
-    await installUserToken(page.context(), followerPair.follower.token, followerPair.follower);
-    await page.goto('/');
+    await observedStep('Install follower browser state', async () => {
+      await installUserToken(page.context(), followerPair.follower.token, followerPair.follower);
+      await page.goto('/');
+    });
 
-    await feedPage.switchToPersonalFeed();
+    await observedStep('Open personal feed', async () => {
+      await feedPage.switchToPersonalFeed();
+    });
 
-    await expect(feedPage.articleCard(followerPair.article.title)).toBeVisible();
+    await observedStep('Verify followed author article is visible', async () => {
+      await expect(feedPage.articleCard(followerPair.article.title)).toBeVisible();
+    });
   });
 
   test('unfollowed author article is removed from personal feed @ui', async ({
@@ -159,14 +185,20 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
     profilePage,
     feedPage,
   }) => {
-    await installUserToken(page.context(), followerPair.follower.token, followerPair.follower);
-    await page.goto('/');
+    await observedStep('Install follower browser state', async () => {
+      await installUserToken(page.context(), followerPair.follower.token, followerPair.follower);
+      await page.goto('/');
+    });
 
-    await profilePage.navigateToUser(followerPair.author.username);
-    await profilePage.unfollowUser();
-    await feedPage.navigate();
-    await feedPage.switchToPersonalFeed();
+    await observedStep('Unfollow author through profile UI', async () => {
+      await profilePage.navigateToUser(followerPair.author.username);
+      await profilePage.unfollowUser();
+    });
 
-    await expect(feedPage.articleCard(followerPair.article.title)).toHaveCount(0);
+    await observedStep('Verify author article is removed from personal feed', async () => {
+      await feedPage.navigate();
+      await feedPage.switchToPersonalFeed();
+      await expect(feedPage.articleCard(followerPair.article.title)).toHaveCount(0);
+    });
   });
 });

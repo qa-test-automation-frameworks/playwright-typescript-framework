@@ -1,0 +1,773 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Controlled Conduit Target API",
+    "version": "1.0.0",
+    "description": "Contract source for the repo-owned Conduit-compatible target exercised by the Playwright framework."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:4300/api"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "operationId": "registerUser",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RegisterRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserResponse"
+          },
+          "422": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "operationId": "loginUser",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/LoginRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "operationId": "getCurrentUser",
+        "security": [{ "tokenAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateUser",
+        "security": [{ "tokenAuth": [] }],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateUserRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserResponse"
+          },
+          "422": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/profiles/{username}": {
+      "get": {
+        "operationId": "getProfile",
+        "parameters": [{ "$ref": "#/components/parameters/Username" }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProfileResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/profiles/{username}/follow": {
+      "post": {
+        "operationId": "followUser",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Username" }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProfileResponse"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "unfollowUser",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Username" }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProfileResponse"
+          }
+        }
+      }
+    },
+    "/articles": {
+      "get": {
+        "operationId": "listArticles",
+        "parameters": [
+          { "$ref": "#/components/parameters/Limit" },
+          { "$ref": "#/components/parameters/Offset" },
+          { "$ref": "#/components/parameters/Tag" },
+          { "$ref": "#/components/parameters/Author" },
+          { "$ref": "#/components/parameters/Favorited" }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ArticleList"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createArticle",
+        "security": [{ "tokenAuth": [] }],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateArticleRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ArticleResponse"
+          },
+          "422": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/articles/feed": {
+      "get": {
+        "operationId": "listFeed",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/Limit" },
+          { "$ref": "#/components/parameters/Offset" }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ArticleList"
+          }
+        }
+      }
+    },
+    "/articles/{slug}": {
+      "get": {
+        "operationId": "getArticle",
+        "parameters": [{ "$ref": "#/components/parameters/Slug" }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ArticleResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateArticle",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Slug" }],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateArticleRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ArticleResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ErrorResponse"
+          },
+          "422": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteArticle",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Slug" }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EmptyResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/articles/{slug}/comments": {
+      "get": {
+        "operationId": "listComments",
+        "parameters": [{ "$ref": "#/components/parameters/Slug" }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CommentList"
+          }
+        }
+      },
+      "post": {
+        "operationId": "addComment",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Slug" }],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateCommentRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CommentResponse"
+          },
+          "422": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/articles/{slug}/comments/{commentId}": {
+      "delete": {
+        "operationId": "deleteComment",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/Slug" },
+          { "$ref": "#/components/parameters/CommentId" }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EmptyResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/articles/{slug}/favorite": {
+      "post": {
+        "operationId": "favoriteArticle",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Slug" }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ArticleResponse"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "unfavoriteArticle",
+        "security": [{ "tokenAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Slug" }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ArticleResponse"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "tokenAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Conduit token header in the form `Token <jwt>`."
+      }
+    },
+    "parameters": {
+      "Slug": {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "minLength": 1 }
+      },
+      "Username": {
+        "name": "username",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "minLength": 1 }
+      },
+      "CommentId": {
+        "name": "commentId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer" }
+      },
+      "Limit": {
+        "name": "limit",
+        "in": "query",
+        "schema": { "type": "integer", "minimum": 0 }
+      },
+      "Offset": {
+        "name": "offset",
+        "in": "query",
+        "schema": { "type": "integer", "minimum": 0 }
+      },
+      "Tag": {
+        "name": "tag",
+        "in": "query",
+        "schema": { "type": "string" }
+      },
+      "Author": {
+        "name": "author",
+        "in": "query",
+        "schema": { "type": "string" }
+      },
+      "Favorited": {
+        "name": "favorited",
+        "in": "query",
+        "schema": { "type": "string" }
+      }
+    },
+    "requestBodies": {
+      "LoginRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/LoginRequest" }
+          }
+        }
+      },
+      "RegisterRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/RegisterRequest" }
+          }
+        }
+      },
+      "UpdateUserRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/UpdateUserRequest" }
+          }
+        }
+      },
+      "CreateArticleRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/CreateArticleRequest" }
+          }
+        }
+      },
+      "UpdateArticleRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/UpdateArticleRequest" }
+          }
+        }
+      },
+      "CreateCommentRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/CreateCommentRequest" }
+          }
+        }
+      }
+    },
+    "responses": {
+      "UserResponse": {
+        "description": "Authenticated user response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/UserResponse" },
+            "examples": { "default": { "$ref": "#/components/examples/UserResponse" } }
+          }
+        }
+      },
+      "ProfileResponse": {
+        "description": "Profile response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ProfileResponse" },
+            "examples": { "default": { "$ref": "#/components/examples/ProfileResponse" } }
+          }
+        }
+      },
+      "ArticleResponse": {
+        "description": "Article response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ArticleResponse" },
+            "examples": { "default": { "$ref": "#/components/examples/ArticleResponse" } }
+          }
+        }
+      },
+      "ArticleList": {
+        "description": "Article list response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ArticleList" },
+            "examples": { "default": { "$ref": "#/components/examples/ArticleList" } }
+          }
+        }
+      },
+      "CommentResponse": {
+        "description": "Comment response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/CommentResponse" },
+            "examples": { "default": { "$ref": "#/components/examples/CommentResponse" } }
+          }
+        }
+      },
+      "CommentList": {
+        "description": "Comment list response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/CommentList" },
+            "examples": { "default": { "$ref": "#/components/examples/CommentList" } }
+          }
+        }
+      },
+      "EmptyResponse": {
+        "description": "Empty successful response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/EmptyResponse" },
+            "examples": { "default": { "$ref": "#/components/examples/EmptyResponse" } }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "description": "Validation or authorization error response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+            "examples": { "default": { "$ref": "#/components/examples/ErrorResponse" } }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": ["email", "token", "username"],
+        "properties": {
+          "email": { "type": "string", "format": "email" },
+          "token": { "type": "string", "minLength": 1 },
+          "username": { "type": "string", "minLength": 1 },
+          "bio": { "type": ["string", "null"] },
+          "image": { "type": ["string", "null"] }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "required": ["user"],
+        "properties": {
+          "user": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "Profile": {
+        "type": "object",
+        "required": ["username", "following"],
+        "properties": {
+          "username": { "type": "string", "minLength": 1 },
+          "bio": { "type": ["string", "null"] },
+          "image": { "type": ["string", "null"], "format": "uri" },
+          "following": { "type": "boolean" }
+        }
+      },
+      "ProfileResponse": {
+        "type": "object",
+        "required": ["profile"],
+        "properties": {
+          "profile": { "$ref": "#/components/schemas/Profile" }
+        }
+      },
+      "Article": {
+        "type": "object",
+        "required": [
+          "slug",
+          "title",
+          "description",
+          "body",
+          "tagList",
+          "createdAt",
+          "updatedAt",
+          "favorited",
+          "favoritesCount",
+          "author"
+        ],
+        "properties": {
+          "slug": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 1 },
+          "body": { "type": "string", "minLength": 1 },
+          "tagList": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" },
+          "favorited": { "type": "boolean" },
+          "favoritesCount": { "type": "integer" },
+          "author": { "$ref": "#/components/schemas/Profile" }
+        }
+      },
+      "ArticleResponse": {
+        "type": "object",
+        "required": ["article"],
+        "properties": {
+          "article": { "$ref": "#/components/schemas/Article" }
+        }
+      },
+      "ArticleList": {
+        "type": "object",
+        "required": ["articles", "articlesCount"],
+        "properties": {
+          "articles": { "type": "array", "items": { "$ref": "#/components/schemas/Article" } },
+          "articlesCount": { "type": "integer" }
+        }
+      },
+      "Comment": {
+        "type": "object",
+        "required": ["id", "createdAt", "updatedAt", "body", "author"],
+        "properties": {
+          "id": { "type": "integer" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" },
+          "body": { "type": "string", "minLength": 1 },
+          "author": { "$ref": "#/components/schemas/Profile" }
+        }
+      },
+      "CommentResponse": {
+        "type": "object",
+        "required": ["comment"],
+        "properties": {
+          "comment": { "$ref": "#/components/schemas/Comment" }
+        }
+      },
+      "CommentList": {
+        "type": "object",
+        "required": ["comments"],
+        "properties": {
+          "comments": { "type": "array", "items": { "$ref": "#/components/schemas/Comment" } }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["user"],
+        "properties": {
+          "user": {
+            "type": "object",
+            "required": ["email", "password"],
+            "properties": {
+              "email": { "type": "string", "format": "email" },
+              "password": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "required": ["user"],
+        "properties": {
+          "user": {
+            "type": "object",
+            "required": ["username", "email", "password"],
+            "properties": {
+              "username": { "type": "string", "minLength": 1 },
+              "email": { "type": "string", "format": "email" },
+              "password": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "required": ["user"],
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": { "type": "string", "format": "email" },
+              "password": { "type": "string", "minLength": 1 },
+              "username": { "type": "string", "minLength": 1 },
+              "bio": { "type": ["string", "null"] },
+              "image": { "type": ["string", "null"], "format": "uri" }
+            }
+          }
+        }
+      },
+      "CreateArticleRequest": {
+        "type": "object",
+        "required": ["article"],
+        "properties": {
+          "article": {
+            "type": "object",
+            "required": ["title", "description", "body"],
+            "properties": {
+              "title": { "type": "string", "minLength": 1 },
+              "description": { "type": "string", "minLength": 1 },
+              "body": { "type": "string", "minLength": 1 },
+              "tagList": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "UpdateArticleRequest": {
+        "type": "object",
+        "required": ["article"],
+        "properties": {
+          "article": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "body": { "type": "string" },
+              "tagList": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "CreateCommentRequest": {
+        "type": "object",
+        "required": ["comment"],
+        "properties": {
+          "comment": {
+            "type": "object",
+            "required": ["body"],
+            "properties": {
+              "body": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      },
+      "EmptyResponse": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["errors"],
+        "properties": {
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "UserResponse": {
+        "value": {
+          "user": {
+            "email": "user@example.test",
+            "token": "example-token",
+            "username": "exampleuser",
+            "bio": null,
+            "image": null
+          }
+        }
+      },
+      "ProfileResponse": {
+        "value": {
+          "profile": {
+            "username": "exampleuser",
+            "bio": "Example profile",
+            "image": "https://example.test/avatar.png",
+            "following": false
+          }
+        }
+      },
+      "ArticleResponse": {
+        "value": {
+          "article": {
+            "slug": "example-article",
+            "title": "Example Article",
+            "description": "Example description",
+            "body": "Example body",
+            "tagList": ["example"],
+            "createdAt": "2026-06-06T00:00:00.000Z",
+            "updatedAt": "2026-06-06T00:00:00.000Z",
+            "favorited": false,
+            "favoritesCount": 0,
+            "author": {
+              "username": "exampleuser",
+              "bio": null,
+              "image": null,
+              "following": false
+            }
+          }
+        }
+      },
+      "ArticleList": {
+        "value": {
+          "articles": [
+            {
+              "slug": "example-article",
+              "title": "Example Article",
+              "description": "Example description",
+              "body": "Example body",
+              "tagList": ["example"],
+              "createdAt": "2026-06-06T00:00:00.000Z",
+              "updatedAt": "2026-06-06T00:00:00.000Z",
+              "favorited": false,
+              "favoritesCount": 0,
+              "author": {
+                "username": "exampleuser",
+                "bio": null,
+                "image": null,
+                "following": false
+              }
+            }
+          ],
+          "articlesCount": 1
+        }
+      },
+      "CommentResponse": {
+        "value": {
+          "comment": {
+            "id": 1,
+            "createdAt": "2026-06-06T00:00:00.000Z",
+            "updatedAt": "2026-06-06T00:00:00.000Z",
+            "body": "Example comment",
+            "author": {
+              "username": "exampleuser",
+              "bio": null,
+              "image": null,
+              "following": false
+            }
+          }
+        }
+      },
+      "CommentList": {
+        "value": {
+          "comments": [
+            {
+              "id": 1,
+              "createdAt": "2026-06-06T00:00:00.000Z",
+              "updatedAt": "2026-06-06T00:00:00.000Z",
+              "body": "Example comment",
+              "author": {
+                "username": "exampleuser",
+                "bio": null,
+                "image": null,
+                "following": false
+              }
+            }
+          ]
+        }
+      },
+      "EmptyResponse": {
+        "value": {}
+      },
+      "ErrorResponse": {
+        "value": {
+          "errors": {
+            "body": ["can't be blank"]
+          }
+        }
+      }
+    }
+  }
+}

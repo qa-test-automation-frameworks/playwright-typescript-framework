@@ -15,7 +15,9 @@ const ignoredDirs = new Set([
 
 const forbidden = [
   /TEST_USER_PASSWORD=(?!replace-with|your-|$).+/i,
-  /TEST_USER_EMAIL=(?!replace-with|your-|$).+/i,
+  /TEST_USER_PASSWORD:\s*\$\{[^}:]+:-[^}]+\}/i,
+  /TEST_USER_EMAIL=(?!replace-with|your-|seed\.user@example\.test|$).+/i,
+  /TEST_USER_EMAIL:\s*\$\{[^}:]+:-[^}]+\}/i,
   /Authorization:\s*Token\s+(?!\[REDACTED\])/i,
   /Bearer\s+[A-Za-z0-9._-]{20,}/,
 ];

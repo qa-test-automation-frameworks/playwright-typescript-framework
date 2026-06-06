@@ -30,6 +30,8 @@ jobs:
       - run: npm run type-check
       - run: npm run check:secrets
       - run: npm run check:anti-patterns
+      - run: npm run check:visual-snapshots
+      - run: npm run check:openapi-contract
       - run: npm run with:target -- npm run check:env
 
   test-api:
@@ -108,6 +110,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium
       - run: npm run with:target -- npx playwright test --project=visual --shard=${{ matrix.shard }}
+      - run: npm run check:visual-snapshots
       - run: npm run flake:report
         if: always()
       - uses: actions/upload-artifact@v4

@@ -15,10 +15,15 @@ export class NotificationComponent {
   public async getValidationErrors(): Promise<string[]> {
     try {
       await this.errorContainer.waitFor({ state: 'visible', timeout: 5000 });
-      const texts = await this.errorItems.allTextContents();
-      return texts.map((t) => t.trim());
-    } catch {
-      return [];
+    } catch (error) {
+      throw new Error(
+        `Validation error container did not become visible within 5000ms. Current page URL: ${this.page.url()}. Original error: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
+
+    const texts = await this.errorItems.allTextContents();
+    return texts.map((t) => t.trim());
   }
 }

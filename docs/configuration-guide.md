@@ -61,7 +61,7 @@ The CI workflow injects these values into environment readiness checks and all t
 
 For deterministic CI, point `BASE_URL` and `API_URL` at a controlled RealWorld deployment. Public demo endpoints are acceptable for exploratory local runs only because availability, data persistence, rate limits, and contract drift are outside this repository's control.
 
-`docker-compose.yml` provides a configurable harness. Set `REALWORLD_API_IMAGE` and `REALWORLD_WEB_IMAGE` to compatible images before starting the stack.
+`docker-compose.yml` provides a repo-owned Conduit-compatible target on port `4300`. Set `TEST_USER_EMAIL`, `TEST_USER_PASSWORD`, and `TEST_USER_USERNAME` explicitly before starting the stack, then point `BASE_URL` to `http://127.0.0.1:4300` and `API_URL` to `http://127.0.0.1:4300/api`.
 
 ## Ignored Local Artifacts
 

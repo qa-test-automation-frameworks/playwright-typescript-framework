@@ -5,9 +5,9 @@ services:
     command: sh -c "npm ci && npm run target:start"
     environment:
       TARGET_PORT: 4300
-      TEST_USER_EMAIL: ${TEST_USER_EMAIL:-seed.user@example.test}
-      TEST_USER_PASSWORD: ${TEST_USER_PASSWORD:-Password123!}
-      TEST_USER_USERNAME: ${TEST_USER_USERNAME:-seeduser}
+      TEST_USER_EMAIL: ${TEST_USER_EMAIL:?Set TEST_USER_EMAIL to a local-only seed email}
+      TEST_USER_PASSWORD: ${TEST_USER_PASSWORD:?Set TEST_USER_PASSWORD to a local-only seed password}
+      TEST_USER_USERNAME: ${TEST_USER_USERNAME:?Set TEST_USER_USERNAME to a local-only seed username}
     ports:
       - '4300:4300'
     volumes:

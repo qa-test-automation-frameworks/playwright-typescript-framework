@@ -25,7 +25,7 @@ export class ArticleCardComponent {
   }
 
   public get favoriteBtn(): Locator {
-    return this.root.getByRole('button');
+    return this.root.getByRole('button', { name: /^(Favorite|Unfavorite)\b/i });
   }
 
   public async click(): Promise<void> {

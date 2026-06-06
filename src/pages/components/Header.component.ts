@@ -47,13 +47,7 @@ export class HeaderComponent {
   }
 
   private async activateLink(link: Locator): Promise<void> {
-    const href = await link.getAttribute('href');
-    if (href) {
-      await this.page.goto(href);
-      return;
-    }
-
-    await link.focus();
-    await link.press('Enter');
+    await link.click();
+    await this.page.waitForLoadState('domcontentloaded');
   }
 }

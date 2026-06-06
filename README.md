@@ -25,6 +25,8 @@ The gate runs:
 - `npm run type-check`
 - `npm run check:secrets`
 - `npm run check:anti-patterns`
+- `npm run check:visual-snapshots`
+- `npm run check:openapi-contract`
 - `npm run with:target -- npm run check:env`
 - `npm run test:api`
 - `npm run test:e2e`
@@ -34,7 +36,7 @@ The gate runs:
 - `npm run test:cross-browser`
 - scheduled `npm run test:cross-browser:full`
 
-CI enforces formatting, linting, type checking, secret scanning, anti-pattern scanning, environment readiness, API tests, sharded authenticated and anonymous UI tests, sharded visual tests, Axe accessibility tests, selector-contract tests, and cross-browser smoke tests against the local controlled target. Linux jobs run inside the pinned `mcr.microsoft.com/playwright:v1.60.0-noble` image. Report artifacts include Allure results, JUnit XML, JSON results, and Playwright HTML output. The visual job runs on Windows to match the committed `win32` Chromium baselines.
+CI enforces formatting, linting, type checking, secret scanning, anti-pattern scanning, visual snapshot hygiene, OpenAPI/Zod contract alignment, environment readiness, API tests, sharded authenticated and anonymous UI tests, sharded visual tests, Axe accessibility tests, selector-contract tests, and cross-browser smoke tests against the local controlled target. Linux jobs run inside the pinned `mcr.microsoft.com/playwright:v1.60.0-noble` image. Report artifacts include Allure results, JUnit XML, JSON results, and Playwright HTML output. The visual job runs on Windows to match the committed `win32` Chromium baselines.
 
 ## Controlled Target Workflow
 
@@ -96,6 +98,7 @@ tests/setup/      Report-visible setup and teardown projects
 tests/visual/     Visual regression checks and baselines
 test-target/      Repo-owned Conduit-compatible API and UI target
 docs/adr/         Architecture decision records
+docs/openapi/     Controlled target OpenAPI contract source
 ```
 
 ## Setup
@@ -154,10 +157,11 @@ The `CI` workflow publishes Allure history from green default-branch controlled-
 - Published report: [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)
 - High-signal tests: `tests/api`, `tests/e2e/article-lifecycle.spec.ts`, `tests/contracts/selectors/controlled-ui.selectors.spec.ts`, `tests/visual`, and `tests/accessibility`
 - Local proof command: `npm run verify:target`
+- Verification evidence: [Verification evidence](docs/verification-evidence.md)
 
 ## Public Readiness Checklist
 
-- No untracked publishable files.
+- No untracked publishable files; every accepted `tests/visual/**/*-snapshots/*.png` baseline is listed in `tests/visual/visual-snapshots.manifest.json`.
 - No ignored reports, traces, screenshots, videos, `.auth`, or local environment files committed.
 - `npm run verify:target` is green on Node 20.
 - GitHub Actions is green against the controlled target on the public default branch.
@@ -182,6 +186,8 @@ npm run check:secrets
 npm run test:update-snapshots
 npm run check:env
 npm run check:runtime
+npm run check:visual-snapshots
+npm run check:openapi-contract
 npm run test:otel
 npm run clean
 npm run allure:generate
@@ -195,6 +201,8 @@ npm run allure:generate
 - API debug logging is opt-in with `DEBUG_API=true` and redacts tokens, passwords, authorization headers, and emails.
 - Test data builders prefix generated usernames, emails, article titles, and tags with `TEST_RUN_ID` when provided.
 - Visual execution uses a fixed Chromium viewport, UTC timezone, `en-US` locale, light color scheme, reduced motion, and a Windows CI runner that matches the committed `win32` baselines.
+- Visual snapshot hygiene fails the quality gate when accepted baselines are missing from `tests/visual/visual-snapshots.manifest.json`.
+- The controlled target API contract is documented in `docs/openapi/conduit-controlled-target.openapi.json` and checked against runtime Zod response schemas.
 - Network interception coverage demonstrates controlled API failure handling through `page.route()`.
 
 ## Known Limitations
@@ -202,6 +210,7 @@ npm run allure:generate
 - User accounts cannot be deleted through the public API, so tests use unique generated users and clean up deletable resources such as articles/comments.
 - Generated reports are intentionally ignored by Git; publish only clean CI artifacts from green runs.
 - The Docker Compose harness runs the repo-owned Conduit-compatible target for deterministic local checks. External RealWorld-compatible deployments remain supported through explicit `BASE_URL`, `API_URL`, and seeded-user environment variables.
+- User retention and cleanup rules are documented in [Data isolation and retention](docs/data-isolation-and-retention.md).
 
 ## Documentation
 
@@ -215,9 +224,13 @@ npm run allure:generate
 - [Portfolio review guide](docs/portfolio-review-guide.md)
 - [Engineering history](docs/engineering-history.md)
 - [Flakiness policy](docs/flakiness-policy.md)
+- [Flake report example](docs/flake-report-example.md)
 - [Contributing guide](docs/CONTRIBUTING.md)
 - [Controlled test environment](docs/CONTROLLED_TEST_ENVIRONMENT.md)
+- [Data isolation and retention](docs/data-isolation-and-retention.md)
 - [Test strategy matrix](docs/test-strategy-matrix.md)
+- [Verification evidence](docs/verification-evidence.md)
+- [Controlled target OpenAPI contract](docs/openapi/conduit-controlled-target.openapi.json)
 - [ADR-001: Playwright over Cypress](docs/adr/ADR-001-playwright-over-cypress.md)
 - [ADR-002: Conduit as Target](docs/adr/ADR-002-conduit-as-target-app.md)
 - [ADR-003: Hybrid API + UI Strategy](docs/adr/ADR-003-hybrid-api-ui-strategy.md)

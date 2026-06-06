@@ -1,0 +1,10 @@
+{
+  "snapshots": [
+    "tests/visual/critical-pages.visual.spec.ts-snapshots/article-details-page-visual-win32.png",
+    "tests/visual/critical-pages.visual.spec.ts-snapshots/followed-author-feed-visual-win32.png",
+    "tests/visual/critical-pages.visual.spec.ts-snapshots/home-feed-guest-visual-win32.png",
+    "tests/visual/critical-pages.visual.spec.ts-snapshots/login-page-visual-win32.png",
+    "tests/visual/critical-pages.visual.spec.ts-snapshots/profile-page-visual-win32.png",
+    "tests/visual/critical-pages.visual.spec.ts-snapshots/settings-page-visual-win32.png"
+  ]
+}

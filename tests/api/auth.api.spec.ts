@@ -9,8 +9,9 @@ test.describe('API: Authentication', { tag: ['@api'] }, () => {
   test(
     'Register a new user successfully @smoke @api',
     { tag: ['@smoke', '@api'] },
-    async ({ authApi }) => {
+    async ({ createAnonymousAuthApi }) => {
       // Arrange
+      const authApi = createAnonymousAuthApi();
       const registerData = new UserBuilder().build();
 
       // Act
@@ -24,8 +25,9 @@ test.describe('API: Authentication', { tag: ['@api'] }, () => {
   test(
     'Login with valid credentials returns JWT @smoke @api',
     { tag: ['@smoke', '@api'] },
-    async ({ authApi }) => {
+    async ({ createAnonymousAuthApi }) => {
       // Act
+      const authApi = createAnonymousAuthApi();
       const response = await authApi.login({
         user: {
           email: config.TEST_USER_EMAIL,
@@ -38,8 +40,9 @@ test.describe('API: Authentication', { tag: ['@api'] }, () => {
     },
   );
 
-  test('Login with invalid password returns 401 @api', async ({ authApi }) => {
+  test('Login with invalid password returns 401 @api', async ({ createAnonymousAuthApi }) => {
     // Arrange
+    const authApi = createAnonymousAuthApi();
     const loginData = {
       user: {
         email: config.TEST_USER_EMAIL,
@@ -51,16 +54,18 @@ test.describe('API: Authentication', { tag: ['@api'] }, () => {
   });
 
   test('Register with duplicate email returns conflict with descriptive error @api', async ({
-    authApi,
+    createAnonymousAuthApi,
   }) => {
     // Arrange
+    const firstAuthApi = createAnonymousAuthApi();
+    const secondAuthApi = createAnonymousAuthApi();
     const firstUser = new UserBuilder().build();
-    await authApi.register(firstUser);
+    await firstAuthApi.register(firstUser);
 
     // Create secondary user with the duplicate email address
     const secondUser = new UserBuilder().withEmail(firstUser.user.email).build();
 
-    await expectApiError(authApi.register(secondUser), 409, 'email');
+    await expectApiError(secondAuthApi.register(secondUser), 409, 'email');
   });
 
   test('Get current user with valid token @api', async ({ request }) => {
@@ -78,10 +83,8 @@ test.describe('API: Authentication', { tag: ['@api'] }, () => {
     expect(response.user.email).toBe(registered.user.email);
   });
 
-  test('Get current user without token returns 401 @api', async ({ baseApiClient, authApi }) => {
-    // Arrange
-    baseApiClient.setToken(null);
-
+  test('Get current user without token returns 401 @api', async ({ createAnonymousAuthApi }) => {
+    const authApi = createAnonymousAuthApi();
     await expectApiError(authApi.getCurrentUser(), 401);
   });
 });

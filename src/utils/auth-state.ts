@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { BrowserContext } from '@playwright/test';
 import { User } from '../api/models/auth.model';
 
 export const AUTH_DIR = path.resolve(process.cwd(), '.auth');
@@ -42,6 +43,29 @@ export function createStorageState(origin: string, user: User): StorageState {
       },
     ],
   };
+}
+
+export async function installUserToken(
+  context: BrowserContext,
+  token: string,
+  user?: Partial<User>,
+): Promise<void> {
+  await context.addInitScript(
+    ({ tokenValue, userValue, tokenStorageKeys }) => {
+      for (const key of tokenStorageKeys) {
+        window.localStorage.setItem(key, tokenValue);
+      }
+
+      if (userValue) {
+        window.localStorage.setItem('user', JSON.stringify(userValue));
+      }
+    },
+    {
+      tokenValue: token,
+      userValue: user,
+      tokenStorageKeys: [...TOKEN_STORAGE_KEYS],
+    },
+  );
 }
 
 export function writeUserStorageState(origin: string, user: User): void {

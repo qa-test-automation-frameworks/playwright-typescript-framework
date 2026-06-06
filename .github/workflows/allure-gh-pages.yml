@@ -14,21 +14,10 @@ jobs:
         with:
           node-version: '20'
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
-      - run: npm run check:env
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run verify:target
         env:
-          BASE_URL: ${{ vars.BASE_URL }}
-          API_URL: ${{ vars.API_URL }}
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-          TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME }}
-      - run: npm run test
-        env:
-          BASE_URL: ${{ vars.BASE_URL }}
-          API_URL: ${{ vars.API_URL }}
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-          TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME }}
+          TEST_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
       - uses: simple-elf/allure-report-action@v1.7
         with:
           allure_results: allure-results

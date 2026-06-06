@@ -170,9 +170,14 @@ test.describe('API: Articles & Comments', { tag: ['@api'] }, () => {
     await expectApiError(articleApiB.deleteArticle(created.article.slug), 404);
   });
 
-  test('Malformed article payload returns validation error @api', async ({ articleApi }) => {
-    const malformedArticle = new MalformedPayloadBuilder().emptyArticle();
+  test('Malformed article payload returns validation error @api', async ({
+    authenticatedApiClient,
+  }) => {
+    const malformedArticle = JSON.stringify(new MalformedPayloadBuilder().emptyArticle());
+    const response = await authenticatedApiClient.rawPost('/articles', malformedArticle, {
+      'content-type': 'application/json',
+    });
 
-    await expectApiError(articleApi.createArticle(malformedArticle as never), 422);
+    expect(response.status()).toBe(422);
   });
 });
