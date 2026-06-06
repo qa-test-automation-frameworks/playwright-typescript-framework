@@ -20,7 +20,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -41,7 +41,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -73,7 +73,7 @@ jobs:
             shard_id: '2-of-2'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -103,7 +103,7 @@ jobs:
             shard_id: '2-of-2'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -129,7 +129,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -153,7 +153,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -177,7 +177,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -206,7 +206,7 @@ jobs:
         project: [firefox-regression, webkit-regression, mobile-chrome-regression]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
