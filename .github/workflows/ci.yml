@@ -2,19 +2,22 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, master, develop]
   pull_request:
-    branches: [main]
+    branches: [main, master]
   schedule:
     - cron: '0 6 * * 1-5'
 
 env:
   CI: 'true'
   TEST_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+  PLAYWRIGHT_DOCKER_IMAGE: mcr.microsoft.com/playwright:v1.60.0-noble
 
 jobs:
   lint-typecheck:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -32,6 +35,8 @@ jobs:
   test-api:
     needs: lint-typecheck
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -39,7 +44,6 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
       - run: npm run with:target -- npm run test:api
       - uses: actions/upload-artifact@v4
         if: always()
@@ -53,6 +57,8 @@ jobs:
   test-e2e:
     needs: lint-typecheck
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
     strategy:
       fail-fast: false
       matrix:
@@ -68,7 +74,6 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
       - run: npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=${{ matrix.shard }}
       - uses: actions/upload-artifact@v4
         if: always()
@@ -81,7 +86,7 @@ jobs:
 
   test-visual:
     needs: lint-typecheck
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
@@ -97,7 +102,7 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install chromium
       - run: npm run with:target -- npx playwright test --project=visual --shard=${{ matrix.shard }}
       - uses: actions/upload-artifact@v4
         if: always()
@@ -111,6 +116,8 @@ jobs:
   test-accessibility:
     needs: lint-typecheck
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -118,7 +125,6 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
       - run: npm run with:target -- npm run test:accessibility
       - uses: actions/upload-artifact@v4
         if: always()
@@ -129,9 +135,11 @@ jobs:
             test-results/
             playwright-report/
 
-  test-cross-browser:
+  test-selector-contract:
     needs: lint-typecheck
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -139,7 +147,28 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
-      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run with:target -- npm run test:contracts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-selector-contract
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/
+
+  test-cross-browser:
+    needs: lint-typecheck
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
       - run: npm run with:target -- npm run test:cross-browser
       - uses: actions/upload-artifact@v4
         if: always()
@@ -150,9 +179,44 @@ jobs:
             test-results/
             playwright-report/
 
+  scheduled-full-cross-browser:
+    needs: lint-typecheck
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [firefox-regression, webkit-regression, mobile-chrome-regression]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run with:target -- npx playwright test --project=${{ matrix.project }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-${{ matrix.project }}
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/
+
   publish-allure-report:
-    needs: [test-api, test-e2e, test-visual, test-accessibility, test-cross-browser]
-    if: success() && github.ref == 'refs/heads/main'
+    needs:
+      [
+        test-api,
+        test-e2e,
+        test-visual,
+        test-accessibility,
+        test-selector-contract,
+        test-cross-browser,
+      ]
+    if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     permissions:
       contents: write
