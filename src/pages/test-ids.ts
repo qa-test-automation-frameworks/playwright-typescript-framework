@@ -4,6 +4,7 @@ export const testIds = {
   articleAuthor: 'article-author',
   articleDate: 'article-date',
   articleDescription: 'article-description',
+  articleMeta: 'article-meta',
   articleTitle: 'article-title',
   articleTag: 'article-tag',
   commentCard: 'comment-card',

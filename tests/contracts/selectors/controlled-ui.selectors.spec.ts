@@ -36,6 +36,7 @@ test.describe('Contract: controlled UI selectors', { tag: ['@contract'] }, () =>
     await page.goto(appRoutes.article(publishedArticle.slug));
 
     await expect(page.getByTestId(testIds.articleTitle)).toHaveText(publishedArticle.title);
+    await expect(page.getByTestId(testIds.articleMeta)).toBeVisible();
     await expect(page.getByTestId(testIds.articleAuthor)).toBeVisible();
     await expect(page.getByTestId(testIds.articleBody)).toBeVisible();
     await expect(page.getByTestId(testIds.articleDescription)).toBeVisible();
