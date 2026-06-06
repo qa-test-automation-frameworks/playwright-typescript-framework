@@ -7,8 +7,18 @@ export class ArticlePage extends BasePage {
     super(page, '');
   }
 
+  private get articleBanner(): Locator {
+    return this.page
+      .locator('.banner')
+      .filter({ has: this.page.getByTestId(testIds.articleTitle) });
+  }
+
+  private get articleMeta(): Locator {
+    return this.articleBanner.locator('.article-meta');
+  }
+
   public get titleHeading(): Locator {
-    return this.page.getByRole('heading', { level: 1 }).first();
+    return this.articleBanner.getByTestId(testIds.articleTitle);
   }
 
   public get bodyContent(): Locator {
@@ -16,7 +26,7 @@ export class ArticlePage extends BasePage {
   }
 
   public get authorLink(): Locator {
-    return this.page.getByTestId(testIds.articleAuthor).first();
+    return this.articleMeta.getByTestId(testIds.articleAuthor);
   }
 
   public get tagItems(): Locator {
@@ -40,30 +50,29 @@ export class ArticlePage extends BasePage {
   }
 
   public get editButton(): Locator {
-    return this.page
+    return this.articleMeta
       .getByRole('link', { name: /edit/i })
-      .or(this.page.getByRole('button', { name: /edit/i }))
-      .first();
+      .or(this.articleMeta.getByRole('button', { name: /edit/i }));
   }
 
   public get deleteButton(): Locator {
-    return this.page.getByRole('button', { name: /delete/i }).first();
+    return this.articleMeta.getByRole('button', { name: /delete article/i });
   }
 
   public get followButton(): Locator {
-    return this.page.getByRole('button', { name: /^follow/i }).first();
+    return this.articleMeta.getByRole('button', { name: /^follow/i });
   }
 
   public get unfollowButton(): Locator {
-    return this.page.getByRole('button', { name: /^unfollow/i }).first();
+    return this.articleMeta.getByRole('button', { name: /^unfollow/i });
   }
 
   public get favoriteButton(): Locator {
-    return this.page.getByRole('button', { name: /^favorite/i }).first();
+    return this.articleMeta.getByRole('button', { name: /^favorite/i });
   }
 
   public get unfavoriteButton(): Locator {
-    return this.page.getByRole('button', { name: /^unfavorite/i }).first();
+    return this.articleMeta.getByRole('button', { name: /^unfavorite/i });
   }
 
   public async postComment(text: string): Promise<void> {
