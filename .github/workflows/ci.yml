@@ -245,7 +245,7 @@ jobs:
           merge-multiple: true
           path: merged-reports
       - run: mkdir -p allure-results && find merged-reports -path '*/allure-results/*' -type f -exec cp {} allure-results/ \;
-      - uses: simple-elf/allure-report-action@v1.7
+      - uses: simple-elf/allure-report-action@v1.14
         with:
           allure_results: allure-results
           gh_pages: gh-pages
