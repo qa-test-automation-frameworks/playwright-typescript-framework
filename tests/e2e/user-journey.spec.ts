@@ -8,6 +8,7 @@ import { AuthApiClient } from '@src/api/clients/AuthApiClient';
 import { BaseApiClient } from '@src/api/BaseApiClient';
 import { observedStep } from '@src/observability/observed-step';
 import { appRoutes } from '@src/routes/app-routes';
+import { installUserToken } from '@src/utils/auth-state';
 
 async function publishArticleThroughUi(
   page: Page,
@@ -18,7 +19,6 @@ async function publishArticleThroughUi(
     addTag(tag: string): Promise<void>;
     submit(): Promise<void>;
   },
-  articlePage: { titleHeading: ReturnType<Page['getByRole']> },
   article: ReturnType<ArticleBuilder['build']>,
 ): Promise<void> {
   await articleEditorPage.fillTitle(article.article.title);
@@ -37,9 +37,6 @@ async function publishArticleThroughUi(
   );
   await articleEditorPage.submit();
   await publishResponse;
-
-  await expect(articlePage.titleHeading).toBeVisible({ timeout: 10_000 });
-  await expect(articlePage.titleHeading).toHaveText(article.article.title);
 }
 
 test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
@@ -53,7 +50,7 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
         const userPayload = new UserBuilder().build();
 
         await authPage.navigateToRegister();
-        await authPage.registerUser(userPayload);
+        await authPage.registerUserAndWaitForSession(userPayload);
 
         await expect(authPage.header.profileLink).toBeVisible({ timeout: 10_000 });
         await expect(authPage.header.profileLink).toContainText(userPayload.user.username);
@@ -72,11 +69,14 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
       const articlePayload = new ArticleBuilder().build();
 
       await authPage.navigateToRegister();
-      await authPage.registerUser(userPayload);
+      await authPage.registerUserAndWaitForSession(userPayload);
       await expect(authPage.header.profileLink).toBeVisible({ timeout: 10_000 });
 
       await authPage.header.navigateToNewArticle();
-      await publishArticleThroughUi(page, articleEditorPage, articlePage, articlePayload);
+      await publishArticleThroughUi(page, articleEditorPage, articlePayload);
+
+      await expect(articlePage.titleHeading).toBeVisible({ timeout: 10_000 });
+      await expect(articlePage.titleHeading).toHaveText(articlePayload.article.title);
 
       const slug = articlePage.getUrl().split('/').pop() || '';
       if (slug) {
@@ -145,11 +145,7 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
     followerPair,
     feedPage,
   }) => {
-    await page.context().addInitScript((token) => {
-      window.localStorage.setItem('jwtToken', token);
-      window.localStorage.setItem('jwt', token);
-      window.localStorage.setItem('token', token);
-    }, followerPair.follower.token);
+    await installUserToken(page.context(), followerPair.follower.token, followerPair.follower);
     await page.goto('/');
 
     await feedPage.switchToPersonalFeed();
@@ -163,11 +159,7 @@ test.describe('E2E: Focused User Journeys', { tag: ['@ui'] }, () => {
     profilePage,
     feedPage,
   }) => {
-    await page.context().addInitScript((token) => {
-      window.localStorage.setItem('jwtToken', token);
-      window.localStorage.setItem('jwt', token);
-      window.localStorage.setItem('token', token);
-    }, followerPair.follower.token);
+    await installUserToken(page.context(), followerPair.follower.token, followerPair.follower);
     await page.goto('/');
 
     await profilePage.navigateToUser(followerPair.author.username);
