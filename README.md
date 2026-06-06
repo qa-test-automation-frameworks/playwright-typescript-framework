@@ -209,6 +209,7 @@ npm run allure:generate
 - [Observability](docs/Observability.md)
 - [Writing tests](docs/writing-tests.md)
 - [Portfolio review guide](docs/portfolio-review-guide.md)
+- [Engineering history](docs/engineering-history.md)
 - [Contributing guide](docs/CONTRIBUTING.md)
 - [Controlled test environment](docs/CONTROLLED_TEST_ENVIRONMENT.md)
 - [Test strategy matrix](docs/test-strategy-matrix.md)
