@@ -11,7 +11,7 @@ test.describe('E2E: Article Lifecycle', { tag: ['@ui'] }, () => {
       // Arrange
       const article = new ArticleBuilder().build();
       await authPage.navigateToLogin();
-      await authPage.loginUser({
+      await authPage.loginUserAndWaitForSession({
         user: {
           email: config.TEST_USER_EMAIL,
           password: config.TEST_USER_PASSWORD,
@@ -87,6 +87,7 @@ test.describe('E2E: Article Lifecycle', { tag: ['@ui'] }, () => {
     await articlePage.deleteArticle();
 
     // Assert: Redirected to feed, article absent from global feed
+    await expect(page).toHaveURL(/\/#?\/?$/);
     await feedPage.switchToGlobalFeed();
     await expect(feedPage.articleCard(article.article.title)).toHaveCount(0);
   });

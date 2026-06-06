@@ -79,23 +79,19 @@ export class ArticlePage extends BasePage {
     await this.commentTextarea.fill(text);
     await this.postCommentButton.focus();
     await this.postCommentButton.press('Enter');
-    await this.page.getByText(text, { exact: true }).waitFor({ state: 'visible' });
   }
 
   public async deleteComment(text: string): Promise<void> {
     const card = this.commentCards.filter({ hasText: text });
     await card.getByRole('button', { name: /delete/i }).click();
-    await this.page.getByText(text, { exact: true }).waitFor({ state: 'detached' });
   }
 
   public async favoriteArticle(): Promise<void> {
     await this.favoriteButton.click();
-    await this.unfavoriteButton.waitFor({ state: 'visible' });
   }
 
   public async unfavoriteArticle(): Promise<void> {
     await this.unfavoriteButton.click();
-    await this.favoriteButton.waitFor({ state: 'visible' });
   }
 
   public async editArticle(): Promise<void> {
@@ -104,16 +100,13 @@ export class ArticlePage extends BasePage {
 
   public async deleteArticle(): Promise<void> {
     await this.deleteButton.click();
-    await this.page.waitForURL(/\/#?\/?$/);
   }
 
   public async followAuthor(): Promise<void> {
     await this.followButton.click();
-    await this.unfollowButton.waitFor({ state: 'visible' });
   }
 
   public async unfollowAuthor(): Promise<void> {
     await this.unfollowButton.click();
-    await this.followButton.waitFor({ state: 'visible' });
   }
 }
