@@ -18,9 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
+    env:
+      HOME: /root
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -39,9 +41,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
+    env:
+      HOME: /root
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -49,7 +53,7 @@ jobs:
       - run: npm run with:target -- npm run test:api
       - run: npm run flake:report
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: reports-api
@@ -63,6 +67,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
+    env:
+      HOME: /root
     strategy:
       fail-fast: false
       matrix:
@@ -72,8 +78,8 @@ jobs:
           - shard: '2/2'
             shard_id: '2-of-2'
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -81,7 +87,7 @@ jobs:
       - run: npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=${{ matrix.shard }}
       - run: npm run flake:report
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: reports-e2e-${{ matrix.shard_id }}
@@ -102,8 +108,8 @@ jobs:
           - shard: '2/2'
             shard_id: '2-of-2'
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -113,7 +119,7 @@ jobs:
       - run: npm run check:visual-snapshots
       - run: npm run flake:report
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: reports-visual-${{ matrix.shard_id }}
@@ -127,9 +133,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
+    env:
+      HOME: /root
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -137,7 +145,7 @@ jobs:
       - run: npm run with:target -- npm run test:accessibility
       - run: npm run flake:report
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: reports-accessibility
@@ -151,9 +159,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
+    env:
+      HOME: /root
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -161,7 +171,7 @@ jobs:
       - run: npm run with:target -- npm run test:contracts
       - run: npm run flake:report
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: reports-selector-contract
@@ -175,9 +185,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
+    env:
+      HOME: /root
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -185,7 +197,7 @@ jobs:
       - run: npm run with:target -- npm run test:cross-browser
       - run: npm run flake:report
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: reports-cross-browser
@@ -200,13 +212,15 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
+    env:
+      HOME: /root
     strategy:
       fail-fast: false
       matrix:
         project: [firefox-regression, webkit-regression, mobile-chrome-regression]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -214,7 +228,7 @@ jobs:
       - run: npm run with:target -- npx playwright test --project=${{ matrix.project }}
       - run: npm run flake:report
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: reports-${{ matrix.project }}
@@ -238,14 +252,14 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v8
         with:
           pattern: reports-*
           merge-multiple: true
           path: merged-reports
       - run: mkdir -p allure-results && find merged-reports -path '*/allure-results/*' -type f -exec cp {} allure-results/ \;
-      - uses: simple-elf/allure-report-action@v1.7
+      - uses: simple-elf/allure-report-action@v1.14
         with:
           allure_results: allure-results
           gh_pages: gh-pages

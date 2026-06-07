@@ -7,7 +7,7 @@ import {
   Tracer,
 } from '@opentelemetry/api';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
-import { Resource } from '@opentelemetry/resources';
+import { resourceFromAttributes } from '@opentelemetry/resources';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
 import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
@@ -22,23 +22,21 @@ export const initTelemetry = (): void => {
   if (!isTelemetryEnabled() || provider) return;
 
   provider = new NodeTracerProvider({
-    resource: new Resource({
+    resource: resourceFromAttributes({
       [ATTR_SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || 'playwright-typescript-framework',
       ...parseResourceAttributes(process.env.OTEL_RESOURCE_ATTRIBUTES),
     }),
+    spanProcessors: [
+      new BatchSpanProcessor(
+        new OTLPTraceExporter({
+          url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://127.0.0.1:4318/v1/traces',
+        }),
+      ),
+      ...(process.env.OTEL_TRACE_CONSOLE === 'true'
+        ? [new BatchSpanProcessor(new ConsoleSpanExporter())]
+        : []),
+    ],
   });
-
-  provider.addSpanProcessor(
-    new BatchSpanProcessor(
-      new OTLPTraceExporter({
-        url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://127.0.0.1:4318/v1/traces',
-      }),
-    ),
-  );
-
-  if (process.env.OTEL_TRACE_CONSOLE === 'true') {
-    provider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
-  }
 
   provider.register();
 };
