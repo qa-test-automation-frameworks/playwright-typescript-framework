@@ -52,7 +52,7 @@
     "realworld",
     "conduit"
   ],
-  "author": "prayagv",
+  "author": "Prayag Vyas (prayagv)",
   "license": "MIT",
   "engines": {
     "node": ">=20",

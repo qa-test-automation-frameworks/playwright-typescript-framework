@@ -151,6 +151,10 @@ Run `npm run flake:report` after a Playwright JSON result is available to write 
 
 The `CI` workflow publishes Allure history from green default-branch controlled-target results to the `gh-pages` branch. The manual `Allure Report Deploy` workflow can republish the same report path on demand.
 
+## License And Attribution
+
+This project is licensed under the [MIT License](LICENSE). When cloning, forking, redistributing, or deriving work from this repository, preserve the license notice and attribute the original source to Prayag Vyas (`prayagv`) as described in [NOTICE](NOTICE).
+
 ## Portfolio Review Path
 
 - Latest CI workflow: [GitHub Actions CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)
