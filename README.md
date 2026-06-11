@@ -9,6 +9,26 @@ This repository contains a Playwright and TypeScript test framework for a repo-o
 
 The framework demonstrates strict TypeScript, typed API clients, Zod response validation, page objects, custom fixtures, visual snapshots, Axe accessibility checks, API-level setup/cleanup, sharded CI execution, and Allure/HTML reporting.
 
+## Reviewer Proof
+
+| Evidence              | Link                                                                                                                                                                                                                                                                   |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Live report           | [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                                                     |
+| Release               | [Releases](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases)                                                                                                                                                                  |
+| CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)                                |
+| Activity snapshot     | [19 default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [11 pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) as of June 11, 2026 |
+| Docs and assets       | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                                                         |
+| Best failure evidence | [Failure example](docs/failure-example.md)                                                                                                                                                                                                                             |
+
+![Intentional Playwright failure with screenshot evidence](docs/assets/screenshots/debugging-failure.png)
+
+## Release Notes Summary
+
+The next release adds cross-platform line-ending enforcement, project-specific
+retry policy, machine-readable runtime and retry metrics, expiring quarantine
+governance, and explicit controlled-target limitations. See
+[CHANGELOG.md](CHANGELOG.md).
+
 ## Quality Gates
 
 Run the full local verification gate:
@@ -140,7 +160,10 @@ npm run observability:down
 
 ## Flakiness Analytics
 
-Run `npm run flake:report` after a Playwright JSON result is available to write `test-results/flake-report.md`. The report summarizes retries and unexpected outcomes for review. See [Flakiness policy](docs/flakiness-policy.md).
+Run `npm run flake:report` after a Playwright JSON result is available to write
+`test-results/flake-report.md` and `test-results/portfolio-metrics-v1.json`.
+Scheduled CI enforces the retry budget with `npm run flake:check`. See
+[Flakiness policy](docs/flakiness-policy.md).
 
 ## Reports
 
@@ -148,6 +171,20 @@ Run `npm run flake:report` after a Playwright JSON result is available to write 
 - Allure results: `allure-results/`
 - JUnit XML: `test-results/junit.xml`
 - JSON results: `test-results/results.json`
+- Portfolio metrics: `test-results/portfolio-metrics-v1.json`
+
+### CI Matrix Summary
+
+| Surface                              | Matrix or shards                 | Retry policy |
+| ------------------------------------ | -------------------------------- | ------------ |
+| API                                  | 1 Linux job                      | 0            |
+| Authenticated and anonymous Chromium | 2 Linux shards                   | 1 UI retry   |
+| Visual Chromium                      | 2 Windows shards                 | 0            |
+| Accessibility and selector contracts | 1 Linux job each                 | 0            |
+| Browser smoke                        | Firefox, WebKit, mobile Chromium | 1 UI retry   |
+
+Current workflow duration and sample size are published on the
+[portfolio dashboard](https://qa-test-automation-frameworks.github.io/.github/).
 
 The `CI` workflow publishes Allure history from green default-branch controlled-target results to the `gh-pages` branch. The manual `Allure Report Deploy` workflow can republish the same report path on demand.
 
@@ -229,6 +266,8 @@ npm run allure:generate
 - [Engineering history](docs/engineering-history.md)
 - [Flakiness policy](docs/flakiness-policy.md)
 - [Flake report example](docs/flake-report-example.md)
+- [Failure example and triage](docs/failure-example.md)
+- [Seeded defect examples](docs/seeded-defects.md)
 - [Contributing guide](docs/CONTRIBUTING.md)
 - [Controlled test environment](docs/CONTROLLED_TEST_ENVIRONMENT.md)
 - [Data isolation and retention](docs/data-isolation-and-retention.md)
@@ -238,3 +277,4 @@ npm run allure:generate
 - [ADR-001: Playwright over Cypress](docs/adr/ADR-001-playwright-over-cypress.md)
 - [ADR-002: Conduit as Target](docs/adr/ADR-002-conduit-as-target-app.md)
 - [ADR-003: Hybrid API + UI Strategy](docs/adr/ADR-003-hybrid-api-ui-strategy.md)
+- [ADR index](docs/adr/README.md)

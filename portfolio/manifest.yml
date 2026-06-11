@@ -1,0 +1,12 @@
+schemaVersion: 1
+repository: playwright-typescript-framework
+status: review-ready
+reviewRank: 1
+ciWorkflow: .github/workflows/ci.yml
+liveReport: https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/
+releases: https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases
+docs: docs/
+assets: docs/assets/
+bestScreenshot: docs/assets/screenshots/debugging-failure.png
+targetOwnership: repository-controlled
+externalCompatibility: non-blocking

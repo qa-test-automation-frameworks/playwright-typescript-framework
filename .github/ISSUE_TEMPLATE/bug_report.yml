@@ -1,0 +1,18 @@
+name: Bug report
+description: Report a reproducible framework or documentation defect.
+title: 'bug: '
+labels: ['bug']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include command, target mode, runtime version, and artifact URL.
+    validations:
+      required: true
