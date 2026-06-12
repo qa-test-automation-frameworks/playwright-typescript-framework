@@ -296,7 +296,7 @@ jobs:
           gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
         with:
           enablement: true
       - uses: actions/upload-pages-artifact@v3
