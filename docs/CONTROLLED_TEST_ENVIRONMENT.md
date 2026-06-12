@@ -1,6 +1,29 @@
 # Controlled Test Environment
 
-This framework can point at the public Conduit RealWorld demo, but deterministic CI should use a controlled RealWorld deployment.
+This framework can point at an independently governed Conduit RealWorld
+deployment, but required CI uses a controlled target.
+
+## What The Controlled Target Proves
+
+The repository-owned target proves fixture composition, API and UI workflow
+coverage, schema enforcement, visual baselines, accessibility rules, cleanup,
+failure diagnostics, sharding, and browser configuration against a known
+contract. It also makes negative states such as `401`, `409`, malformed JSON,
+and intercepted `5xx` responses reproducible.
+
+It does not prove adaptation to another team's deployment process, data model,
+authentication provider, release cadence, availability behavior, or contract
+governance. Because target and tests can change in one pull request, controlled
+target results must not be presented as independent product validation.
+
+## External Compatibility
+
+A small scheduled, non-blocking smoke check may run against the official
+RealWorld demo using read-only pages and disposable data. Its result is reported
+separately from the required controlled-target gate. External availability,
+rate limits, and retained data are outside this repository's control, so an
+external failure opens a triage issue but does not convert the required CI gate
+to red without reproduction against a controlled target.
 
 The framework code intentionally requires explicit `BASE_URL`, `API_URL`, and shared-user values through `.env`, GitHub Actions variables, or another environment injection mechanism. The repo-owned target wrapper (`npm run with:target` and `npm run verify:target`) is the one exception: it injects fixture-only local target values and generates an ephemeral seed password for that process.
 
@@ -29,7 +52,7 @@ The readiness check validates:
 
 ## Recommended CI Target
 
-For portfolio-grade execution, use one of these options:
+For reproducible execution, use one of these options:
 
 - A hosted RealWorld environment owned by the repository owner.
 - The checked-in Docker Compose harness, which runs the repo-owned Conduit-compatible target on port `4300`.

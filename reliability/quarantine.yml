@@ -1,0 +1,8 @@
+# Quarantine is intentionally empty.
+#
+# Entries must use this shape and expire within 14 days:
+# - id: tests/e2e/example.spec.ts::scenario name
+#   owner: github-handle
+#   issue: https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/issues/123
+#   reason: bounded infrastructure instability
+#   expires: 2026-06-25

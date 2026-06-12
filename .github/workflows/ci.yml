@@ -14,6 +14,20 @@ env:
   PLAYWRIGHT_DOCKER_IMAGE: mcr.microsoft.com/playwright:v1.60.0-noble
 
 jobs:
+  fresh-clone-format:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run format:check
+
   lint-typecheck:
     runs-on: ubuntu-latest
     container:
@@ -32,6 +46,7 @@ jobs:
       - run: npm run type-check
       - run: npm run check:secrets
       - run: npm run check:anti-patterns
+      - run: npm run check:quarantine
       - run: npm run check:visual-snapshots
       - run: npm run check:openapi-contract
       - run: npm run with:target -- npm run check:env
@@ -53,6 +68,8 @@ jobs:
       - run: npm run with:target -- npm run test:api
       - run: npm run flake:report
         if: always()
+      - run: npm run flake:check
+        if: always() && github.event_name == 'schedule'
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -87,6 +104,8 @@ jobs:
       - run: npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=${{ matrix.shard }}
       - run: npm run flake:report
         if: always()
+      - run: npm run flake:check
+        if: always() && github.event_name == 'schedule'
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -119,6 +138,8 @@ jobs:
       - run: npm run check:visual-snapshots
       - run: npm run flake:report
         if: always()
+      - run: npm run flake:check
+        if: always() && github.event_name == 'schedule'
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -145,6 +166,8 @@ jobs:
       - run: npm run with:target -- npm run test:accessibility
       - run: npm run flake:report
         if: always()
+      - run: npm run flake:check
+        if: always() && github.event_name == 'schedule'
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -171,6 +194,8 @@ jobs:
       - run: npm run with:target -- npm run test:contracts
       - run: npm run flake:report
         if: always()
+      - run: npm run flake:check
+        if: always() && github.event_name == 'schedule'
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -197,6 +222,8 @@ jobs:
       - run: npm run with:target -- npm run test:cross-browser
       - run: npm run flake:report
         if: always()
+      - run: npm run flake:check
+        if: always() && github.event_name == 'schedule'
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -228,6 +255,8 @@ jobs:
       - run: npm run with:target -- npx playwright test --project=${{ matrix.project }}
       - run: npm run flake:report
         if: always()
+      - run: npm run flake:check
+        if: always() && github.event_name == 'schedule'
       - uses: actions/upload-artifact@v7
         if: always()
         with:

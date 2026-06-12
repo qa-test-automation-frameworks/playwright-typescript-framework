@@ -1,6 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import { config } from './src/utils/config';
 
+const uiRetries = process.env.CI ? 1 : 0;
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -8,7 +10,7 @@ export default defineConfig({
   testDir: 'tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: 0,
   workers: process.env.CI ? 4 : 2,
   reporter: [
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
@@ -51,6 +53,7 @@ export default defineConfig({
     },
     {
       name: 'chromium-authenticated',
+      retries: uiRetries,
       testIgnore: /tests\/e2e\/auth\.spec\.ts/,
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       use: {
@@ -61,6 +64,7 @@ export default defineConfig({
     },
     {
       name: 'firefox-smoke',
+      retries: uiRetries,
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       grep: /@smoke/,
       use: {
@@ -71,6 +75,7 @@ export default defineConfig({
     },
     {
       name: 'firefox-regression',
+      retries: uiRetries,
       testIgnore: /tests\/e2e\/auth\.spec\.ts/,
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       use: {
@@ -81,6 +86,7 @@ export default defineConfig({
     },
     {
       name: 'webkit-smoke',
+      retries: uiRetries,
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       grep: /@smoke/,
       use: {
@@ -91,6 +97,7 @@ export default defineConfig({
     },
     {
       name: 'webkit-regression',
+      retries: uiRetries,
       testIgnore: /tests\/e2e\/auth\.spec\.ts/,
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       use: {
@@ -101,6 +108,7 @@ export default defineConfig({
     },
     {
       name: 'chromium-anonymous',
+      retries: uiRetries,
       testMatch: /tests\/e2e\/auth\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
@@ -140,6 +148,7 @@ export default defineConfig({
     },
     {
       name: 'mobile-chrome-smoke',
+      retries: uiRetries,
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       grep: /@smoke/,
       use: {
@@ -150,6 +159,7 @@ export default defineConfig({
     },
     {
       name: 'mobile-chrome-regression',
+      retries: uiRetries,
       testIgnore: /tests\/e2e\/auth\.spec\.ts/,
       testMatch: /tests\/e2e\/.*\.spec\.ts/,
       use: {
