@@ -15,7 +15,7 @@ report-grade failure diagnostics.
 | Evidence              | Link                                                                                                                                                                                                                                         |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Live report           | [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                           |
-| Release               | [Releases](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases)                                                                                                                                        |
+| Release               | [v1.0.0](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0)                                                                                                                               |
 | CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)      |
 | Repository activity   | [Default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [Pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) |
 | Docs and assets       | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                               |
@@ -35,7 +35,7 @@ report-grade failure diagnostics.
 
 ## Release Notes Summary
 
-Current `main` includes cross-platform line-ending enforcement, project-specific
+Release `v1.0.0` includes cross-platform line-ending enforcement, project-specific
 retry policy, machine-readable runtime and retry metrics, expiring quarantine
 governance, OpenTelemetry support, and explicit controlled-target limitations.
 See [CHANGELOG.md](CHANGELOG.md).
