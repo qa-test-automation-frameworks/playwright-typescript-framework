@@ -5,29 +5,40 @@
 [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)
 [![Allure Report](https://img.shields.io/badge/Allure-report-blue)](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)
 
-This repository contains a Playwright and TypeScript test framework for a repo-owned Conduit-compatible controlled target.
-
-The framework demonstrates strict TypeScript, typed API clients, Zod response validation, page objects, custom fixtures, visual snapshots, Axe accessibility checks, API-level setup/cleanup, sharded CI execution, and Allure/HTML reporting.
+Modern browser automation as an engineered product: a repo-owned controlled
+target, strict TypeScript, typed API clients, Zod contracts, reusable fixtures,
+visual baselines, Axe accessibility checks, sharded CI, observability, and
+report-grade failure diagnostics.
 
 ## Reviewer Proof
 
-| Evidence              | Link                                                                                                                                                                                                                                                                   |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Live report           | [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                                                     |
-| Release               | [Releases](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases)                                                                                                                                                                  |
-| CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)                                |
-| Activity snapshot     | [19 default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [11 pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) as of June 11, 2026 |
-| Docs and assets       | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                                                         |
-| Best failure evidence | [Failure example](docs/failure-example.md)                                                                                                                                                                                                                             |
+| Evidence              | Link                                                                                                                                                                                                                                         |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Live report           | [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                           |
+| Release               | [Releases](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases)                                                                                                                                        |
+| CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)      |
+| Repository activity   | [Default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [Pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) |
+| Docs and assets       | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                               |
+| Best failure evidence | [Failure example](docs/failure-example.md)                                                                                                                                                                                                   |
 
 ![Intentional Playwright failure with screenshot evidence](docs/assets/screenshots/debugging-failure.png)
 
+## What This Framework Proves
+
+| Engineering question                               | Implemented answer                                                                                     |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| How can broad browser coverage stay deterministic? | A repo-owned Conduit target, stable seed data, explicit project boundaries, and pinned browser images. |
+| How are API and UI layers kept coherent?           | Typed API clients, Zod validation, API-driven setup, and page objects share controlled contracts.      |
+| How are failures made actionable?                  | Screenshots, traces, HTML and Allure reports, redacted logs, runtime metrics, and documented triage.   |
+| How is flakiness governed?                         | Project-specific retry rules, a retry budget, expiring quarantine metadata, and scheduled analytics.   |
+| How does CI scale?                                 | Linux and Windows jobs, UI and visual shards, browser smoke projects, and machine-readable metrics.    |
+
 ## Release Notes Summary
 
-The next release adds cross-platform line-ending enforcement, project-specific
+Current `main` includes cross-platform line-ending enforcement, project-specific
 retry policy, machine-readable runtime and retry metrics, expiring quarantine
-governance, and explicit controlled-target limitations. See
-[CHANGELOG.md](CHANGELOG.md).
+governance, OpenTelemetry support, and explicit controlled-target limitations.
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## Quality Gates
 
