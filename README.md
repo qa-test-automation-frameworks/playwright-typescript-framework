@@ -12,26 +12,26 @@ report-grade failure diagnostics.
 
 ## Reviewer Proof
 
-| Evidence              | Link                                                                                                                                                                                                                                                                   |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Live report           | [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                                                     |
-| Release               | [Releases](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases)                                                                                                                                                                  |
-| CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)                                |
+| Evidence              | Link                                                                                                                                                                                                                                         |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Live report           | [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                           |
+| Release               | [Releases](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases)                                                                                                                                        |
+| CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)      |
 | Repository activity   | [Default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [Pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) |
-| Docs and assets       | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                                                         |
-| Best failure evidence | [Failure example](docs/failure-example.md)                                                                                                                                                                                                                             |
+| Docs and assets       | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                               |
+| Best failure evidence | [Failure example](docs/failure-example.md)                                                                                                                                                                                                   |
 
 ![Intentional Playwright failure with screenshot evidence](docs/assets/screenshots/debugging-failure.png)
 
 ## What This Framework Proves
 
-| Engineering question | Implemented answer |
-| --- | --- |
+| Engineering question                               | Implemented answer                                                                                     |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | How can broad browser coverage stay deterministic? | A repo-owned Conduit target, stable seed data, explicit project boundaries, and pinned browser images. |
-| How are API and UI layers kept coherent? | Typed API clients, Zod validation, API-driven setup, and page objects share controlled contracts. |
-| How are failures made actionable? | Screenshots, traces, HTML and Allure reports, redacted logs, runtime metrics, and documented triage. |
-| How is flakiness governed? | Project-specific retry rules, a retry budget, expiring quarantine metadata, and scheduled analytics. |
-| How does CI scale? | Linux and Windows jobs, UI and visual shards, browser smoke projects, and machine-readable metrics. |
+| How are API and UI layers kept coherent?           | Typed API clients, Zod validation, API-driven setup, and page objects share controlled contracts.      |
+| How are failures made actionable?                  | Screenshots, traces, HTML and Allure reports, redacted logs, runtime metrics, and documented triage.   |
+| How is flakiness governed?                         | Project-specific retry rules, a retry budget, expiring quarantine metadata, and scheduled analytics.   |
+| How does CI scale?                                 | Linux and Windows jobs, UI and visual shards, browser smoke projects, and machine-readable metrics.    |
 
 ## Release Notes Summary
 
