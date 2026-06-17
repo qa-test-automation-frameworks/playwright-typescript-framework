@@ -275,7 +275,12 @@ const handleApi = async (req: IncomingMessage, res: ServerResponse, url: URL) =>
     ) {
       return json(res, 422, { errors: { body: ['username already exists'] } });
     }
-    if (input.email) user.email = input.email;
+    const previousEmail = user.email;
+    if (input.email) {
+      user.email = input.email;
+      users.delete(previousEmail);
+      users.set(user.email, user);
+    }
     if (input.username) user.username = input.username;
     if (input.password) user.password = input.password;
     if ('bio' in input) user.bio = input.bio ?? null;
@@ -398,6 +403,12 @@ const handleApi = async (req: IncomingMessage, res: ServerResponse, url: URL) =>
       return json(res, 200, { comment: { ...comment, author: profile(user, user.username) } });
     }
     if (action === 'comments' && method === 'DELETE' && commentId) {
+      const user = requireUser(req, res);
+      if (!user) return;
+      const comment = comments.find((c) => c.id === Number(commentId) && c.slug === slug);
+      if (!comment || comment.author !== user.username) {
+        return json(res, 404, { errors: { body: ['comment not found'] } });
+      }
       comments = comments.filter((c) => c.id !== Number(commentId));
       return json(res, 200, {});
     }

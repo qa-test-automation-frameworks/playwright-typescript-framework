@@ -2,6 +2,7 @@ import { test, expect } from '@src/fixtures';
 import { BaseApiClient } from '@src/api/BaseApiClient';
 import { ArticleApiClient } from '@src/api/clients/ArticleApiClient';
 import { AuthApiClient } from '@src/api/clients/AuthApiClient';
+import { CommentApiClient } from '@src/api/clients/CommentApiClient';
 import { ProfileApiClient } from '@src/api/clients/ProfileApiClient';
 import { ArticleBuilder } from '@src/builders/ArticleBuilder';
 import { UserBuilder } from '@src/builders/UserBuilder';
@@ -17,6 +18,33 @@ test.describe('API: controlled target regressions', { tag: ['@api'] }, () => {
     await expect(
       commentApi.addComment(publishedArticle.slug, { comment: { body: '' } }),
     ).rejects.toMatchObject({ status: 422 });
+  });
+
+  test('requires authentication before deleting comments', async ({
+    request,
+    publishedArticle,
+    commentApi,
+  }) => {
+    const created = await commentApi.addComment(publishedArticle.slug, {
+      comment: { body: `protected comment ${Date.now()}` },
+    });
+    const anonymousCommentApi = new CommentApiClient(new BaseApiClient(request));
+
+    await expect(
+      anonymousCommentApi.deleteComment(publishedArticle.slug, created.comment.id),
+    ).rejects.toMatchObject({ status: 401 });
+  });
+
+  test('keeps account access valid after email update', async ({ request, registeredUser }) => {
+    const authApi = new AuthApiClient(new BaseApiClient(request, registeredUser.token));
+    const updated = await authApi.updateUser({
+      user: { email: `updated-${Date.now()}@example.test` },
+    });
+    const refreshedAuthApi = new AuthApiClient(new BaseApiClient(request, updated.user.token));
+
+    const current = await refreshedAuthApi.getCurrentUser();
+
+    expect(current.user.email).toBe(updated.user.email);
   });
 
   test('rejects profile update conflicts with 422', async ({ request, registeredUser }) => {
