@@ -74,7 +74,7 @@
   "devDependencies": {
     "@axe-core/playwright": "4.11.3",
     "@commitlint/cli": "19.6.0",
-    "@commitlint/config-conventional": "19.6.0",
+    "@commitlint/config-conventional": "21.0.2",
     "@playwright/test": "1.60.0",
     "@types/node": "20.17.6",
     "@typescript-eslint/eslint-plugin": "7.18.0",
