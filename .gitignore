@@ -20,6 +20,9 @@ node_modules/
 /screenshots/
 /videos/
 /traces/
+.codebase-memory/
+codebase-memory/
+.agent/index-codebase-memory.sh
 
 # System files
 .DS_Store
