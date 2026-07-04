@@ -47,4 +47,3 @@ evidence.
   the framework against another RealWorld implementation.
 - Reviewers should treat the controlled target as framework evidence, not as
   proof that the same tests are portable without configuration work.
-
