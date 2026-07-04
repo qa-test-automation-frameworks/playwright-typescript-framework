@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Superseded by [ADR-004: Repo-owned controlled target as default](ADR-004-repo-owned-controlled-target.md)
 
 ## Context
 
