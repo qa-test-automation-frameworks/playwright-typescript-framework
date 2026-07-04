@@ -173,7 +173,7 @@ npm run observability:down
 
 Run `npm run flake:report` after a Playwright JSON result is available to write
 `test-results/flake-report.md` and `test-results/portfolio-metrics-v1.json`.
-Scheduled CI enforces the retry budget with `npm run flake:check`. See
+CI enforces the retry budget with `npm run flake:check` on pull requests and scheduled runs. See
 [Flakiness policy](docs/flakiness-policy.md).
 
 ## Reports
@@ -278,6 +278,7 @@ npm run allure:generate
 - [Flakiness policy](docs/flakiness-policy.md)
 - [Flake report example](docs/flake-report-example.md)
 - [Failure example and triage](docs/failure-example.md)
+- [Offline failure evidence bundle](docs/failure-evidence-bundle.md)
 - [Seeded defect examples](docs/seeded-defects.md)
 - [Contributing guide](docs/CONTRIBUTING.md)
 - [Controlled test environment](docs/CONTROLLED_TEST_ENVIRONMENT.md)
