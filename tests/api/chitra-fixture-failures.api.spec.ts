@@ -91,4 +91,16 @@ test.describe('chitra fixture failures', { tag: ['@api'] }, () => {
     const count = nextCount('feed_pagination_race');
     expect(count % 3, `feed pagination race on invocation ${count}`).not.toBe(0);
   });
+
+  // --- regression: fails, gets "fixed", then breaks its own fix promise ------
+  //
+  // Fails on invocations 1-2 (introduced/active), passes on 3-4 (fixed), fails
+  // again from 5 onward (regressed) -- two status flips total, so it stays
+  // "regressed" rather than tipping into "intermittent" (min_oscillations=3).
+
+  test('regression: auth token cache invalidation @api', () => {
+    const count = nextCount('auth_token_cache_regression');
+    const isStale = count <= 2 || count >= 5;
+    expect(isStale, `stale auth token served from cache on invocation ${count}`).toBe(false);
+  });
 });
