@@ -95,11 +95,17 @@ test.describe('chitra fixture failures', { tag: ['@api'] }, () => {
   // --- regression: fails, gets "fixed", then breaks its own fix promise ------
   //
   // Fails on invocations 1-2 (introduced/active), passes on 3-4 (fixed), fails
-  // again from 5 onward (regressed) -- two status flips total, so it stays
-  // "regressed" rather than tipping into "intermittent" (min_oscillations=3).
+  // again from 5 onward (regressed, then active on any further run) -- two
+  // status flips total, so it stays out of "intermittent" (min_oscillations=3).
+  // Needs *exactly* 5 ingested runs so the latest persisted state is the fresh
+  // "regressed" transition, not "active" -- stop seeding this fixture at 5.
+  //
+  // (v2: a fresh counter -- an earlier attempt overshot to 6 runs and settled
+  // on "active"; rather than surgically edit the hash-chained lifecycle
+  // ledger, this starts a clean sequence.)
 
-  test('regression: auth token cache invalidation @api', () => {
-    const count = nextCount('auth_token_cache_regression');
+  test('regression: auth token cache invalidation v2 @api', () => {
+    const count = nextCount('auth_token_cache_regression_v2');
     const isStale = count <= 2 || count >= 5;
     expect(isStale, `stale auth token served from cache on invocation ${count}`).toBe(false);
   });
