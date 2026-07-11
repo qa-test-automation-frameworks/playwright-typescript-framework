@@ -1,4 +1,5 @@
 export const testIds = {
+  articleBanner: 'article-banner',
   articleCard: 'article-card',
   articleBody: 'article-body',
   articleAuthor: 'article-author',

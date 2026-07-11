@@ -7,12 +7,16 @@ export class ArticlePage extends BasePage {
     super(page, '');
   }
 
+  private get banner(): Locator {
+    return this.page.getByTestId(testIds.articleBanner);
+  }
+
   private get articleMeta(): Locator {
     return this.page.getByTestId(testIds.articleMeta);
   }
 
   public get titleHeading(): Locator {
-    return this.page.locator('.banner').getByTestId(testIds.articleTitle);
+    return this.banner.getByTestId(testIds.articleTitle);
   }
 
   public get bodyContent(): Locator {
