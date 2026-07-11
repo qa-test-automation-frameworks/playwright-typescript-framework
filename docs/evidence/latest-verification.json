@@ -1,23 +1,88 @@
 {
   "schemaVersion": 1,
   "repository": "playwright-typescript-framework",
-  "evidenceState": "evidence-stale",
+  "evidenceState": "review-ready",
   "evidenceClass": ["controlled"],
   "verifiedRef": "main",
-  "verifiedSha": null,
+  "verifiedSha": "07c1c5053ab26044805a336c5b39bc5bc3096720",
   "workflow": {
     "name": "ci.yml",
-    "runId": null,
-    "runUrl": null,
+    "runId": 29139295982,
+    "runUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/29139295982",
     "branch": "main",
-    "event": null,
-    "conclusion": null,
-    "completedAt": null
+    "event": "push",
+    "conclusion": "success",
+    "completedAt": "2026-07-11T04:18:20Z"
   },
   "target": { "name": "repository-owned Conduit-compatible target", "environment": "controlled" },
-  "results": [],
+  "results": [
+    {
+      "project": "api",
+      "total": 8,
+      "expected": 8,
+      "unexpected": 0,
+      "retried": 0,
+      "durationSeconds": 16.477
+    },
+    {
+      "project": "test-e2e (1/2)",
+      "total": 32,
+      "expected": 32,
+      "unexpected": 0,
+      "retried": 0,
+      "durationSeconds": 1.451
+    },
+    {
+      "project": "test-e2e (2/2)",
+      "total": 14,
+      "expected": 14,
+      "unexpected": 0,
+      "retried": 0,
+      "durationSeconds": 9.554
+    },
+    {
+      "project": "cross-browser",
+      "total": 11,
+      "expected": 11,
+      "unexpected": 0,
+      "retried": 0,
+      "durationSeconds": 12.122
+    },
+    {
+      "project": "selector-contract",
+      "total": 10,
+      "expected": 10,
+      "unexpected": 0,
+      "retried": 0,
+      "durationSeconds": 10.557
+    },
+    {
+      "project": "accessibility",
+      "total": 8,
+      "expected": 8,
+      "unexpected": 0,
+      "retried": 0,
+      "durationSeconds": 5.968
+    },
+    {
+      "project": "visual (1/2)",
+      "total": 5,
+      "expected": 5,
+      "unexpected": 0,
+      "retried": 0,
+      "durationSeconds": 3.336
+    },
+    {
+      "project": "visual (2/2)",
+      "total": 5,
+      "expected": 5,
+      "unexpected": 0,
+      "retried": 0,
+      "durationSeconds": 4.125
+    }
+  ],
   "reportUrl": "https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/",
   "artifactRetention": "CI artifacts plus published Allure history",
   "limitationsUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/known-issues.md",
-  "generatedAt": "2026-07-11T00:00:00Z"
+  "generatedAt": "2026-07-11T04:35:00Z"
 }
