@@ -285,6 +285,8 @@ npm run allure:generate
 - [Data isolation and retention](docs/data-isolation-and-retention.md)
 - [Test strategy matrix](docs/test-strategy-matrix.md)
 - [Verification evidence](docs/verification-evidence.md)
+- [Current verification record](docs/evidence/latest-verification.md)
+- [Enterprise adaptation](docs/enterprise-adaptation.md)
 - [Controlled target OpenAPI contract](docs/openapi/conduit-controlled-target.openapi.json)
 - [ADR-001: Playwright over Cypress](docs/adr/ADR-001-playwright-over-cypress.md)
 - [ADR-002: Conduit as Target](docs/adr/ADR-002-conduit-as-target-app.md)
