@@ -70,3 +70,24 @@ Visual tests should cover stable, high-value pages only.
 Accessibility tests should wait until the target page is ready, then run Axe through `AxeBuilder`.
 
 Keep scans focused on critical pages and states. If a violation is accepted temporarily, document the reason in the test or associated issue rather than weakening the scan globally.
+
+## Fixture Contract
+
+API fixtures intentionally separate anonymous and authenticated clients:
+
+- `anonymousApiClient`, `anonymousAuthApi`, and `createAnonymousAuthApi()` cover registration, login, and unauthenticated boundary checks without an `Authorization` header.
+- `authenticatedApiClient`, `authenticatedAuthApi`, `articleApi`, `commentApi`, and `profileApi` cover protected domain operations using the setup user's token.
+- `baseApiClient` remains as the authenticated compatibility alias for older specs; new tests should prefer the explicit anonymous/authenticated names.
+- Browser tests that need alternate users install token state through `installUserToken()` instead of writing localStorage keys inline.
+
+## Design Notes
+
+- Page fixtures instantiate page objects only; tests and helper methods perform navigation explicitly.
+- Test-scoped cleanup fixtures register resources as they are created and clean them after each test, which keeps `fullyParallel` execution safe from shared cleanup state.
+- Anonymous and authenticated API fixture boundaries are explicit so auth endpoint tests do not accidentally inherit setup-user authorization.
+- API debug logging is opt-in with `DEBUG_API=true` and redacts tokens, passwords, authorization headers, and emails.
+- Test data builders prefix generated usernames, emails, article titles, and tags with `TEST_RUN_ID` when provided.
+- Visual execution uses a fixed Chromium viewport, UTC timezone, `en-US` locale, light color scheme, reduced motion, and a Windows CI runner that matches the committed `win32` baselines.
+- Visual snapshot hygiene fails the quality gate when accepted baselines are missing from `tests/visual/visual-snapshots.manifest.json`.
+- The controlled target API contract is documented in `docs/openapi/conduit-controlled-target.openapi.json` and checked against runtime Zod response schemas.
+- Network interception coverage demonstrates controlled API failure handling through `page.route()`.

@@ -148,14 +148,8 @@ For normal local verification, prefer `npm run verify:target` instead of hand-ma
 
 The controlled UI exposes stable `data-testid` values for repeated or test-critical surfaces such as article cards, article body, article author, article title, article description, article date, sidebar tag lists, comments, validation errors, profile links, and profile fields. Page objects centralize these IDs in `src/pages/test-ids.ts` and otherwise prefer roles, labels, placeholders, and scoped locators.
 
-## Fixture Contract
-
-API fixtures intentionally separate anonymous and authenticated clients:
-
-- `anonymousApiClient`, `anonymousAuthApi`, and `createAnonymousAuthApi()` cover registration, login, and unauthenticated boundary checks without an `Authorization` header.
-- `authenticatedApiClient`, `authenticatedAuthApi`, `articleApi`, `commentApi`, and `profileApi` cover protected domain operations using the setup user's token.
-- `baseApiClient` remains as the authenticated compatibility alias for older specs; new tests should prefer the explicit anonymous/authenticated names.
-- Browser tests that need alternate users install token state through `installUserToken()` instead of writing localStorage keys inline.
+Fixture boundaries (anonymous vs. authenticated API clients) are documented in
+[Writing tests](docs/writing-tests.md#fixture-contract).
 
 ## Observability
 
@@ -222,40 +216,8 @@ This project is licensed under the [MIT License](LICENSE). When cloning, forking
 
 For deterministic CI, use the repo-owned controlled target or point `BASE_URL` and `API_URL` at a controlled RealWorld-compatible deployment, not a public demo service. See [Controlled Test Environment](docs/CONTROLLED_TEST_ENVIRONMENT.md). The checked-in Docker Compose harness runs the repo-owned Conduit-compatible target on port `4300`; set `TEST_USER_PASSWORD` explicitly before starting it.
 
-## Commands
-
-```bash
-npm test                 # Run all configured Playwright projects
-npm run test:api         # API suite
-npm run test:e2e         # Authenticated and anonymous E2E suites
-npm run test:visual      # Visual suite
-npm run test:accessibility
-npm run test:contracts
-npm run test:cross-browser
-npm run test:cross-browser:full
-npm run test:smoke       # Smoke-tagged tests
-npm run check:secrets
-npm run test:update-snapshots
-npm run check:env
-npm run check:runtime
-npm run check:visual-snapshots
-npm run check:openapi-contract
-npm run test:otel
-npm run clean
-npm run allure:generate
-```
-
-## Design Notes
-
-- Page fixtures instantiate page objects only; tests and helper methods perform navigation explicitly.
-- Test-scoped cleanup fixtures register resources as they are created and clean them after each test, which keeps `fullyParallel` execution safe from shared cleanup state.
-- Anonymous and authenticated API fixture boundaries are explicit so auth endpoint tests do not accidentally inherit setup-user authorization.
-- API debug logging is opt-in with `DEBUG_API=true` and redacts tokens, passwords, authorization headers, and emails.
-- Test data builders prefix generated usernames, emails, article titles, and tags with `TEST_RUN_ID` when provided.
-- Visual execution uses a fixed Chromium viewport, UTC timezone, `en-US` locale, light color scheme, reduced motion, and a Windows CI runner that matches the committed `win32` baselines.
-- Visual snapshot hygiene fails the quality gate when accepted baselines are missing from `tests/visual/visual-snapshots.manifest.json`.
-- The controlled target API contract is documented in `docs/openapi/conduit-controlled-target.openapi.json` and checked against runtime Zod response schemas.
-- Network interception coverage demonstrates controlled API failure handling through `page.route()`.
+See [Commands](docs/commands.md) for the full npm script reference and
+[Writing tests](docs/writing-tests.md#design-notes) for fixture and test-authoring design notes.
 
 ## Known Limitations
 
@@ -267,6 +229,7 @@ npm run allure:generate
 ## Documentation
 
 - [Architecture](docs/Architecture.md)
+- [Commands](docs/commands.md)
 - [Configuration guide](docs/configuration-guide.md)
 - [Debugging test failures](docs/debugging-test-failures.md)
 - [Dos and don'ts](docs/dos-and-dont.md)
