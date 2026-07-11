@@ -20,8 +20,8 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -35,8 +35,8 @@ jobs:
     env:
       HOME: /root
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -44,6 +44,7 @@ jobs:
       - run: npm run format:check
       - run: npm run lint
       - run: npm run type-check
+      - run: bash scripts/verify-action-pins.sh
       - run: npm run check:secrets
       - run: npm run check:anti-patterns
       - run: npm run check:quarantine
@@ -59,8 +60,8 @@ jobs:
     env:
       HOME: /root
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -70,7 +71,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
           name: reports-api
@@ -95,8 +96,8 @@ jobs:
           - shard: '2/2'
             shard_id: '2-of-2'
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -106,7 +107,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
           name: reports-e2e-${{ matrix.shard_id }}
@@ -127,8 +128,8 @@ jobs:
           - shard: '2/2'
             shard_id: '2-of-2'
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -140,7 +141,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
           name: reports-visual-${{ matrix.shard_id }}
@@ -157,8 +158,8 @@ jobs:
     env:
       HOME: /root
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -168,7 +169,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
           name: reports-accessibility
@@ -185,8 +186,8 @@ jobs:
     env:
       HOME: /root
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -196,7 +197,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
           name: reports-selector-contract
@@ -213,8 +214,8 @@ jobs:
     env:
       HOME: /root
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -224,7 +225,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
           name: reports-cross-browser
@@ -246,8 +247,8 @@ jobs:
       matrix:
         project: [firefox-regression, webkit-regression, mobile-chrome-regression]
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -257,7 +258,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
           name: reports-${{ matrix.project }}
@@ -283,23 +284,23 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v8
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           pattern: reports-*
           merge-multiple: true
           path: merged-reports
       - run: mkdir -p allure-results && find merged-reports -path '*/allure-results/*' -type f -exec cp {} allure-results/ \;
-      - uses: simple-elf/allure-report-action@v1.14
+      - uses: simple-elf/allure-report-action@e463a472d3b1d750f9544369d60589ff1964c820 # v1.14
         with:
           allure_results: allure-results
           gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history
-      - uses: actions/configure-pages@v6
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
         with:
           enablement: true
-      - uses: actions/upload-pages-artifact@v5
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: allure-history
-      - uses: actions/deploy-pages@v5
+      - uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
