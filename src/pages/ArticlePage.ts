@@ -12,7 +12,7 @@ export class ArticlePage extends BasePage {
   }
 
   public get titleHeading(): Locator {
-    return this.page.getByTestId(testIds.articleTitle);
+    return this.page.locator('.banner').getByTestId(testIds.articleTitle);
   }
 
   public get bodyContent(): Locator {
