@@ -22,7 +22,7 @@ jobs:
       - run: npm run verify:target
         env:
           TEST_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
-      - uses: simple-elf/allure-report-action@e463a472d3b1d750f9544369d60589ff1964c820 # v1.14
+      - uses: simple-elf/allure-report-action@385367cde61ac68c2568a117f7579f7f148dc459 # v1.15
         with:
           allure_results: allure-results
           gh_pages: gh-pages
