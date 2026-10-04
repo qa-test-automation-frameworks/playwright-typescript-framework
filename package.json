@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "test:unit": "node scripts/run-framework-unit.js",
     "test:api": "playwright test --project=api",
     "test:e2e": "playwright test --project=chromium-authenticated --project=chromium-anonymous",
     "test:smoke": "playwright test --grep @smoke",
@@ -38,7 +39,7 @@
     "observability:down": "docker compose --profile observability down",
     "test:otel": "cross-env OTEL_ENABLED=true playwright test --project=api --project=chromium-authenticated",
     "verify:otel": "npm run observability:up && npm run test:otel && npm run observability:down",
-    "verify": "npm run check:runtime && npm run format:check && npm run lint && npm run type-check && npm run check:secrets && npm run check:anti-patterns && npm run check:quarantine && npm run check:visual-snapshots && npm run check:openapi-contract && npm run check:env && npm run test:api && npm run test:e2e && npm run test:visual && npm run check:visual-snapshots && npm run test:accessibility && npm run test:contracts && npm run test:cross-browser && npm run flake:report",
+    "verify": "npm run check:runtime && npm run format:check && npm run lint && npm run type-check && npm run test:unit && npm run check:secrets && npm run check:anti-patterns && npm run check:quarantine && npm run check:visual-snapshots && npm run check:openapi-contract && npm run check:env && npm run test:api && npm run test:e2e && npm run test:visual && npm run check:visual-snapshots && npm run test:accessibility && npm run test:contracts && npm run test:cross-browser && npm run flake:report",
     "lint": "eslint . --ext .ts,.js --max-warnings 0",
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "format": "prettier --write .",
