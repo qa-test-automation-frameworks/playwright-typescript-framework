@@ -1,0 +1,78 @@
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated git-raw-commits@4.0.0: This package is no longer maintained. For the JavaScript API, please use @conventional-changelog/git-client instead.
+npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated eslint@8.57.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm warn deprecated @faker-js/faker@9.2.0: Please update to a newer version
+
+> playwright-typescript-framework@1.0.0 preinstall
+> node scripts/check-runtime.js
+
+Runtime OK: Node v24.21.0, npm 10.9.4
+
+> playwright-typescript-framework@1.0.0 prepare
+> husky
+
+
+added 343 packages in 10s
+
+89 packages are looking for funding
+  run `npm fund` for details
+
+> playwright-typescript-framework@1.0.0 check:runtime
+> node scripts/check-runtime.js
+
+Runtime OK: Node v24.21.0, npm 10.9.4
+
+> playwright-typescript-framework@1.0.0 test:unit
+> node scripts/run-framework-unit.js
+
+◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+
+Running 21 tests using 1 worker
+
+(node:117299) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:117299) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/unit/allure-publication.spec.ts:30:5 › complete artifacts merge without dropping a failed result (9ms)
+  ✓   2 tests/unit/allure-publication.spec.ts:37:5 › a missing shard rejects publication (14ms)
+  ✓   3 tests/unit/allure-publication.spec.ts:44:5 › an empty shard rejects publication (3ms)
+  ✓   4 tests/unit/allure-publication.spec.ts:52:5 › duplicate results cannot inflate the merged report (7ms)
+  ✓   5 tests/unit/allure-publication.spec.ts:59:5 › conflicting attachment contents reject publication (7ms)
+  ✓   6 tests/unit/allure-publication.spec.ts:69:5 › invalid input leaves the existing published candidate untouched (8ms)
+  ✓   7 tests/unit/allure-publication.spec.ts:78:5 › scheduled publication requires the full cross-browser artifact matrix (62ms)
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+  ✓   8 tests/unit/diagnostic-redaction.spec.ts:21:5 › structured redaction handles nested arrays and key casing without mutating input (2ms)
+  ✓   9 tests/unit/diagnostic-redaction.spec.ts:37:5 › captured error output omits arbitrary exception messages and stacks (4ms)
+  ✓  10 tests/unit/diagnostic-redaction.spec.ts:58:7 › HTTP errors omit text bodies and query values (6ms)
+  ✓  11 tests/unit/diagnostic-redaction.spec.ts:58:7 › HTTP errors omit JSON bodies and query values (3ms)
+  ✓  12 tests/unit/diagnostic-redaction.spec.ts:72:5 › malformed success responses keep raw text out of exported errors (2ms)
+[2026-10-04T12:09:21.932Z] [ERROR] Zod Schema Validation failed for GET http://127.0.0.1/api/policies | Meta: {"status":200,"errorName":"[REDACTED]","errorMessage":"[REDACTED]","errorStack":"[REDACTED]"}
+  ✓  13 tests/unit/diagnostic-redaction.spec.ts:82:5 › schema rejection does not expose values included by parser diagnostics (24ms)
+  ✓  14 tests/unit/diagnostic-redaction.spec.ts:92:5 › valid response data remains available to the caller (2ms)
+  ✓  15 tests/unit/diagnostic-redaction.spec.ts:102:5 › transport exceptions cannot export secret text or URL credentials (2ms)
+  ✓  16 tests/unit/diagnostic-redaction.spec.ts:115:5 › validation diagnostics preserve known field names but omit values and arbitrary keys (3ms)
+  ✓  17 tests/unit/diagnostic-redaction.spec.ts:128:5 › response read errors are sanitized and retain the received HTTP status (2ms)
+  ✓  18 tests/unit/diagnostic-redaction.spec.ts:143:5 › telemetry receives a sanitized transport exception before export (21ms)
+  ✓  19 tests/unit/diagnostic-redaction.spec.ts:181:5 › debug diagnostics omit request headers, payloads and response free text (2ms)
+  ✓  20 tests/unit/diagnostic-redaction.spec.ts:209:5 › only exact known validation messages produce diagnostic codes (2ms)
+  ✓  21 tests/unit/diagnostic-redaction.spec.ts:229:5 › invalid URL exceptions do not export the rejected input (2ms)
+
+  21 passed (2.0s)
+
+> playwright-typescript-framework@1.0.0 lint
+> eslint . --ext .ts,.js --max-warnings 0
+
+
+> playwright-typescript-framework@1.0.0 type-check
+> tsc --noEmit
+
+
+> playwright-typescript-framework@1.0.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!

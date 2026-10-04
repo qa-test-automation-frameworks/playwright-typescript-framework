@@ -134,12 +134,17 @@ docs/openapi/     Controlled target OpenAPI contract source
 
 ## Setup
 
-Use Node 20 or newer, with Node 20 listed in `.nvmrc` and `.node-version` as the baseline runtime.
+Use Node24.21.0 (pinned in `.nvmrc` and `.node-version`) and npm10.9.4.
+See [runtime policy](docs/runtime-policy.md) for the supported release range.
 
 ```bash
-npm ci
+npx --yes npm@10.9.4 ci
+npm run test:unit
+npm run lint
+npm run type-check
+
+# Browser checks are a separate path:
 npx playwright install chromium
-cp .env.example .env
 ```
 
 For normal local verification, prefer `npm run verify:target` instead of hand-maintaining `.env`. For exploratory external runs, update `.env` with credentials for a test account and explicit target URLs. Do not commit `.env`, `.auth`, reports, traces, screenshots, or generated browser artifacts.
@@ -213,7 +218,7 @@ This project is licensed under the [MIT License](LICENSE). When cloning, forking
 
 - No untracked publishable files; every accepted `tests/visual/**/*-snapshots/*.png` baseline is listed in `tests/visual/visual-snapshots.manifest.json`.
 - No ignored reports, traces, screenshots, videos, `.auth`, or local environment files committed.
-- `npm run verify:target` is green on Node 20.
+- Verify `npm run verify:target` on the supported runtime before claiming a complete current run.
 - GitHub Actions is green against the controlled target on the public default branch.
 - CI and Allure badges point to the repository workflow and GitHub Pages report URLs.
 - Confirm at least one meaningful initial commit exists before publishing.

@@ -45,7 +45,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "preinstall": "node scripts/check-runtime.js"
   },
   "keywords": [
     "playwright",
@@ -58,8 +59,8 @@
   "author": "Prayag Vyas (prayagv)",
   "license": "MIT",
   "engines": {
-    "node": ">=20",
-    "npm": ">=10"
+    "node": ">=24.21.0 <25",
+    "npm": "10.9.4"
   },
   "dependencies": {
     "@faker-js/faker": "9.2.0",
@@ -99,5 +100,6 @@
     "*.{json,md,yml}": [
       "prettier --write"
     ]
-  }
+  },
+  "packageManager": "npm@10.9.4"
 }

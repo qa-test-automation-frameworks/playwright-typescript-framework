@@ -23,8 +23,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run format:check
 
@@ -38,8 +39,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run format:check
       - run: npm run lint
@@ -63,8 +65,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npm run test:api
       - run: npm run flake:report
@@ -99,8 +102,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=${{ matrix.shard }}
       - run: npm run flake:report
@@ -131,8 +135,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npx playwright install chromium
       - run: npm run with:target -- npx playwright test --project=visual --shard=${{ matrix.shard }}
@@ -161,8 +166,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npm run test:accessibility
       - run: npm run flake:report
@@ -189,8 +195,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npm run test:contracts
       - run: npm run flake:report
@@ -217,8 +224,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npm run test:cross-browser
       - run: npm run flake:report
@@ -250,8 +258,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npx playwright test --project=${{ matrix.project }}
       - run: npm run flake:report
@@ -288,12 +297,13 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '20'
+          node-version-file: .nvmrc
           cache: 'npm'
       - uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5
         with:
           distribution: temurin
           java-version: '21'
+      - run: npm install --global npm@10.9.4
       - run: npm ci
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
