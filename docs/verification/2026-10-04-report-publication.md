@@ -40,8 +40,8 @@ Docker action and its Linux invocation of Windows visual baselines.
 
 - Seven focused publication regressions cover complete pass/fail input,
   missing/empty groups, UUID duplication, attachment conflict, existing candidate
-  preservation and scheduled matrix completeness. They run alongside thirteen
-  diagnostic tests: **20 passing unit cases**.
+  preservation and scheduled matrix completeness. They run alongside fourteen
+  diagnostic tests: **21 passing unit cases**.
 - Lint/type/format checks passed on Node 24.19.0/npm 10.9.4.
 - The owned-target API results rendered successfully with JDK 21.0.12.1 and the
   pinned CLI.

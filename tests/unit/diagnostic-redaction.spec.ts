@@ -225,3 +225,14 @@ test('only exact known validation messages produce diagnostic codes', async () =
   expect((second as ApiError).body).not.toContain('email_or_username_conflict');
   expect(JSON.stringify([first, second])).not.toContain(sentinel);
 });
+
+test('invalid URL exceptions do not export the rejected input', async () => {
+  const client = clientWithResponse('{}');
+  const caught: unknown = await client
+    .get(`http://${sentinel}:invalid/api?token=${sentinel}`, z.object({}))
+    .catch((error: unknown) => error);
+  expect(caught).toBeInstanceOf(ApiError);
+  expect((caught as ApiError).status).toBe(0);
+  expect((caught as ApiError).message).toContain('not a valid URL');
+  expect(JSON.stringify(caught)).not.toContain(sentinel);
+});

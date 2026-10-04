@@ -30,9 +30,9 @@ npm run with:target -- npm run test:api
 ```
 
 The service-free unit command uses the existing Playwright runner with synthetic
-configuration and no browser/provider. Thirteen tests cover casing/nesting,
+configuration and no browser/provider. Fourteen tests cover casing/nesting,
 immutability, captured error/debug output, text/JSON failures, query/userinfo,
-malformed JSON, schema failures, response read failure, valid caller data,
+invalid URL inputs, malformed JSON, schema failures, response read failure, valid caller data,
 telemetry's recorded transport exception, and exact allowlisted validation codes.
 The owned-target API profile passed all **32 runner cases**, including its setup
 and teardown; this is not 32 distinct business assertions.

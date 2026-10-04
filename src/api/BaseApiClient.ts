@@ -61,7 +61,12 @@ export class BaseApiClient {
     } = {},
   ): Promise<T> {
     const fullUrl = url.startsWith('http') ? url : `${config.API_URL}${url}`;
-    const parsedUrl = new URL(fullUrl);
+    let parsedUrl: URL;
+    try {
+      parsedUrl = new URL(fullUrl);
+    } catch {
+      throw new ApiError(0, 'Invalid URL', '', 'API request target is not a valid URL');
+    }
     const diagnosticUrl = `${parsedUrl.origin}${parsedUrl.pathname}`;
     const headers = this.getHeaders(options.headers);
 
