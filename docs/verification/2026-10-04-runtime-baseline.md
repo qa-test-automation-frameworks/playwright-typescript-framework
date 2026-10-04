@@ -38,7 +38,13 @@ required network access. Full elapsed wall time was not instrumented and is not
 claimed; native unit durations and npm installation output are retained.
 
 Native logs, registry response and source hashes are under
-`evidence/2026-10-04-runtime/`. Exact-revision remote browser/Windows execution
-remains pending; older Node20 CI cannot verify this migration. Local Docker is
+`evidence/2026-10-04-runtime/`. Exact-revision [CI37201420831](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37201420831)
+completed successfully at5040a09e5f750e854c7db2b256a3d6f0bcdf017b. Native API
+metadata records successful Linux/Windows fresh-clone checks, lint/unit/type gate,
+API, both E2E and visual shards, accessibility, selector contracts, cross-browser
+smoke and Allure rendering. The scheduled full cross-browser job and PR public
+publication were skipped; neither is inferred from this run. Native run/jobs/artifact
+metadata is retained. This verifies the source change at5040a09, with subsequent
+evidence-only documentation distinct from the tested revision. Local Docker is
 unavailable, so resolving the target image is not actual container execution proof.
 Portfolio-wide R01/R03 and security/feature currency remain separate work.
