@@ -1,0 +1,27 @@
+✔ exact per-command checkout trust repairs ownership mismatch while rejecting dirty/wrong source (138.12453ms)
+✔ final cases reconcile; retries remain attempts rather than extra tests (8.096409ms)
+✔ expected native failures retain Playwright final-outcome semantics (0.849808ms)
+✔ native assertion failure and runner failure remain failed evidence (2.441817ms)
+✔ empty collection and all-skipped selection cannot pass (1.772795ms)
+✔ native globals fail execution despite passing cases (0.726166ms)
+✔ native statistics, duplicate identities and missing attempts fail closed (1.12988ms)
+✔ missing retry attempt and final outcome disagreement are rejected (0.406942ms)
+✔ old source, run attempt or scope cannot reuse a native input (0.373556ms)
+✔ complete shards aggregate actual cases while missing or duplicate inclusion fails (3.597375ms)
+✔ business cases cannot overlap while separate setup executions are retained (4.207348ms)
+✔ native shard, source, target and run attempt identities cannot be mixed (6.760707ms)
+✔ leaf summaries must reconcile before aggregation (2.193482ms)
+✔ unnamed native default project has a stable case identity (0.656617ms)
+✔ native calendar corruption cannot be normalized into valid execution (0.368777ms)
+✔ setup-only execution cannot pass a business suite, and wrong projects are rejected (0.772308ms)
+✔ PR fast scopes require actual success, allowing only the scheduled tier to skip (1.782482ms)
+✔ mandatory skipped, failed, cancelled or missing child cannot pass the final gate (2.597002ms)
+✔ scheduled full browsers must actually succeed on the scheduled trigger (0.461463ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 245.874693

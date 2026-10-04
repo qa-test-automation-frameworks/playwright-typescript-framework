@@ -1,14 +1,13 @@
-import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { inspectCheckout } from './checkout.mjs';
 import { buildEvidence } from './playwright.mjs';
 import { validateEvidence } from './contract.mjs';
 
 const env = process.env;
 const input = process.argv[2] ?? 'test-results/results.json';
 const output = process.argv[3] ?? 'test-results/evidence-v3.json';
-const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 const required = (name) => {
   if (!env[name]) throw new Error(`Required evidence context ${name} is missing`);
   return env[name];
@@ -31,11 +30,22 @@ function targetDigest() {
   return `sha256:${hash(Buffer.concat(paths.map((path) => Buffer.concat([Buffer.from(`${path.replaceAll('\\', '/')}\0`), readFileSync(path), Buffer.from('\0')]))))}`;
 }
 
-git('diff', '--quiet');
-git('diff', '--cached', '--quiet');
-const sourceSha = git('rev-parse', 'HEAD');
-if (sourceSha !== required('GITHUB_SHA'))
-  throw new Error('Checkout does not match the declared tested GitHub SHA');
+const sourceSha = inspectCheckout(required('GITHUB_SHA'));
+const scopeProjects = {
+  'framework-unit': ['default'],
+  'evidence-negative-control': ['evidence-control'],
+  api: ['api'],
+  e2e: ['chromium-authenticated', 'chromium-anonymous'],
+  visual: ['visual'],
+  accessibility: ['accessibility'],
+  'selector-contract': ['selector-contract'],
+  'cross-browser': ['firefox-smoke', 'webkit-smoke', 'mobile-chrome-smoke'],
+  'firefox-regression': ['firefox-regression'],
+  'webkit-regression': ['webkit-regression'],
+  'mobile-chrome-regression': ['mobile-chrome-regression'],
+};
+const businessProjects = scopeProjects[required('EVIDENCE_SCOPE')];
+if (!businessProjects) throw new Error('Unknown evidence suite scope');
 const context = {
   repository: required('GITHUB_REPOSITORY'),
   sourceSha,
@@ -49,6 +59,7 @@ const context = {
     branch: required('GITHUB_REF_NAME'),
   },
   scope: required('EVIDENCE_SCOPE'),
+  projects: { allowed: [...businessProjects, 'setup', 'teardown'], business: businessProjects },
   required: env.EVIDENCE_REQUIRED !== 'false',
   evidenceClass: env.EVIDENCE_CLASS ?? 'controlled',
   testOutcome: required('EVIDENCE_TEST_OUTCOME'),

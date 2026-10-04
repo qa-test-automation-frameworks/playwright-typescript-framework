@@ -68,3 +68,10 @@ applying that recipe through the branch protection API; preserve any newly exist
 settings during rollout rather than blindly replacing them. Required human review
 policy and default-branch rollout remain separate decisions/evidence. Current work
 is delivered as a draft PR, not merged default-branch configuration.
+
+Git inspection trusts only the canonical checkout root per invocation to handle
+container ownership differences; it does not modify global trust or accept a
+missing Git checkout. Source SHA and dirty tracked files remain independently
+checked. Native timestamps must be real UTC calendar values rather than Date.parse
+normalizations. Scope/project declarations reject another suite's results and
+prevent successful setup/teardown alone from establishing business coverage.

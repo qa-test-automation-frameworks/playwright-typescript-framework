@@ -206,3 +206,23 @@ test('unnamed native default project has a stable case identity', () => {
   const leaf = buildEvidence(report, context);
   assert.equal(leaf.summary.cases[0].project, 'default');
 });
+
+test('native calendar corruption cannot be normalized into valid execution', () => {
+  const report = fixture();
+  report.stats.startTime = '2026-02-30T08:00:00.000Z';
+  assert.throws(() => summarizeNative(report), /UTC calendar/);
+});
+test('setup-only execution cannot pass a business suite, and wrong projects are rejected', () => {
+  const report = fixture();
+  report.suites[0].suites[0].specs[0].tests[0].projectId = 'setup';
+  const declared = {
+    ...context,
+    projects: { allowed: ['chromium', 'setup', 'teardown'], business: ['chromium'] },
+  };
+  const record = buildEvidence(report, declared).record;
+  assert.equal(record.execution.disposition, 'failed');
+  assert.equal(record.execution.integrity, 'partial');
+  assert.equal(record.execution.counts.executed, 1);
+  report.suites[0].suites[0].specs[0].tests[0].projectId = 'api';
+  assert.throws(() => buildEvidence(report, declared), /declared scope/);
+});

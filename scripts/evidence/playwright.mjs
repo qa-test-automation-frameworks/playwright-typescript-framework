@@ -68,6 +68,13 @@ export function summarizeNative(report) {
   if (!['expected', 'unexpected', 'flaky', 'skipped'].every((key) => safeCount(stats[key])))
     throw new Error('Invalid native outcome statistics');
   const start = Date.parse(stats.startTime);
+  if (
+    typeof stats.startTime !== 'string' ||
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(stats.startTime) ||
+    !Number.isFinite(start) ||
+    new Date(start).toISOString().replace('.000Z', 'Z') !== stats.startTime.replace('.000Z', 'Z')
+  )
+    throw new Error('Invalid native UTC calendar timestamp');
   if (!Number.isFinite(start) || !Number.isFinite(stats.duration) || stats.duration < 0)
     throw new Error('Invalid native timing');
   const cases = nativeCases(report);
@@ -109,14 +116,24 @@ export function buildEvidence(report, context) {
   if (summary.toolVersion !== context.target.tools.playwright)
     throw new Error('Native Playwright version does not match installed tool');
   const exitFailed = context.testOutcome !== 'success';
-  const substantive = summary.counts.executed > 0;
+  if (
+    context.projects &&
+    summary.cases.some((item) => !context.projects.allowed.includes(item.project))
+  )
+    throw new Error('Native projects do not belong to the declared scope');
+  const substantive =
+    summary.counts.executed > 0 &&
+    (!context.projects ||
+      summary.cases.some(
+        (item) => context.projects.business.includes(item.project) && item.outcome !== 'skipped',
+      ));
   const failed =
     exitFailed || summary.counts.failed > 0 || summary.globalErrorCount > 0 || !substantive;
   const reasons = [];
   if (exitFailed) reasons.push(`Runner step outcome ${context.testOutcome}`);
   if (summary.counts.failed) reasons.push(`${summary.counts.failed} unexpected final native cases`);
   if (summary.globalErrorCount) reasons.push(`${summary.globalErrorCount} native global errors`);
-  if (!substantive) reasons.push('No substantive native execution');
+  if (!substantive) reasons.push('No substantive selected scope execution');
   if (
     context.shardTotal > 1 &&
     (summary.shard?.current !== context.shardCurrent || summary.shard?.total !== context.shardTotal)
@@ -143,7 +160,7 @@ export function buildEvidence(report, context) {
       reason: reasons.length ? reasons.join('; ') : null,
       startedAt: summary.startedAt,
       completedAt: summary.completedAt,
-      integrity: substantive ? 'complete' : 'empty',
+      integrity: substantive ? 'complete' : summary.counts.executed > 0 ? 'partial' : 'empty',
       counts: structuredClone(summary.counts),
       measurements: [],
       // One leaf scope per shard. Aggregate scope declares all expected shards later.
