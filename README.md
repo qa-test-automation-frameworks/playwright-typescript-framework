@@ -14,7 +14,7 @@ report-grade failure diagnostics.
 
 | Evidence              | Link                                                                                                                                                                                                                                         |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Live report           | [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                           |
+| Live report           | [Allure report](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                            |
 | Release               | [v1.0.0](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0)                                                                                                                               |
 | CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)      |
 | Repository activity   | [Default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [Pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) |
@@ -134,12 +134,17 @@ docs/openapi/     Controlled target OpenAPI contract source
 
 ## Setup
 
-Use Node 20 or newer, with Node 20 listed in `.nvmrc` and `.node-version` as the baseline runtime.
+Use Node24.21.0 (pinned in `.nvmrc` and `.node-version`) and npm10.9.4.
+See [runtime policy](docs/runtime-policy.md) for the supported release range.
 
 ```bash
-npm ci
+npx --yes npm@10.9.4 ci
+npm run test:unit
+npm run lint
+npm run type-check
+
+# Browser checks are a separate path:
 npx playwright install chromium
-cp .env.example .env
 ```
 
 For normal local verification, prefer `npm run verify:target` instead of hand-maintaining `.env`. For exploratory external runs, update `.env` with credentials for a test account and explicit target URLs. Do not commit `.env`, `.auth`, reports, traces, screenshots, or generated browser artifacts.
@@ -191,7 +196,11 @@ CI enforces the retry budget with `npm run flake:check` on pull requests and sch
 Current workflow duration and sample size are published on the
 [portfolio dashboard](https://qa-test-automation-frameworks.github.io/.github/).
 
-The `CI` workflow publishes Allure history from green default-branch controlled-target results to the `gh-pages` branch. The manual `Allure Report Deploy` workflow can republish the same report path on demand.
+The `CI` workflow validates all eight required artifact groups, renders Allure with the lockfile-pinned CLI, and retains the rendered report as a CI artifact. Default-branch runs deploy that complete report through GitHub Pages. Pull requests render without deployment. `source.json` identifies the tested revision and run. Report generation failure leaves the previously deployed report intact; native Playwright HTML remains in each test job's artifacts.
+
+For local rendering, install JDK 21 and set `JAVA_HOME`, then run `npm run allure:generate` after a test profile. The optional renderer uses Allure 2 for compatibility with the existing report format; adopting Allure 3 is a separate migration. Hosted long-term history retention remains a separate evidence workstream.
+
+The manual `Allure Report Deploy` workflow republishes an existing rendered artifact from a successful default-branch `CI` run. Supply that run's numeric ID. It verifies source identity and never reruns tests or presents historical evidence as a fresh test execution.
 
 ## License And Attribution
 
@@ -200,7 +209,7 @@ This project is licensed under the [MIT License](LICENSE). When cloning, forking
 ## Portfolio Review Path
 
 - Latest CI workflow: [GitHub Actions CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)
-- Published report: [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)
+- Published report: [Allure report](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)
 - High-signal tests: `tests/api`, `tests/e2e/article-lifecycle.spec.ts`, `tests/contracts/selectors/controlled-ui.selectors.spec.ts`, `tests/visual`, and `tests/accessibility`
 - Local proof command: `npm run verify:target`
 - Verification evidence: [Verification evidence](docs/verification-evidence.md)
@@ -209,7 +218,7 @@ This project is licensed under the [MIT License](LICENSE). When cloning, forking
 
 - No untracked publishable files; every accepted `tests/visual/**/*-snapshots/*.png` baseline is listed in `tests/visual/visual-snapshots.manifest.json`.
 - No ignored reports, traces, screenshots, videos, `.auth`, or local environment files committed.
-- `npm run verify:target` is green on Node 20.
+- Verify `npm run verify:target` on the supported runtime before claiming a complete current run.
 - GitHub Actions is green against the controlled target on the public default branch.
 - CI and Allure badges point to the repository workflow and GitHub Pages report URLs.
 - Confirm at least one meaningful initial commit exists before publishing.

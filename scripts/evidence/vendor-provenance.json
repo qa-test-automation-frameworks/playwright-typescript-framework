@@ -1,0 +1,12 @@
+{
+  "contractVersion": "3.0.0",
+  "upstreamRepository": "qa-test-automation-frameworks/.github",
+  "upstreamCommit": "b0a347750fa2826cdd6b681107b7f1391d8da02b",
+  "note": "Self-contained Node copy; only local schema/runtime paths and setup wording adapted. No runtime network or cross-repository dependency.",
+  "upstreamHashes": {
+    "scripts/evidence-contract.mjs": "a38a74bb2524e494095fcb767d1b2e069242e54c598088c77db82894833399a5",
+    "scripts/check-runtime.mjs": "2399c90404e897d70e0e2a88ee784bf83b381f14a200c5aeb63f061fd4f816e5",
+    "portfolio/evidence/evidence-v3.schema.json": "40502a47e825755d216e35ea19716ad7de69e47accd6aed1cfb3607160e4d1b9",
+    "portfolio/evidence/freshness-policies.json": "1313329c1c06bd3a056dd1ed7d25c631036cae58480fdc4e767f22a0a01a568e"
+  }
+}

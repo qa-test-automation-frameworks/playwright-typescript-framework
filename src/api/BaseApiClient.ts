@@ -61,15 +61,20 @@ export class BaseApiClient {
     } = {},
   ): Promise<T> {
     const fullUrl = url.startsWith('http') ? url : `${config.API_URL}${url}`;
+    let parsedUrl: URL;
+    try {
+      parsedUrl = new URL(fullUrl);
+    } catch {
+      throw new ApiError(0, 'Invalid URL', '', 'API request target is not a valid URL');
+    }
+    const diagnosticUrl = `${parsedUrl.origin}${parsedUrl.pathname}`;
     const headers = this.getHeaders(options.headers);
 
-    Logger.debug(`API Request: ${method} ${fullUrl}`, {
-      headers: {
-        ...headers,
-        Authorization: headers.Authorization ? 'Token [REDACTED]' : undefined,
-      },
-      params: options.params,
-      data: options.data,
+    Logger.debug(`API Request: ${method} ${diagnosticUrl}`, {
+      hasAuthorization: Object.keys(headers).some((key) => key.toLowerCase() === 'authorization'),
+      headerCount: Object.keys(headers).length,
+      hasParameters: options.params !== undefined || parsedUrl.search.length > 0,
+      hasBody: options.data !== undefined,
     });
 
     const response = await withSpan(
@@ -79,57 +84,79 @@ export class BaseApiClient {
         'api.path': new URL(fullUrl).pathname,
       },
       async (span) => {
-        const apiResponse = await this.requestContext.fetch(fullUrl, {
-          method,
-          headers,
-          ...(options.data !== undefined ? { data: options.data } : {}),
-          ...(options.params !== undefined ? { params: options.params } : {}),
-        });
+        const apiResponse = await this.requestContext
+          .fetch(fullUrl, {
+            method,
+            headers,
+            ...(options.data !== undefined ? { data: options.data } : {}),
+            ...(options.params !== undefined ? { params: options.params } : {}),
+          })
+          .catch(() => {
+            // Sanitize before withSpan records the exception for export.
+            throw new ApiError(
+              0,
+              'Transport failure',
+              '',
+              `API transport failed: ${method} ${diagnosticUrl}`,
+            );
+          });
         span.setAttribute('api.status', apiResponse.status());
         return apiResponse;
       },
-    );
+    ).catch(() => {
+      throw new ApiError(
+        0,
+        'Transport failure',
+        '',
+        `API transport failed: ${method} ${diagnosticUrl}`,
+      );
+    });
 
     const status = response.status();
-    const statusText = response.statusText();
-    const responseText = await response.text();
+    const responseText = await response.text().catch(() => {
+      throw new ApiError(
+        status,
+        'Response read failure',
+        '',
+        `API response read failed: ${method} ${diagnosticUrl}`,
+      );
+    });
 
-    Logger.debug(`API Response: ${status} ${statusText}`, {
+    Logger.debug(`API Response: ${status}`, {
       status,
       body: this.redactResponseBody(responseText),
     });
 
     if (status < 200 || status >= 300) {
       const redactedBody = this.redactResponseBody(responseText);
-      const errorMsg = `API Request failed: ${method} ${fullUrl} returned status ${status} (${statusText}). Response body: ${redactedBody}`;
-      throw new ApiError(status, statusText, redactedBody, errorMsg);
+      const errorMsg = `API Request failed: ${method} ${diagnosticUrl} returned status ${status}. ${redactedBody}`;
+      throw new ApiError(status, `HTTP ${status}`, redactedBody, errorMsg);
     }
 
     let parsedJson: unknown;
     try {
       parsedJson = responseText ? JSON.parse(responseText) : {};
-    } catch (e) {
+    } catch {
       throw new ApiError(
         status,
-        statusText,
-        responseText,
-        `API Response for ${method} ${fullUrl} was not valid JSON`,
+        `HTTP ${status}`,
+        this.redactResponseBody(responseText),
+        `API Response for ${method} ${diagnosticUrl} was not valid JSON`,
       );
     }
 
     // Direct .parse() validation as required by final checklist
     try {
       return schema.parse(parsedJson);
-    } catch (zodError: unknown) {
-      Logger.error(
-        `Zod Schema Validation failed for ${method} ${url}`,
-        zodError instanceof Error ? zodError : undefined,
-        {
-          parsedJson,
-          error: zodError instanceof Error ? zodError.message : String(zodError),
-        },
+    } catch {
+      const error = new ApiError(
+        status,
+        'Schema validation failed',
+        this.redactResponseBody(responseText),
+        `Zod Schema Validation failed for ${method} ${diagnosticUrl}`,
       );
-      throw zodError;
+      Logger.error(error.message, error, { status });
+      throw error;
     }
   }
 
@@ -138,11 +165,55 @@ export class BaseApiClient {
       return '';
     }
 
+    // Remote bodies and parser errors can contain secrets in arbitrary text,
+    // including strings under keys that are not in the structured key filter.
+    let validationFields: string[] = [];
+    let validationCodes: string[] = [];
     try {
-      return JSON.stringify(Logger.redact(JSON.parse(responseText)));
+      const parsed: unknown = JSON.parse(responseText);
+      if (parsed && typeof parsed === 'object' && 'errors' in parsed) {
+        const errors: unknown = parsed.errors;
+        if (errors && typeof errors === 'object' && !Array.isArray(errors)) {
+          // Only known contract field names are diagnostic; never values or arbitrary keys.
+          const safeFields = new Set([
+            'email',
+            'username',
+            'password',
+            'title',
+            'body',
+            'description',
+          ]);
+          validationFields = Object.keys(errors).filter((field) => safeFields.has(field));
+          // Exact contract messages map to static codes; no remote text is copied.
+          const knownMessages = new Map([
+            ['email or username already exists', 'email_or_username_conflict'],
+            ['email already exists', 'email_conflict'],
+            ['username already exists', 'username_conflict'],
+          ]);
+          const values: unknown[] = Object.values(errors);
+          validationCodes = [
+            ...new Set(
+              values.flatMap((value) =>
+                Array.isArray(value)
+                  ? value.flatMap((entry: unknown) =>
+                      typeof entry === 'string' && knownMessages.has(entry)
+                        ? [knownMessages.get(entry) as string]
+                        : [],
+                    )
+                  : [],
+              ),
+            ),
+          ];
+        }
+      }
     } catch {
-      return responseText;
+      // Non-JSON input remains completely opaque.
     }
+    const fields = validationFields.length
+      ? `; validation fields: ${validationFields.join(', ')}`
+      : '';
+    const codes = validationCodes.length ? `; validation codes: ${validationCodes.join(', ')}` : '';
+    return `[REDACTED response body: ${responseText.length} characters${fields}${codes}]`;
   }
 
   public async get<T>(

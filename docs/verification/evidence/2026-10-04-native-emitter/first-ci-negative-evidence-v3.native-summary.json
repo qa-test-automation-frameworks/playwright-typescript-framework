@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-10-04T14:07:48.042Z",
+  "completedAt": "2026-10-04T14:07:48.972Z",
+  "counts": {
+    "unit": "parameter_case",
+    "selected": 1,
+    "executed": 1,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "retried": 0,
+    "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+  },
+  "cases": [
+    {
+      "id": "5755c13d9969eeb7937590e327e81e34ab4bd2e8e5fe74b9f622addc258e388a",
+      "project": "evidence-control",
+      "outcome": "unexpected",
+      "retried": false,
+      "attempts": ["failed"]
+    }
+  ],
+  "globalErrorCount": 0,
+  "toolVersion": "1.60.0",
+  "shard": null,
+  "rawAttempts": 1,
+  "inputSha256": "fa10c805fa4ba25d150d0d5adc707979ab380ab08eaec63314e681eaa0744af9"
+}

@@ -1,0 +1,94 @@
+{
+  "startedAt": "2026-10-04T14:22:40.164Z",
+  "completedAt": "2026-10-04T14:22:47.321Z",
+  "counts": {
+    "unit": "parameter_case",
+    "selected": 10,
+    "executed": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "retried": 0,
+    "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+  },
+  "cases": [
+    {
+      "id": "a0fcd1a7316ec0123247a8d20ed78949dc8695f751279c797b43595e0f9310da",
+      "project": "teardown",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "2132966d81a4fbaf061d8bfb4e14eb8493b07bc3c145ea82bf0106cfb71d3890",
+      "project": "setup",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "966da196f5a47fdcdc93f6f6d5a7022e081169558f5b03463e29393347580982",
+      "project": "chromium-authenticated",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "3be00d4e13ac293771c8dde53883418d0702f5ff16ac78361d7fe9dc26ee72ee",
+      "project": "chromium-authenticated",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "66f1a996b801896394605c9a5f3389d3aa86a111b8efb4380bcae0da2ccd4ac7",
+      "project": "chromium-authenticated",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "e9a00fc561c9510c2c26e0bcd400c79f30c675d4b04c7719e4d4c1272ef365c7",
+      "project": "chromium-authenticated",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "5d2d7a778829f8d4120d27db24a59e82ccde087d9e2e886571dbd26a3ab82f27",
+      "project": "chromium-anonymous",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "41dd459db8b92952f880f4bf5a91d45feed8d51e3463beb2f25a3c528ed616a0",
+      "project": "chromium-anonymous",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "33b419a925130d2b6c6457b52f1112a01e89f2c4a8169a15e0024aeddd0528a4",
+      "project": "chromium-anonymous",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "782c45ef716bfbba9020051fabbbc86ab6e4e00837fdd016ffbd6d7c5909d240",
+      "project": "chromium-anonymous",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    }
+  ],
+  "globalErrorCount": 0,
+  "toolVersion": "1.60.0",
+  "shard": {
+    "current": 2,
+    "total": 2
+  },
+  "rawAttempts": 10,
+  "inputSha256": "c6911c6d9b4a3931bfaf61f4f540d3eb1f2a9c4fae911807b14261178bb054e9"
+}
