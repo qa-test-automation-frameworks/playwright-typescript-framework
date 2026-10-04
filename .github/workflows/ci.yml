@@ -267,9 +267,13 @@ jobs:
             test-results/
             playwright-report/
 
-  publish-allure-report:
+  generate-allure-report:
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
     needs:
       [
+        fresh-clone-format,
+        lint-typecheck,
+        scheduled-full-cross-browser,
         test-api,
         test-e2e,
         test-visual,
@@ -277,6 +281,43 @@ jobs:
         test-selector-contract,
         test-cross-browser,
       ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          pattern: reports-*
+          merge-multiple: false
+          path: merged-reports
+      - name: Validate and collect every required report shard
+        run: node scripts/prepare-allure-results.js
+      - name: Render with the lockfile-pinned Allure CLI
+        run: npm run allure:generate
+      - name: Record the tested source and run
+        env:
+          REPORT_SOURCE_SHA: ${{ github.sha }}
+          REPORT_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          node -e "require('fs').writeFileSync('allure-report/source.json', JSON.stringify({sourceSha:process.env.REPORT_SOURCE_SHA,runUrl:process.env.REPORT_RUN_URL,runAttempt:process.env.GITHUB_RUN_ATTEMPT},null,2))"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: rendered-allure-report
+          path: allure-report/
+          if-no-files-found: error
+
+  publish-allure-report:
+    needs: generate-allure-report
     if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     permissions:
@@ -284,23 +325,14 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          pattern: reports-*
-          merge-multiple: true
-          path: merged-reports
-      - run: mkdir -p allure-results && find merged-reports -path '*/allure-results/*' -type f -exec cp {} allure-results/ \;
-      - uses: simple-elf/allure-report-action@e463a472d3b1d750f9544369d60589ff1964c820 # v1.14
-        with:
-          allure_results: allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
+          name: rendered-allure-report
+          path: allure-report
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
         with:
           enablement: true
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
-          path: allure-history
+          path: allure-report
       - uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
