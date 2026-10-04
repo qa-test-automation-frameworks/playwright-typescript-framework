@@ -1,0 +1,245 @@
+{
+  "startedAt": "2026-10-04T14:22:30.394Z",
+  "completedAt": "2026-10-04T14:22:33.185Z",
+  "counts": {
+    "unit": "parameter_case",
+    "selected": 32,
+    "executed": 32,
+    "passed": 32,
+    "failed": 0,
+    "skipped": 0,
+    "retried": 0,
+    "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+  },
+  "cases": [
+    {
+      "id": "a0fcd1a7316ec0123247a8d20ed78949dc8695f751279c797b43595e0f9310da",
+      "project": "teardown",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "2132966d81a4fbaf061d8bfb4e14eb8493b07bc3c145ea82bf0106cfb71d3890",
+      "project": "setup",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "4bcd0a8efd6f17ebf4768ccea939dbbecc095006ee3a9597f01acb27d02eec50",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "b497fce3fc39c7ee057adc3a65c5fa9789a5821a926687836cd3dbc9be6e03e2",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "29c9ef890841e00cf662e3db1481f7e704fc32dc14cfda61e261acb77c489fcf",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "31708bb1242a29acb45c3e2f9ad8f01d6babefe152b2ac4a45fcefcfc26a1ace",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "cf14b6abee6061f8e7bc08ebf116bd2927a17438546d11408a727270db544154",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "668031b6e21485d93169eb3ae332c9c14ebc0de342440c06f31d94b6ca5511f0",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "6de3141985e4ac786848b7a4613c9931b49b9ecf84f7b070d375701facd1041b",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "ffb68d1d7303335bb8911cd996d8675c4a551b5ac0e40f645618cd438c703005",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "48b14874b36524caa1503952d0b5b695806a5080b392e9f4307e98a411f7fe95",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "9be38f7ab3f7d7713b1b1f6cec94064a24742248140cf8d288acd4797bc4b3b1",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "f2d171a37120bcd40c1c5f2d601429f2bb1664aae2f129df68f4ec2a35a3d54d",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "db483bc5f5b03173881ec9b62faaddd1942866ffb67d48e05cbe3bb19a1e0622",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "6d2ef261a22101ee09a277ffd1d32754359dbb8d820854b654e88cf44899ec2e",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "301fb13214c6785ca9fc23c8572b1d651fd4e5a6101bcdbb4a25a58c5918c7f8",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "79e6a3730283d702c9817654676c8e64058acab5dfd92abe0a1076411d789a3a",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "09403ed9079680b42443ef6cda869b687b43f25dd7fc37cd8d20e579977d1d4c",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "b0bcc5151ed6d602d504758ae131d98258bd78c2d4324fd9f3774ff0133b0927",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "02023dd77b854b772ba8bf181b81da1f4c85cc61208e3b10b3afe95ee0eebfbb",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "2b33a79ef7758449eb071f6c7f105e3c224e4e203a37e15040deb72b6068a006",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "4e66966e3253b4d39e6049d6755cb8c321f4bce8e76fe444be570c1054363325",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "f69b1e4082acbc9798f098588e63f5b04478366f6c34d1dfa340b3d90c6890f8",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "b1b656de10e3b9f463deb69002666633c8c8569c205d3d6453eafef73bd7891a",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "b8239c3c9eb225d6e0b56a8599447fbd444849f8bf7660f8cc84d7090caa7762",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "261055301a0bc002638c25bd81aa058b35963fadf351ce0a3775e27b50632e68",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "62226c277ba0a314b70d5865dca352caa44b14e833fd7150a0e8626c14880c63",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "eb885b106124678599a73877128034816a2ffd93d49d101303d5a99c454cb998",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "46087bf4ad8c09baa1cfe8cd326ca3c23c3f91246027ffbb85fb40b0565aa234",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "a7e95266f4a02860a14d412c01f8d165d6119844ad5e4f82151443492fdfb7ce",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "acebf620d4ed05f27376b90d7a8df4be90aee469852313b2b03edc814ab843c8",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "432afbf1afa3831a5064fdcc27f978dd437e8a90706ebe506f3a86e0375a277d",
+      "project": "api",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    }
+  ],
+  "globalErrorCount": 0,
+  "toolVersion": "1.60.0",
+  "shard": null,
+  "rawAttempts": 32,
+  "inputSha256": "fc0d2a54360f08a7c64f5d050cc4ed88420ec471199dc91a82116fdeb575b7dc"
+}

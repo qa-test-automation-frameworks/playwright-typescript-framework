@@ -41,3 +41,39 @@ verifies initial ownership rejection, repaired exact path and wrong/dirty-source
 rejection. Local19 controls pass after that repair. Additional controls reject
 invalid native calendar times, wrong scope projects and setup-only business proof.
 New exact-revision CI remains required; completed37208052196 must not be restarted.
+
+## Repaired native CI and complete reconciliation
+
+Exact378520037ff1e67be2902e7868764d8701e0f8f1
+[CI37208832825](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825)
+completed SUCCESS at tested PR mergef4d810749dedf4a813cdc27b8dacec787f3893ac.
+Linux/Windows first-success checks, unit/adapter gates, real negative control,
+API, both E2E/visual shards, accessibility, selector-contract, smoke browsers,
+Allure rendering and final required-ci all succeeded. Scheduled full browsers
+and default-branch publication skipped; neither is claimed executed.
+
+Downloaded native reports/records from all eight required artifact groups. For
+each, validated schema, actual source/run/attempt/scope metadata, raw input SHA256,
+native case/statistic counts and sanitized case detail. Recomputed six scope
+aggregates from those same leaves and matched the rendered manifest exactly.
+Every required shard present once; source/run/attempt/target identities match
+within each aggregate. Publication remains pending independently from execution.
+
+Native case executions: API32; E2E11+10; visual5+5; accessibility8; selector8;
+smoke browsers14. Total93 includes repeated real setup/teardown executions.
+Allure may consolidate common history identities, so its displayed denominator
+is separately retained in repaired-ci/allure-statistic.json and is not substituted
+for native case totals. Framework-unit21 and real negative1 are separate records;
+the negative record is intentionally failed evidence, not an application regression.
+19 adapter/ownership/final-gate controls passed in the quality job.
+
+Positive and negative emitted records, eight sanitized leaf summaries, rendered
+aggregate, native reconciliation and API artifact/run metadata are retained under
+evidence/2026-10-04-native-emitter/repaired-ci. Raw input hashes were actually checked
+against downloaded bytes. Artifact publisher digest/expiry are API metadata, not
+a claim that an archive download digest was separately verified. Retained JSON is
+formatter-normalized and its own hashes cover those retained bytes.
+
+Playwright's native-emitter implementation is scoped-verified for current required
+PR tiers. Main is still unprotected; rollout/merge enforcement, scheduled full tiers,
+E03 durable publication, E04 ingestion and the other four E02 adapters remain.

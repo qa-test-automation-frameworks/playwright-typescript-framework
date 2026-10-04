@@ -1,0 +1,59 @@
+{
+  "startedAt": "2026-10-04T14:23:22.983Z",
+  "completedAt": "2026-10-04T14:23:29.881Z",
+  "counts": {
+    "unit": "parameter_case",
+    "selected": 5,
+    "executed": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "retried": 0,
+    "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+  },
+  "cases": [
+    {
+      "id": "a0fcd1a7316ec0123247a8d20ed78949dc8695f751279c797b43595e0f9310da",
+      "project": "teardown",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "2132966d81a4fbaf061d8bfb4e14eb8493b07bc3c145ea82bf0106cfb71d3890",
+      "project": "setup",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "14dbe071ec39c627e4c0825cff83a5d4abccee803b5ae3c0be02df06ef7c2136",
+      "project": "visual",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "bc7ec6ad97e12b5a9599e75bf98fe8ec2a26381671e5b63f499197994a3acbf7",
+      "project": "visual",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "c888a7b20d83f8b211f8adc3076be73bd9e4dbb0f7f84a625183ce4b7691e1da",
+      "project": "visual",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    }
+  ],
+  "globalErrorCount": 0,
+  "toolVersion": "1.60.0",
+  "shard": {
+    "current": 2,
+    "total": 2
+  },
+  "rawAttempts": 5,
+  "inputSha256": "50255594932a81b9ec4c148d3270060af737a61522c7fa1e5e1c1b3cd1faab01"
+}

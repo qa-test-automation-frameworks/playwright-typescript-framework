@@ -1,0 +1,131 @@
+{
+  "records": [
+    {
+      "scope": "api",
+      "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+      "shards": {
+        "expected": ["shard-1-of-1"],
+        "received": ["shard-1-of-1"]
+      },
+      "counts": {
+        "unit": "parameter_case",
+        "selected": 32,
+        "executed": 32,
+        "passed": 32,
+        "failed": 0,
+        "skipped": 0,
+        "retried": 0,
+        "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts. Aggregate includes independently executed setup/teardown per shard; business-project cases cannot overlap."
+      },
+      "environment": "github_actions-linux",
+      "execution": "passed",
+      "publication": "pending"
+    },
+    {
+      "scope": "e2e",
+      "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+      "shards": {
+        "expected": ["shard-1-of-2", "shard-2-of-2"],
+        "received": ["shard-1-of-2", "shard-2-of-2"]
+      },
+      "counts": {
+        "unit": "parameter_case",
+        "selected": 21,
+        "executed": 21,
+        "passed": 21,
+        "failed": 0,
+        "skipped": 0,
+        "retried": 0,
+        "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts. Aggregate includes independently executed setup/teardown per shard; business-project cases cannot overlap."
+      },
+      "environment": "github_actions-linux",
+      "execution": "passed",
+      "publication": "pending"
+    },
+    {
+      "scope": "visual",
+      "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+      "shards": {
+        "expected": ["shard-1-of-2", "shard-2-of-2"],
+        "received": ["shard-1-of-2", "shard-2-of-2"]
+      },
+      "counts": {
+        "unit": "parameter_case",
+        "selected": 10,
+        "executed": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "retried": 0,
+        "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts. Aggregate includes independently executed setup/teardown per shard; business-project cases cannot overlap."
+      },
+      "environment": "github_actions-windows",
+      "execution": "passed",
+      "publication": "pending"
+    },
+    {
+      "scope": "accessibility",
+      "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+      "shards": {
+        "expected": ["shard-1-of-1"],
+        "received": ["shard-1-of-1"]
+      },
+      "counts": {
+        "unit": "parameter_case",
+        "selected": 8,
+        "executed": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0,
+        "retried": 0,
+        "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts. Aggregate includes independently executed setup/teardown per shard; business-project cases cannot overlap."
+      },
+      "environment": "github_actions-linux",
+      "execution": "passed",
+      "publication": "pending"
+    },
+    {
+      "scope": "selector-contract",
+      "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+      "shards": {
+        "expected": ["shard-1-of-1"],
+        "received": ["shard-1-of-1"]
+      },
+      "counts": {
+        "unit": "parameter_case",
+        "selected": 8,
+        "executed": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0,
+        "retried": 0,
+        "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts. Aggregate includes independently executed setup/teardown per shard; business-project cases cannot overlap."
+      },
+      "environment": "github_actions-linux",
+      "execution": "passed",
+      "publication": "pending"
+    },
+    {
+      "scope": "cross-browser",
+      "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+      "shards": {
+        "expected": ["shard-1-of-1"],
+        "received": ["shard-1-of-1"]
+      },
+      "counts": {
+        "unit": "parameter_case",
+        "selected": 14,
+        "executed": 14,
+        "passed": 14,
+        "failed": 0,
+        "skipped": 0,
+        "retried": 0,
+        "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts. Aggregate includes independently executed setup/teardown per shard; business-project cases cannot overlap."
+      },
+      "environment": "github_actions-linux",
+      "execution": "passed",
+      "publication": "pending"
+    }
+  ],
+  "limitation": "Scheduled full-browser scopes skipped; publication pending; branch protection disabled."
+}
