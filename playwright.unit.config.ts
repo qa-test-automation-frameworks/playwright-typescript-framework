@@ -1,6 +1,8 @@
+import { nativeEvidenceMetadata } from './scripts/evidence/native-metadata';
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
+  metadata: nativeEvidenceMetadata(),
   testDir: 'tests/unit',
   forbidOnly: !!process.env.CI,
   retries: 0,

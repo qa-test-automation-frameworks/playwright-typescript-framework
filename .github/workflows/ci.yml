@@ -35,6 +35,8 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       HOME: /root
+      EVIDENCE_SCOPE: framework-unit
+      EVIDENCE_CLASS: hermetic
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
@@ -47,12 +49,60 @@ jobs:
       - run: npm run lint
       - run: npm run type-check
       - run: npm run test:unit
+        id: native-tests
+      - name: Collect framework-unit native evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+        run: node scripts/evidence/collect.mjs test-results/framework-unit/results.json test-results/framework-unit/evidence-v3.json
+      - run: node --test scripts/evidence/*.test.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: framework-unit-evidence
+          path: test-results/framework-unit/
+          if-no-files-found: error
       - run: npm run check:secrets
       - run: npm run check:anti-patterns
       - run: npm run check:quarantine
       - run: npm run check:visual-snapshots
       - run: npm run check:openapi-contract
       - run: npm run with:target -- npm run check:env
+
+  evidence-negative-control:
+    runs-on: ubuntu-latest
+    env:
+      EVIDENCE_SCOPE: evidence-negative-control
+      EVIDENCE_CLASS: hermetic
+      EVIDENCE_REQUIRED: 'false'
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install --global npm@10.9.4
+      - run: npm ci
+      - name: Execute real intentional native assertion failure
+        id: native-tests
+        continue-on-error: true
+        run: npx playwright test --config=playwright.evidence-control.config.ts
+      - name: Collect actual failed native execution
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+        run: node scripts/evidence/collect.mjs test-results/evidence-control/results.json test-results/evidence-control/evidence-v3.json
+      - name: Require the intended assertion failure and failed evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+        run: node scripts/evidence/assert-control.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: evidence-negative-control
+          path: test-results/evidence-control/
+          if-no-files-found: error
 
   test-api:
     needs: lint-typecheck
@@ -61,6 +111,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       HOME: /root
+      EVIDENCE_SCOPE: api
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
@@ -70,6 +121,12 @@ jobs:
       - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npm run test:api
+        id: native-tests
+      - name: Collect native execution evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+        run: node scripts/evidence/collect.mjs
       - run: npm run flake:report
         if: always()
       - run: npm run flake:check
@@ -90,6 +147,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       HOME: /root
+      EVIDENCE_SCOPE: e2e
     strategy:
       fail-fast: false
       matrix:
@@ -107,6 +165,14 @@ jobs:
       - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=${{ matrix.shard }}
+        id: native-tests
+      - name: Collect native execution evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+          EVIDENCE_SHARD_CURRENT: ${{ matrix.shard_id == '1-of-2' && '1' || '2' }}
+          EVIDENCE_SHARD_TOTAL: '2'
+        run: node scripts/evidence/collect.mjs
       - run: npm run flake:report
         if: always()
       - run: npm run flake:check
@@ -123,6 +189,8 @@ jobs:
   test-visual:
     needs: lint-typecheck
     runs-on: windows-latest
+    env:
+      EVIDENCE_SCOPE: visual
     strategy:
       fail-fast: false
       matrix:
@@ -141,6 +209,14 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium
       - run: npm run with:target -- npx playwright test --project=visual --shard=${{ matrix.shard }}
+        id: native-tests
+      - name: Collect native execution evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+          EVIDENCE_SHARD_CURRENT: ${{ matrix.shard_id == '1-of-2' && '1' || '2' }}
+          EVIDENCE_SHARD_TOTAL: '2'
+        run: node scripts/evidence/collect.mjs
       - run: npm run check:visual-snapshots
       - run: npm run flake:report
         if: always()
@@ -162,6 +238,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       HOME: /root
+      EVIDENCE_SCOPE: accessibility
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
@@ -171,6 +248,12 @@ jobs:
       - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npm run test:accessibility
+        id: native-tests
+      - name: Collect native execution evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+        run: node scripts/evidence/collect.mjs
       - run: npm run flake:report
         if: always()
       - run: npm run flake:check
@@ -191,6 +274,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       HOME: /root
+      EVIDENCE_SCOPE: selector-contract
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
@@ -200,6 +284,12 @@ jobs:
       - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npm run test:contracts
+        id: native-tests
+      - name: Collect native execution evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+        run: node scripts/evidence/collect.mjs
       - run: npm run flake:report
         if: always()
       - run: npm run flake:check
@@ -220,6 +310,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       HOME: /root
+      EVIDENCE_SCOPE: cross-browser
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
@@ -229,6 +320,12 @@ jobs:
       - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npm run test:cross-browser
+        id: native-tests
+      - name: Collect native execution evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+        run: node scripts/evidence/collect.mjs
       - run: npm run flake:report
         if: always()
       - run: npm run flake:check
@@ -250,6 +347,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       HOME: /root
+      EVIDENCE_SCOPE: ${{ matrix.project }}
     strategy:
       fail-fast: false
       matrix:
@@ -263,6 +361,13 @@ jobs:
       - run: npm install --global npm@10.9.4
       - run: npm ci
       - run: npm run with:target -- npx playwright test --project=${{ matrix.project }}
+        id: native-tests
+      - name: Collect native execution evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+          EVIDENCE_REQUIRED: 'false'
+        run: node scripts/evidence/collect.mjs
       - run: npm run flake:report
         if: always()
       - run: npm run flake:check
@@ -280,6 +385,7 @@ jobs:
     if: ${{ !cancelled() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
     needs:
       [
+        evidence-negative-control,
         fresh-clone-format,
         lint-typecheck,
         scheduled-full-cross-browser,
@@ -310,10 +416,14 @@ jobs:
           pattern: reports-*
           merge-multiple: false
           path: merged-reports
+      - name: Validate native evidence and every required shard
+        run: node scripts/evidence/aggregate.mjs
       - name: Validate and collect every required report shard
         run: node scripts/prepare-allure-results.js
       - name: Render with the lockfile-pinned Allure CLI
         run: npm run allure:generate
+      - name: Include validated execution manifests in the rendered report
+        run: node -e "require('fs').copyFileSync('test-results/aggregate-evidence-v3.json','allure-report/execution-evidence-v3.json')"
       - name: Record the tested source and run
         env:
           REPORT_SOURCE_SHA: ${{ github.sha }}
@@ -326,8 +436,35 @@ jobs:
           path: allure-report/
           if-no-files-found: error
 
+  required-ci:
+    if: always()
+    needs:
+      [
+        fresh-clone-format,
+        lint-typecheck,
+        evidence-negative-control,
+        test-api,
+        test-e2e,
+        test-visual,
+        test-accessibility,
+        test-selector-contract,
+        test-cross-browser,
+        scheduled-full-cross-browser,
+        generate-allure-report,
+      ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .nvmrc
+      - name: Require substantive native success and evidence
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: node scripts/evidence/required-ci.mjs
+
   publish-allure-report:
-    needs: generate-allure-report
+    needs: [generate-allure-report, required-ci]
     if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     permissions:

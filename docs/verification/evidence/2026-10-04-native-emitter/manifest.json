@@ -1,0 +1,33 @@
+{
+  "note": "Exact local source snapshot; local native counts reconciled without fabricated GitHub execution identity. Remote emitter verification still required.",
+  "sourceHashes": {
+    "scripts/evidence/aggregate.mjs": "ced270fa96ab15cd8b978f1a80e277ffe008fda39d6560f4cfd329ccbbd3ecf4",
+    "scripts/evidence/assert-control.mjs": "7007da761ed75334cf6f808e20be9d6de9b7ea90cfef98bdf7686e4c98f4d8ad",
+    "scripts/evidence/check-runtime.mjs": "790d95b455c7c6232d60b6af317399755390c716f4c2d04e8f2ffd5949554c59",
+    "scripts/evidence/collect.mjs": "877a3bee8c7aa7ffa57c0df0a1959b22a1e43225f777e60871e48afc4a160c78",
+    "scripts/evidence/contract.mjs": "6d92575dff1d3a7f71946670f414d6c6e9a426977580c158515a751194445db1",
+    "scripts/evidence/evidence-v3.schema.json": "c280fabdf2e64e9d1350f9004e55ff64a0438ad4ba552422087cdb392de77ab9",
+    "scripts/evidence/freshness-policies.json": "1313329c1c06bd3a056dd1ed7d25c631036cae58480fdc4e767f22a0a01a568e",
+    "scripts/evidence/native-metadata.ts": "6ed692ee0fb1bec2b4d47198eb49fe958a03abfd1f878cd6bf8839b3d256f06a",
+    "scripts/evidence/playwright.mjs": "0ad42cbd4abba6620e1e2d92ebe7e1e0fc2472e57f000029e0e39688add182c6",
+    "scripts/evidence/playwright.test.mjs": "f4c475894a547976be18c1be2b9b0750db93541d13c9a346085de5470e56ff12",
+    "scripts/evidence/probe/intentional-failure.spec.ts": "e49caa9f353c6627a2235292c19e677d5d337a1ee26b9bc4925a2080d29c36e3",
+    "scripts/evidence/required-ci.mjs": "77d16eac9bf89e28f423c7176b26aef5c5eb1713bbb7b3c495400b6ecc018d17",
+    "scripts/evidence/required-ci.test.mjs": "c1bc8456e9d641ccdc7dd197b8bec6e975de4e6017909e2ea0f1fa9c8b989657",
+    "scripts/evidence/vendor-provenance.json": "9beb1c1e34b4c9445611879bfd64870f379cc1515f4aa1796eda9aee30a378ee",
+    "playwright.config.ts": "5001019d9b91e90f2bfeeff45e6908a673ea73d7723bd4bc6310b7eaaac47c2c",
+    "playwright.unit.config.ts": "ff2ec267eab5546e9f638d9d85dcee640aa8a2b056183d2efc861373d4e2bcf8",
+    "playwright.evidence-control.config.ts": "6cd85d3c55359a9063ae1ed60f62959d63afabac6ec1c7a3fad72d0260c010b1",
+    ".github/workflows/ci.yml": "b799ca8ca76eed6aed6e05708cd4e6220dad2d93bf2f7763fb58cbd21ce24b22"
+  },
+  "evidenceHashes": {
+    "adapter-tests.log": "2f75b62e95e0e07a67b31a87f5290eb87439b97ac07eb3043bfe2ca961592894",
+    "api-native-stats.json": "c375df4d2cec07a4012f5c6df89b39c9b1a7f957494f45d921023e6cbc32f2ff",
+    "inspected-main-protection.json": "f049b93f1acbc29fb3c0dd955093b48fed65b2b78efc4e5fe9939faab185bfd6",
+    "inspected-rulesets.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "intended-native-failure.log.gz": "a0294f36c5990ae614479399a73fcfbafc1208c756320fc13cbf406cb1dad2c8",
+    "native-reconciliation.jsonl": "9c425221e3af6e1acf1f2aafbe443e8e5f43c9cadf835ec1fba7c935c8016f6e",
+    "negative-native-stats.json": "df99855981a38f69a15f7dce60d608205f86ca412cb598859152617bcf84d40b",
+    "unit-native-stats.json": "ce4ae251bb89d1f205ae8c97c75b898a12a0c7116623959273dad76ed4dd4aff"
+  }
+}
