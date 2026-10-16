@@ -115,6 +115,16 @@ function gatherTests(suites, rows = []) {
   return rows;
 }
 
+function isExpectedOutcome(test) {
+  // Playwright's JSON reporter uses `status: expected|unexpected|flaky|skipped`;
+  // `expectedStatus` is the underlying result (`passed`, `failed`, etc.).
+  return test.status === 'expected';
+}
+
+function isSuccessfulTest(test) {
+  return isExpectedOutcome(test) && test.expectedStatus === 'passed';
+}
+
 function runFaultControls() {
   const results = [];
   for (const [index, fault] of faults.entries()) {
@@ -173,16 +183,13 @@ function runRepeatedProfile() {
     const payload = parseResultFile();
     const tests = gatherTests(payload?.suites ?? []);
     const attemptStatuses = tests.flatMap((item) => item.results.map((attempt) => attempt.status));
-    const passed =
-      result.status === 0 &&
-      tests.length > 0 &&
-      tests.every((item) => item.status === item.expectedStatus);
+    const passed = result.status === 0 && tests.length > 0 && tests.every(isSuccessfulTest);
     runs.push({
       iteration: index,
       passed,
       exitCode: result.status,
       totalTests: tests.length,
-      expectedOutcomes: tests.filter((item) => item.status === item.expectedStatus).length,
+      expectedOutcomes: tests.filter(isExpectedOutcome).length,
       firstAttemptFailures: attemptStatuses.filter((status) => status !== 'passed').length,
       retries: tests.reduce((total, item) => total + Math.max(0, item.results.length - 1), 0),
       skipped: tests.filter((item) => item.status === 'skipped').length,
@@ -240,6 +247,10 @@ function runRepeatedProfile() {
   }
 }
 
-if (mode === 'faults') runFaultControls();
-else if (mode === 'repeat') runRepeatedProfile();
-else throw new Error('Usage: node scripts/reliability-lab.js faults | repeat [20..50]');
+if (require.main === module) {
+  if (mode === 'faults') runFaultControls();
+  else if (mode === 'repeat') runRepeatedProfile();
+  else throw new Error('Usage: node scripts/reliability-lab.js faults | repeat [20..50]');
+}
+
+module.exports = { isExpectedOutcome, isSuccessfulTest };
