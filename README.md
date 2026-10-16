@@ -1,7 +1,7 @@
 # Playwright TypeScript Framework for Conduit RealWorld
 
-[![Playwright](https://img.shields.io/badge/Playwright-1.60.0-2EAD33)](https://playwright.dev/)
-[![Node](https://img.shields.io/badge/Node-20%2B-339933)](https://nodejs.org/)
+[![Playwright](https://img.shields.io/badge/Playwright-1.64.0-2EAD33)](https://playwright.dev/)
+[![Node](https://img.shields.io/badge/Node-24.21.0-339933)](https://nodejs.org/)
 [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)
 [![Allure Report](https://img.shields.io/badge/Allure-report-blue)](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)
 
@@ -68,7 +68,7 @@ The gate runs:
 - `npm run test:cross-browser`
 - scheduled `npm run test:cross-browser:full`
 
-CI enforces formatting, linting, type checking, secret scanning, anti-pattern scanning, visual snapshot hygiene, OpenAPI/Zod contract alignment, environment readiness, API tests, sharded authenticated and anonymous UI tests, sharded visual tests, Axe accessibility tests, selector-contract tests, cross-browser smoke tests, and five intentional fault controls plus a 20-run clean-target sample. Linux jobs run inside the pinned `mcr.microsoft.com/playwright:v1.60.0-noble` image. Report artifacts include Allure results, JUnit XML, JSON results, Playwright HTML output, and reliability sample summaries. The visual job runs on Windows to match the committed `win32` Chromium baselines.
+CI enforces formatting, linting, type checking, secret scanning, anti-pattern scanning, visual snapshot hygiene, OpenAPI/Zod contract alignment, environment readiness, API tests in regular and fixed-seed shuffled order, sharded authenticated and anonymous UI tests, sharded visual tests, Axe accessibility tests, selector-contract tests, cross-browser smoke tests, and five intentional fault controls plus a 20-run clean-target sample. Linux jobs run inside the pinned `mcr.microsoft.com/playwright:v1.64.0-noble` image. Report artifacts include Allure results, JUnit XML, JSON results, Playwright HTML output, and reliability sample summaries. The visual job runs on Windows to match the committed `win32` Chromium baselines.
 
 ## Controlled Target Workflow
 

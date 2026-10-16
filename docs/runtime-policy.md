@@ -4,9 +4,9 @@ Node24.21.0/npm10.9.4 is the contributor and CI baseline. Stable later Node24
 patches/minors satisfy the installation policy but are not automatically verified.
 Other Node majors, older patches and other npm versions fail early. Both Node
 version files, engines, normal preinstall, CI and the controlled-target container
-use this baseline. The browser image stays Playwright1.60.0; setup-node explicitly
-selects the framework runtime inside CI containers. Browser/package upgrades are
-separate compatibility work.
+use this baseline. The browser image and `@playwright/test` both pin Playwright 1.64.0; setup-node
+explicitly selects the framework runtime inside CI containers. Version upgrades
+require matching the browser image and passing the complete CI compatibility matrix.
 
 The [official lifecycle](https://nodejs.org/en/about/previous-releases) lists
 Node24 as LTS and Node20 as EOL. Node's bundled npm is not the project pin. Install

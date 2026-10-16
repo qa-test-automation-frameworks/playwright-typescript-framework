@@ -38,10 +38,10 @@ test('captured error output omits arbitrary exception messages and stacks', () =
   let output = '';
   // eslint-disable-next-line @typescript-eslint/unbound-method -- Stored for restoration, never invoked unbound.
   const original = process.stderr.write;
-  process.stderr.write = ((chunk: string | Uint8Array) => {
+  process.stderr.write = (chunk: string | Uint8Array): boolean => {
     output += String(chunk);
     return true;
-  }) as typeof process.stderr.write;
+  };
   try {
     const error = new Error(sentinel);
     error.name = sentinel;
@@ -183,10 +183,10 @@ test('debug diagnostics omit request headers, payloads and response free text', 
   // eslint-disable-next-line @typescript-eslint/unbound-method -- Stored for restoration, never invoked unbound.
   const original = process.stdout.write;
   const priorDebug = process.env.DEBUG_API;
-  process.stdout.write = ((chunk: string | Uint8Array) => {
+  process.stdout.write = (chunk: string | Uint8Array): boolean => {
     output += String(chunk);
     return true;
-  }) as typeof process.stdout.write;
+  };
   process.env.DEBUG_API = 'true';
   try {
     const client = clientWithResponse(JSON.stringify({ id: 'known-id', description: sentinel }));

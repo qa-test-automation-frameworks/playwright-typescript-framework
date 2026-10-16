@@ -26,13 +26,13 @@ const context = {
     fixtureVersion: 'fixture-v1',
     environment: 'isolated_ci',
     profile: 'e2e',
-    tools: { playwright: '1.60.0' },
+    tools: { playwright: '1.64.0' },
   },
   limitations: ['Synthetic adapter fixture only; not actual run evidence.'],
 };
 function fixture(outcomes = ['expected']) {
   const config = {
-    version: '1.60.0',
+    version: '1.64.0',
     shard: null,
     metadata: {
       evidenceSourceSha: context.sourceSha,

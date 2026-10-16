@@ -60,11 +60,9 @@ const hasUserContainer = (value: unknown): value is UserContainer =>
 const hasArticlesContainer = (value: unknown): value is ArticlesContainer =>
   isRecord(value) && 'articles' in value;
 
-const asArticle = (value: unknown): ArticleCandidate | null =>
-  isRecord(value) ? (value as ArticleCandidate) : null;
+const asArticle = (value: unknown): ArticleCandidate | null => (isRecord(value) ? value : null);
 
-const asUser = (value: unknown): UserCandidate | null =>
-  isRecord(value) ? (value as UserCandidate) : null;
+const asUser = (value: unknown): UserCandidate | null => (isRecord(value) ? value : null);
 
 const isApiResponse = (value: unknown): value is APIResponse =>
   isRecord(value) && typeof value.status === 'function';
