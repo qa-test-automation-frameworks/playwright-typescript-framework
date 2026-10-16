@@ -493,6 +493,7 @@ jobs:
   publish-allure-report:
     needs: [generate-allure-report, required-ci]
     if: >-
+      !cancelled() &&
       needs.generate-allure-report.result == 'success' &&
       needs.required-ci.result == 'success' &&
       (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
