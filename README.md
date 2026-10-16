@@ -12,14 +12,15 @@ report-grade failure diagnostics.
 
 ## Reviewer Proof
 
-| Evidence              | Link                                                                                                                                                                                                                                         |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Live report           | [Allure report](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                            |
-| Release               | [v1.0.0](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0)                                                                                                                               |
-| CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)      |
-| Repository activity   | [Default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [Pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) |
-| Docs and assets       | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                               |
-| Best failure evidence | [Failure example](docs/failure-example.md)                                                                                                                                                                                                   |
+| Evidence               | Link                                                                                                                                                                                                                                         |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Live report            | [Allure report](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                            |
+| Release                | [v1.0.0](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0)                                                                                                                               |
+| CI                     | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)      |
+| Repository activity    | [Default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [Pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) |
+| Docs and assets        | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                               |
+| Best failure evidence  | [Failure example](docs/failure-example.md)                                                                                                                                                                                                   |
+| Reliability experiment | [Controlled faults and repeated-run sample](docs/verification/2026-10-16-reliability-lab.md)                                                                                                                                                 |
 
 ![Intentional Playwright failure with screenshot evidence](docs/assets/screenshots/debugging-failure.png)
 
@@ -67,7 +68,7 @@ The gate runs:
 - `npm run test:cross-browser`
 - scheduled `npm run test:cross-browser:full`
 
-CI enforces formatting, linting, type checking, secret scanning, anti-pattern scanning, visual snapshot hygiene, OpenAPI/Zod contract alignment, environment readiness, API tests, sharded authenticated and anonymous UI tests, sharded visual tests, Axe accessibility tests, selector-contract tests, and cross-browser smoke tests against the local controlled target. Linux jobs run inside the pinned `mcr.microsoft.com/playwright:v1.60.0-noble` image. Report artifacts include Allure results, JUnit XML, JSON results, and Playwright HTML output. The visual job runs on Windows to match the committed `win32` Chromium baselines.
+CI enforces formatting, linting, type checking, secret scanning, anti-pattern scanning, visual snapshot hygiene, OpenAPI/Zod contract alignment, environment readiness, API tests, sharded authenticated and anonymous UI tests, sharded visual tests, Axe accessibility tests, selector-contract tests, cross-browser smoke tests, and five intentional fault controls plus a 20-run clean-target sample. Linux jobs run inside the pinned `mcr.microsoft.com/playwright:v1.60.0-noble` image. Report artifacts include Allure results, JUnit XML, JSON results, Playwright HTML output, and reliability sample summaries. The visual job runs on Windows to match the committed `win32` Chromium baselines.
 
 ## Controlled Target Workflow
 

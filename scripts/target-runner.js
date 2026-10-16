@@ -7,6 +7,7 @@ const playwrightCli = join(dirname(require.resolve('@playwright/test/package.jso
 const env = {
   ...process.env,
   TARGET_PORT: process.env.TARGET_PORT || '4300',
+  CONTROLLED_TARGET_MODE: '1',
   BASE_URL: process.env.BASE_URL || `http://127.0.0.1:${process.env.TARGET_PORT || 4300}`,
   API_URL: process.env.API_URL || `http://127.0.0.1:${process.env.TARGET_PORT || 4300}/api`,
   TEST_USER_EMAIL: process.env.TEST_USER_EMAIL || 'seed.user@example.test',

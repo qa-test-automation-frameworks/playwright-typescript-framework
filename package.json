@@ -27,6 +27,8 @@
     "allure:serve": "allure serve allure-results",
     "flake:report": "node scripts/flake-report.js",
     "flake:check": "node scripts/flake-report.js --enforce",
+    "reliability:faults": "node scripts/reliability-lab.js faults",
+    "reliability:repeat": "node scripts/reliability-lab.js repeat 20",
     "check:quarantine": "node scripts/check-quarantine.js",
     "clean": "node -e \"for (const dir of ['.auth','allure-report','allure-results','playwright-report','test-results']) require('fs').rmSync(dir,{recursive:true,force:true})\"",
     "check:runtime": "node scripts/check-runtime.js",
