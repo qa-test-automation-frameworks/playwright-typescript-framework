@@ -1,0 +1,91 @@
+
+> playwright-typescript-framework@1.0.0 with:target
+> node scripts/target-runner.js npm run test:api
+
+Controlled target ready at http://127.0.0.1:4300
+
+> playwright-typescript-framework@1.0.0 test:api
+> playwright test --project=api
+
+◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+
+Running 32 tests using 2 workers
+
+[1A[2K(node:118433) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:118433) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+
+[1A[2K[1/32] [setup] › tests/setup/global-setup.ts:15:6 › global setup - authenticate and seed
+[1A[2K[setup] › tests/setup/global-setup.ts:15:6 › global setup - authenticate and seed
+[2026-10-04T12:11:17.244Z] [INFO] Starting global setup...
+
+[1A[2K[2026-10-04T12:11:17.266Z] [INFO] Environment readiness check passed | Meta: {"uiStatus":200,"apiStatus":200}
+
+[1A[2K(node:118448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:118449) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:118448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:118449) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+
+[1A[2K◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+
+[1A[2K[2/32] [api] › tests/api/articles.api.spec.ts:13:7 › API: Articles & Comments › Create article returns correct shape @smoke @api
+[1A[2K[3/32] [api] › tests/api/articles.api.spec.ts:33:7 › API: Articles & Comments › Get article by slug @api
+[1A[2K[4/32] [api] › tests/api/articles.api.spec.ts:50:7 › API: Articles & Comments › Update article title and body @api
+[1A[2K[5/32] [api] › tests/api/articles.api.spec.ts:76:7 › API: Articles & Comments › Delete article removes it @api @critical
+[1A[2K[6/32] [api] › tests/api/articles.api.spec.ts:92:7 › API: Articles & Comments › Favourite article increments count @api
+[1A[2K[7/32] [api] › tests/api/articles.api.spec.ts:108:7 › API: Articles & Comments › List articles with tag filter @api
+[1A[2K[8/32] [api] › tests/api/articles.api.spec.ts:128:7 › API: Articles & Comments › Add and retrieve comment on article @api
+[1A[2K[9/32] [api] › tests/api/articles.api.spec.ts:150:7 › API: Articles & Comments › Authenticated user cannot delete another user's article @api
+[1A[2K[10/32] [api] › tests/api/articles.api.spec.ts:173:7 › API: Articles & Comments › Malformed article payload returns validation error @api
+[1A[2K[11/32] [api] › tests/api/auth.api.spec.ts:9:7 › API: Authentication › Register a new user successfully @smoke @api
+[1A[2K[12/32] [api] › tests/api/auth.api.spec.ts:25:7 › API: Authentication › Login with valid credentials returns JWT @smoke @api
+[1A[2K[13/32] [api] › tests/api/auth.api.spec.ts:43:7 › API: Authentication › Login with invalid password returns 401 @api
+[1A[2K[14/32] [api] › tests/api/auth.api.spec.ts:56:7 › API: Authentication › Register with duplicate email returns conflict with descriptive error @api
+[1A[2K[15/32] [api] › tests/api/auth.api.spec.ts:71:7 › API: Authentication › Get current user with valid token @api
+[1A[2K[16/32] [api] › tests/api/auth.api.spec.ts:86:7 › API: Authentication › Get current user without token returns 401 @api
+[1A[2K[17/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:11:7 › API: controlled target regressions › rejects invalid article payloads with 422 @api
+[1A[2K[18/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:17:7 › API: controlled target regressions › rejects empty comments with 422 @api
+[1A[2K[19/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:23:7 › API: controlled target regressions › requires authentication before deleting comments @api
+[1A[2K[20/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:38:7 › API: controlled target regressions › keeps account access valid after email update @api
+[1A[2K[21/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:50:7 › API: controlled target regressions › rejects profile update conflicts with 422 @api
+[1A[2K[22/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:61:7 › API: controlled target regressions › hides unauthorized article mutations behind 404 @api
+[1A[2K[23/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:74:7 › API: controlled target regressions › filters articles by tag @api
+[1A[2K[24/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:83:7 › API: controlled target regressions › paginates global feed while preserving total count @api
+[1A[2K[25/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:123:7 › API: controlled target regressions › returns 400 for malformed JSON bodies @api
+[1A[2K[26/32] [api] › tests/api/controlled-target-regressions.api.spec.ts:104:7 › API: controlled target regressions › returns followed authors in the social feed only @api
+[1A[2K[27/32] [api] › tests/api/profile.api.spec.ts:33:7 › API: User Profiles & Social Graph › Get public profile by username @api
+[1A[2K[28/32] [api] › tests/api/profile.api.spec.ts:49:7 › API: User Profiles & Social Graph › Builds profile update payloads for account settings coverage @api
+[1A[2K[29/32] [api] › tests/api/profile.api.spec.ts:56:7 › API: User Profiles & Social Graph › Follow a user @api
+[1A[2K[30/32] [api] › tests/api/profile.api.spec.ts:83:7 › API: User Profiles & Social Graph › Unfollow a user @api
+[1A[2K[31/32] [api] › tests/api/profile.api.spec.ts:110:7 › API: User Profiles & Social Graph › Personal feed shows articles from followed authors @api @critical
+[1A[2K(node:118476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:118476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+
+[1A[2K[32/32] [teardown] › tests/setup/global-teardown.ts:8:9 › global teardown - remove shared seed
+[1A[2K  32 passed (6.9s)

@@ -1,0 +1,24 @@
+✔ final cases reconcile; retries remain attempts rather than extra tests (6.060455ms)
+✔ expected native failures retain Playwright final-outcome semantics (0.95645ms)
+✔ native assertion failure and runner failure remain failed evidence (1.013086ms)
+✔ empty collection and all-skipped selection cannot pass (0.759627ms)
+✔ native globals fail execution despite passing cases (0.64184ms)
+✔ native statistics, duplicate identities and missing attempts fail closed (0.953438ms)
+✔ missing retry attempt and final outcome disagreement are rejected (0.38198ms)
+✔ old source, run attempt or scope cannot reuse a native input (0.286944ms)
+✔ complete shards aggregate actual cases while missing or duplicate inclusion fails (3.260769ms)
+✔ business cases cannot overlap while separate setup executions are retained (4.449949ms)
+✔ native shard, source, target and run attempt identities cannot be mixed (3.02667ms)
+✔ leaf summaries must reconcile before aggregation (1.130814ms)
+✔ unnamed native default project has a stable case identity (0.739162ms)
+✔ PR fast scopes require actual success, allowing only the scheduled tier to skip (1.136753ms)
+✔ mandatory skipped, failed, cancelled or missing child cannot pass the final gate (2.369582ms)
+✔ scheduled full browsers must actually succeed on the scheduled trigger (0.258841ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115.005578

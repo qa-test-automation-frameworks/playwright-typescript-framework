@@ -1,0 +1,119 @@
+{
+  "startedAt": "2026-10-04T14:22:31.931Z",
+  "completedAt": "2026-10-04T14:22:43.748Z",
+  "counts": {
+    "unit": "parameter_case",
+    "selected": 14,
+    "executed": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "retried": 0,
+    "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+  },
+  "cases": [
+    {
+      "id": "a0fcd1a7316ec0123247a8d20ed78949dc8695f751279c797b43595e0f9310da",
+      "project": "teardown",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "2132966d81a4fbaf061d8bfb4e14eb8493b07bc3c145ea82bf0106cfb71d3890",
+      "project": "setup",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "0075b3a934f464316d1866b982fe6a3a4e308d55fde7bf6fcf288a264fec52c9",
+      "project": "firefox-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "1a78594854f16c9c25a93fd09898b6caa8ba7999041ce4585c6186d3178d4ffa",
+      "project": "webkit-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "6cd33b9762593ea09a287b58cf5999b41c05cd5209863219d2b41bccb062364b",
+      "project": "mobile-chrome-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "6b554b15644cffe174218abb2646a8e8b6045d6bfdbc53c4ab6f2935709d2acd",
+      "project": "firefox-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "b2dd536c4e60883501cd64ad80eb405fe4dcf536bd78f036831bea7d50d6d423",
+      "project": "firefox-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "d6fba8ed12999b481e300a8a47918a0e500d8f8fbf1828480b7644da6329dc32",
+      "project": "webkit-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "c03a7d53a88f1e7e198b2e72ebe89f62e2986da9b6fb309be1affb5a1732e315",
+      "project": "webkit-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "9a1510f999701a07a614f878d1a661ddb14d375af9d3fd6f6184297bbe7da8c7",
+      "project": "mobile-chrome-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "c49121454a4807506b621edec83b87da9bb26a3642965068525efc975015cf00",
+      "project": "mobile-chrome-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "869636ada78c17a08b1968db6c002027bdd497fe4ff001cd189e4a99595f652e",
+      "project": "firefox-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "899b507c3ccae1bdfa0a7787767c024e498933a0a9a5c68f6ea601f298a42589",
+      "project": "webkit-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "8f25542716c5af14c67ce90f01457d5217778c42fefa8397a50edab97ac58778",
+      "project": "mobile-chrome-smoke",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    }
+  ],
+  "globalErrorCount": 0,
+  "toolVersion": "1.60.0",
+  "shard": null,
+  "rawAttempts": 14,
+  "inputSha256": "4918712a84d0fa098a3ea3896a7f682112b99e13a5161a9d96853b24809df470"
+}

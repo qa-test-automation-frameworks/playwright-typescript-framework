@@ -1,0 +1,86 @@
+{
+  "node": "24.21.0",
+  "npm": "10.9.4",
+  "unchangedNonRootLockEntries": 344,
+  "sources": [
+    {
+      "path": ".nvmrc",
+      "sha256": "73fb1b615e2043a933be1c0895cde4358036acc28d785692509b822aa53c761f"
+    },
+    {
+      "path": ".node-version",
+      "sha256": "73fb1b615e2043a933be1c0895cde4358036acc28d785692509b822aa53c761f"
+    },
+    {
+      "path": ".npmrc",
+      "sha256": "7151cf397def0c2cb0ab65643701d27d335a72c90f775675b5f826bc7005818a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6126cd84c9a843212bb63678e27d4e494ad5c320ad9c2cb0bc5a39bbc69ace4d"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "d9502739368814371f38da410d4ff546eb422ba8aef7525c821d18b309e10554"
+    },
+    {
+      "path": "scripts/check-runtime.js",
+      "sha256": "424b19259c36bcbdc3f0dfa63be8d5340495cb96ee957f25d5eb961e65235b55"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "716760c82c34215bac9f0eca4af3ba5bf5e41e083b5b8d175471b30958915774"
+    },
+    {
+      "path": "docker-compose.yml",
+      "sha256": "804e8a1ecaaaabfbc9016cf4d31823cbe65e8bf6e46ac94d26a5653a2379427f"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "api.log",
+      "sha256": "7049168f2e51ad5c37c2c5f791d4b4c180764b13db53a639ae7192381ce1e31e"
+    },
+    {
+      "path": "clean-bootstrap.log",
+      "sha256": "12cb1c2a61044d3d613397dfe9bab83e708dfd9552e0a24b9bd53f45bb67f170"
+    },
+    {
+      "path": "local.log",
+      "sha256": "ddbf4aaa10d5b8ec64855dcb7b19e89be2258154081f9a672c3038a5e542d20f"
+    },
+    {
+      "path": "lock.log",
+      "sha256": "3fc298697693fead523a8ab1e098ed9f7f37c5186924dd9cf33eccf5ba5aab6d"
+    },
+    {
+      "path": "node-image-manifest.json",
+      "sha256": "b31f49f6d0ad187d6ebca2c2cf4f915272c14cd5639a1e137d2de49255af38e8"
+    },
+    {
+      "path": "old-major-negative.log",
+      "sha256": "31fb679b29dffde4a1ebfb39a13e2aecd3cd2545b0a007a6b55149a443ac41be"
+    },
+    {
+      "path": "old-patch-negative.log",
+      "sha256": "a0b0467d2a1bf7866a9bf0b12f4c0b3bda4c3d1b60e0ba9eaf41537968d987b7"
+    },
+    {
+      "path": "remote-artifacts.json",
+      "sha256": "f55094db1433311dbeba72f249388c5361ef6af269a37247057c4ae091e25f20"
+    },
+    {
+      "path": "remote-jobs.json",
+      "sha256": "17cdb3d5086d94c2a900cdae49e7659e66950a25276cfb39e8c0ce44a4f671b6"
+    },
+    {
+      "path": "remote-run.json",
+      "sha256": "7c304c5a7dcbc70c3a5d3ae556b72e7c625ed225985e04795c8ae2c7f6a6859a"
+    },
+    {
+      "path": "wrong-npm-negative.log",
+      "sha256": "a622cbd467cb0b66225a1613a08ea3733ad06e676f67017faf640f1fd39c5709"
+    }
+  ],
+  "remoteTestedHead": "5040a09e5f750e854c7db2b256a3d6f0bcdf017b"
+}

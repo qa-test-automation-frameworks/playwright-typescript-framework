@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "test:unit": "node scripts/run-framework-unit.js",
     "test:api": "playwright test --project=api",
+    "test:api:shuffle": "playwright test --project=api --workers=1 --retries=0 --shuffle 271828182 --reporter=line",
     "test:e2e": "playwright test --project=chromium-authenticated --project=chromium-anonymous",
     "test:smoke": "playwright test --grep @smoke",
     "test:visual": "playwright test --project=visual",
@@ -26,6 +28,8 @@
     "allure:serve": "allure serve allure-results",
     "flake:report": "node scripts/flake-report.js",
     "flake:check": "node scripts/flake-report.js --enforce",
+    "reliability:faults": "node scripts/reliability-lab.js faults",
+    "reliability:repeat": "node scripts/reliability-lab.js repeat 20",
     "check:quarantine": "node scripts/check-quarantine.js",
     "clean": "node -e \"for (const dir of ['.auth','allure-report','allure-results','playwright-report','test-results']) require('fs').rmSync(dir,{recursive:true,force:true})\"",
     "check:runtime": "node scripts/check-runtime.js",
@@ -38,13 +42,14 @@
     "observability:down": "docker compose --profile observability down",
     "test:otel": "cross-env OTEL_ENABLED=true playwright test --project=api --project=chromium-authenticated",
     "verify:otel": "npm run observability:up && npm run test:otel && npm run observability:down",
-    "verify": "npm run check:runtime && npm run format:check && npm run lint && npm run type-check && npm run check:secrets && npm run check:anti-patterns && npm run check:quarantine && npm run check:visual-snapshots && npm run check:openapi-contract && npm run check:env && npm run test:api && npm run test:e2e && npm run test:visual && npm run check:visual-snapshots && npm run test:accessibility && npm run test:contracts && npm run test:cross-browser && npm run flake:report",
+    "verify": "npm run check:runtime && npm run format:check && npm run lint && npm run type-check && npm run test:unit && npm run check:secrets && npm run check:anti-patterns && npm run check:quarantine && npm run check:visual-snapshots && npm run check:openapi-contract && npm run check:env && npm run test:api && npm run test:e2e && npm run test:visual && npm run check:visual-snapshots && npm run test:accessibility && npm run test:contracts && npm run test:cross-browser && npm run flake:report",
     "lint": "eslint . --ext .ts,.js --max-warnings 0",
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "preinstall": "node scripts/check-runtime.js"
   },
   "keywords": [
     "playwright",
@@ -57,17 +62,17 @@
   "author": "Prayag Vyas (prayagv)",
   "license": "MIT",
   "engines": {
-    "node": ">=20",
-    "npm": ">=10"
+    "node": ">=24.21.0 <25",
+    "npm": "10.9.4"
   },
   "dependencies": {
-    "@faker-js/faker": "9.2.0",
+    "@faker-js/faker": "10.6.0",
     "@opentelemetry/api": "1.9.1",
     "@opentelemetry/exporter-trace-otlp-http": "0.219.0",
-    "@opentelemetry/resources": "2.7.1",
-    "@opentelemetry/sdk-trace-base": "2.7.1",
-    "@opentelemetry/sdk-trace-node": "2.8.0",
-    "@opentelemetry/semantic-conventions": "1.28.0",
+    "@opentelemetry/resources": "2.12.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0",
+    "@opentelemetry/sdk-trace-node": "2.12.0",
+    "@opentelemetry/semantic-conventions": "1.29.0",
     "dotenv": "17.4.2",
     "zod": "4.4.3"
   },
@@ -75,16 +80,17 @@
     "@axe-core/playwright": "4.11.3",
     "@commitlint/cli": "19.6.0",
     "@commitlint/config-conventional": "19.6.0",
-    "@playwright/test": "1.60.0",
+    "@playwright/test": "1.64.0",
     "@types/node": "20.17.6",
-    "@typescript-eslint/eslint-plugin": "7.18.0",
-    "@typescript-eslint/parser": "7.18.0",
+    "@typescript-eslint/eslint-plugin": "8.71.2",
+    "@typescript-eslint/parser": "8.71.2",
+    "allure-commandline": "2.46.1",
     "allure-playwright": "3.9.0",
     "cross-env": "7.0.3",
     "eslint": "8.57.0",
     "eslint-plugin-playwright": "2.10.4",
     "husky": "9.1.7",
-    "lint-staged": "15.2.10",
+    "lint-staged": "17.6.0",
     "prettier": "3.8.3",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"
@@ -97,5 +103,6 @@
     "*.{json,md,yml}": [
       "prettier --write"
     ]
-  }
+  },
+  "packageManager": "npm@10.9.4"
 }

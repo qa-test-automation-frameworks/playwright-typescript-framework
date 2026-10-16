@@ -1,0 +1,42 @@
+{
+  "verified": [
+    {
+      "scope": "unit",
+      "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+      "runId": "37208832825",
+      "attempt": 1,
+      "execution": "passed",
+      "counts": {
+        "unit": "parameter_case",
+        "selected": 21,
+        "executed": 21,
+        "passed": 21,
+        "failed": 0,
+        "skipped": 0,
+        "retried": 0,
+        "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+      },
+      "publication": "pending",
+      "nativeInputHashVerified": true
+    },
+    {
+      "scope": "negative",
+      "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+      "runId": "37208832825",
+      "attempt": 1,
+      "execution": "failed",
+      "counts": {
+        "unit": "parameter_case",
+        "selected": 1,
+        "executed": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0,
+        "retried": 0,
+        "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+      },
+      "publication": "pending",
+      "nativeInputHashVerified": true
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 3,
+  "kind": "execution",
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "sourceSha": "05a2a9152fc588b4e16aa24abe4cb7de90dd39be",
+  "workflow": {
+    "id": "ci.yml",
+    "name": "CI",
+    "runId": "37208052196",
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208052196",
+    "trigger": "pull_request",
+    "branch": "49/merge"
+  },
+  "scope": {
+    "id": "evidence-negative-control",
+    "required": false,
+    "evidenceClass": "hermetic",
+    "freshnessPolicy": "daily_gate_v1"
+  },
+  "target": {
+    "identity": "framework-unit-fakes",
+    "revision": "git:05a2a9152fc588b4e16aa24abe4cb7de90dd39be",
+    "fixtureVersion": "git-05a2a9152fc588b4e16aa24abe4cb7de90dd39be",
+    "environment": "github_actions-linux",
+    "profile": "evidence-negative-control",
+    "tools": {
+      "node": "24.21.0",
+      "playwright": "1.60.0"
+    }
+  },
+  "execution": {
+    "disposition": "failed",
+    "reason": "Runner step outcome failure; 1 unexpected final native cases",
+    "startedAt": "2026-10-04T14:07:48.042Z",
+    "completedAt": "2026-10-04T14:07:48.972Z",
+    "integrity": "complete",
+    "counts": {
+      "unit": "parameter_case",
+      "selected": 1,
+      "executed": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "retried": 0,
+      "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+    },
+    "measurements": [],
+    "shards": {
+      "expected": ["shard-1-of-1"],
+      "received": ["shard-1-of-1"]
+    }
+  },
+  "publication": {
+    "disposition": "pending",
+    "reason": null,
+    "publishedAt": null,
+    "reportUrl": null,
+    "artifacts": []
+  },
+  "generator": {
+    "name": "playwright_native_v3",
+    "version": "3.0.0"
+  },
+  "limitations": [
+    "Publication pending; E03 artifact references and retention not certified.",
+    "Native duration rounded to millisecond manifest precision.",
+    "Hermetic fakes/probe are versioned in the tested source; no target service or browser is contacted."
+  ]
+}

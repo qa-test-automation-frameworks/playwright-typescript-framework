@@ -1,7 +1,7 @@
 # Playwright TypeScript Framework for Conduit RealWorld
 
-[![Playwright](https://img.shields.io/badge/Playwright-1.60.0-2EAD33)](https://playwright.dev/)
-[![Node](https://img.shields.io/badge/Node-20%2B-339933)](https://nodejs.org/)
+[![Playwright](https://img.shields.io/badge/Playwright-1.64.0-2EAD33)](https://playwright.dev/)
+[![Node](https://img.shields.io/badge/Node-24.21.0-339933)](https://nodejs.org/)
 [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)
 [![Allure Report](https://img.shields.io/badge/Allure-report-blue)](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)
 
@@ -12,14 +12,15 @@ report-grade failure diagnostics.
 
 ## Reviewer Proof
 
-| Evidence              | Link                                                                                                                                                                                                                                         |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Live report           | [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                           |
-| Release               | [v1.0.0](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0)                                                                                                                               |
-| CI                    | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)      |
-| Repository activity   | [Default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [Pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) |
-| Docs and assets       | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                               |
-| Best failure evidence | [Failure example](docs/failure-example.md)                                                                                                                                                                                                   |
+| Evidence               | Link                                                                                                                                                                                                                                         |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Live report            | [Allure report](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)                                                                                                                                            |
+| Release                | [v1.0.0](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0)                                                                                                                               |
+| CI                     | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)      |
+| Repository activity    | [Default-branch commits](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commits/main/) · [Pull requests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pulls?q=is%3Apr) |
+| Docs and assets        | [Documentation](docs) · [Screenshots](docs/assets/screenshots)                                                                                                                                                                               |
+| Best failure evidence  | [Failure example](docs/failure-example.md)                                                                                                                                                                                                   |
+| Reliability experiment | [Controlled faults and repeated-run sample](docs/verification/2026-10-16-reliability-lab.md)                                                                                                                                                 |
 
 ![Intentional Playwright failure with screenshot evidence](docs/assets/screenshots/debugging-failure.png)
 
@@ -67,7 +68,7 @@ The gate runs:
 - `npm run test:cross-browser`
 - scheduled `npm run test:cross-browser:full`
 
-CI enforces formatting, linting, type checking, secret scanning, anti-pattern scanning, visual snapshot hygiene, OpenAPI/Zod contract alignment, environment readiness, API tests, sharded authenticated and anonymous UI tests, sharded visual tests, Axe accessibility tests, selector-contract tests, and cross-browser smoke tests against the local controlled target. Linux jobs run inside the pinned `mcr.microsoft.com/playwright:v1.60.0-noble` image. Report artifacts include Allure results, JUnit XML, JSON results, and Playwright HTML output. The visual job runs on Windows to match the committed `win32` Chromium baselines.
+CI enforces formatting, linting, type checking, secret scanning, anti-pattern scanning, visual snapshot hygiene, OpenAPI/Zod contract alignment, environment readiness, API tests in regular and fixed-seed shuffled order, sharded authenticated and anonymous UI tests, sharded visual tests, Axe accessibility tests, selector-contract tests, cross-browser smoke tests, and five intentional fault controls plus a 20-run clean-target sample. Linux jobs run inside the pinned `mcr.microsoft.com/playwright:v1.64.0-noble` image. Report artifacts include Allure results, JUnit XML, JSON results, Playwright HTML output, and reliability sample summaries. The visual job runs on Windows to match the committed `win32` Chromium baselines.
 
 ## Controlled Target Workflow
 
@@ -134,12 +135,17 @@ docs/openapi/     Controlled target OpenAPI contract source
 
 ## Setup
 
-Use Node 20 or newer, with Node 20 listed in `.nvmrc` and `.node-version` as the baseline runtime.
+Use Node24.21.0 (pinned in `.nvmrc` and `.node-version`) and npm10.9.4.
+See [runtime policy](docs/runtime-policy.md) for the supported release range.
 
 ```bash
-npm ci
+npx --yes npm@10.9.4 ci
+npm run test:unit
+npm run lint
+npm run type-check
+
+# Browser checks are a separate path:
 npx playwright install chromium
-cp .env.example .env
 ```
 
 For normal local verification, prefer `npm run verify:target` instead of hand-maintaining `.env`. For exploratory external runs, update `.env` with credentials for a test account and explicit target URLs. Do not commit `.env`, `.auth`, reports, traces, screenshots, or generated browser artifacts.
@@ -191,7 +197,11 @@ CI enforces the retry budget with `npm run flake:check` on pull requests and sch
 Current workflow duration and sample size are published on the
 [portfolio dashboard](https://qa-test-automation-frameworks.github.io/.github/).
 
-The `CI` workflow publishes Allure history from green default-branch controlled-target results to the `gh-pages` branch. The manual `Allure Report Deploy` workflow can republish the same report path on demand.
+The `CI` workflow validates all eight required artifact groups, renders Allure with the lockfile-pinned CLI, and retains the rendered report as a CI artifact. Default-branch runs deploy that complete report through GitHub Pages. Pull requests render without deployment. `source.json` identifies the tested revision and run. Report generation failure leaves the previously deployed report intact; native Playwright HTML remains in each test job's artifacts.
+
+For local rendering, install JDK 21 and set `JAVA_HOME`, then run `npm run allure:generate` after a test profile. The optional renderer uses Allure 2 for compatibility with the existing report format; adopting Allure 3 is a separate migration. Hosted long-term history retention remains a separate evidence workstream.
+
+The manual `Allure Report Deploy` workflow republishes an existing rendered artifact from a successful default-branch `CI` run. Supply that run's numeric ID. It verifies source identity and never reruns tests or presents historical evidence as a fresh test execution.
 
 ## License And Attribution
 
@@ -200,7 +210,7 @@ This project is licensed under the [MIT License](LICENSE). When cloning, forking
 ## Portfolio Review Path
 
 - Latest CI workflow: [GitHub Actions CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)
-- Published report: [Allure history](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)
+- Published report: [Allure report](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/)
 - High-signal tests: `tests/api`, `tests/e2e/article-lifecycle.spec.ts`, `tests/contracts/selectors/controlled-ui.selectors.spec.ts`, `tests/visual`, and `tests/accessibility`
 - Local proof command: `npm run verify:target`
 - Verification evidence: [Verification evidence](docs/verification-evidence.md)
@@ -209,7 +219,7 @@ This project is licensed under the [MIT License](LICENSE). When cloning, forking
 
 - No untracked publishable files; every accepted `tests/visual/**/*-snapshots/*.png` baseline is listed in `tests/visual/visual-snapshots.manifest.json`.
 - No ignored reports, traces, screenshots, videos, `.auth`, or local environment files committed.
-- `npm run verify:target` is green on Node 20.
+- Verify `npm run verify:target` on the supported runtime before claiming a complete current run.
 - GitHub Actions is green against the controlled target on the public default branch.
 - CI and Allure badges point to the repository workflow and GitHub Pages report URLs.
 - Confirm at least one meaningful initial commit exists before publishing.

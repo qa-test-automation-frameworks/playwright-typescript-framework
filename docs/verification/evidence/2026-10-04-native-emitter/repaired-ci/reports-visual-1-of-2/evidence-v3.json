@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 3,
+  "kind": "execution",
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "sourceSha": "f4d810749dedf4a813cdc27b8dacec787f3893ac",
+  "workflow": {
+    "id": "ci.yml",
+    "name": "CI",
+    "runId": "37208832825",
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825",
+    "trigger": "pull_request",
+    "branch": "49/merge"
+  },
+  "scope": {
+    "id": "visual",
+    "required": true,
+    "evidenceClass": "controlled",
+    "freshnessPolicy": "daily_gate_v1"
+  },
+  "target": {
+    "identity": "owned-conduit-target",
+    "revision": "sha256:a8db1c2120f7b6adb7c214d580e073fc3b44aa32b6a06c1ff6d706996817f75e",
+    "fixtureVersion": "sha256-a3835e06c88f6a0b49ecebc008c3187a328ae5d2bdf32288af999559cc9eea1a",
+    "environment": "github_actions-windows",
+    "profile": "visual",
+    "tools": {
+      "node": "24.21.0",
+      "playwright": "1.60.0"
+    }
+  },
+  "execution": {
+    "disposition": "passed",
+    "reason": null,
+    "startedAt": "2026-10-04T14:23:29.898Z",
+    "completedAt": "2026-10-04T14:23:36.935Z",
+    "integrity": "complete",
+    "counts": {
+      "unit": "parameter_case",
+      "selected": 5,
+      "executed": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "retried": 0,
+      "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+    },
+    "measurements": [],
+    "shards": {
+      "expected": ["shard-1-of-2"],
+      "received": ["shard-1-of-2"]
+    }
+  },
+  "publication": {
+    "disposition": "pending",
+    "reason": null,
+    "publishedAt": null,
+    "reportUrl": null,
+    "artifacts": []
+  },
+  "generator": {
+    "name": "playwright_native_v3",
+    "version": "3.0.0"
+  },
+  "limitations": [
+    "Publication pending; E03 artifact references and retention not certified.",
+    "Native duration rounded to millisecond manifest precision.",
+    "Target digest covers owned target files, seed implementation and dependency lock; target is co-versioned with the framework, not independently deployed."
+  ]
+}

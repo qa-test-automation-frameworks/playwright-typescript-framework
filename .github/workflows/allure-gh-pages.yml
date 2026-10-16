@@ -2,36 +2,37 @@ name: Allure Report Deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Successful default-branch CI run containing rendered-allure-report
+        type: string
+        required: true
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
-    env:
-      HOME: /root
     permissions:
       contents: read
+      actions: read
       pages: write
       id-token: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN_ID: ${{ inputs.source_run_id }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: '20'
-      - run: npm ci
-      - run: npx playwright install --with-deps chromium firefox webkit
-      - run: npm run verify:target
-        env:
-          TEST_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
-      - uses: simple-elf/allure-report-action@e463a472d3b1d750f9544369d60589ff1964c820 # v1.14
-        with:
-          allure_results: allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
+      - name: Check trusted source run and retrieve rendered report
+        run: |
+          [[ "$SOURCE_RUN_ID" =~ ^[0-9]+$ ]] || { echo 'Expected numeric source run ID'; exit 1; }
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN_ID" > /tmp/source-run.json
+          node -e "const r=require('/tmp/source-run.json'); if(r.name!=='CI'||!['main','master'].includes(r.head_branch)||!['push','schedule'].includes(r.event)||r.conclusion!=='success') throw new Error('Source must be a successful trusted default-branch CI run')"
+          gh run download "$SOURCE_RUN_ID" --repo "$GITHUB_REPOSITORY" --name rendered-allure-report --dir allure-report
+          node -e "const r=require('/tmp/source-run.json'),s=require('./allure-report/source.json'); if(s.sourceSha!==r.head_sha||s.runAttempt!==String(r.run_attempt)||s.runUrl!==process.env.GITHUB_SERVER_URL+'/'+process.env.GITHUB_REPOSITORY+'/actions/runs/'+r.id) throw new Error('Rendered report source identity mismatch')"
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
         with:
           enablement: true
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
-          path: allure-history
+          path: allure-report
       - uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5

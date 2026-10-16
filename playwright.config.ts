@@ -1,3 +1,4 @@
+import { nativeEvidenceMetadata } from './scripts/evidence/native-metadata';
 import { defineConfig, devices } from '@playwright/test';
 import { config } from './src/utils/config';
 
@@ -7,6 +8,7 @@ const uiRetries = process.env.CI ? 1 : 0;
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  metadata: nativeEvidenceMetadata(),
   testDir: 'tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,

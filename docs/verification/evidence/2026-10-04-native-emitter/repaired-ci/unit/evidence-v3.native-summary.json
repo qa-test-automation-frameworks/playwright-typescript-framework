@@ -1,0 +1,168 @@
+{
+  "startedAt": "2026-10-04T14:21:07.227Z",
+  "completedAt": "2026-10-04T14:21:08.440Z",
+  "counts": {
+    "unit": "parameter_case",
+    "selected": 21,
+    "executed": 21,
+    "passed": 21,
+    "failed": 0,
+    "skipped": 0,
+    "retried": 0,
+    "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+  },
+  "cases": [
+    {
+      "id": "1500b259d2db240a5d3f5c7f8f36c9778b76b92c751c8198e4d74d3b86796e46",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "66b39ead49d92942f757c9dd7a7480d9151f297d1ec092627446583be8af16f7",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "6dbe2bc59e2bd97d3d950421e381365f9d164a03480a0e1221e28befd3c9e9b6",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "35f1d2c02439dc53d3eb6d9e5cca20b1f0a03505e394178457cd980ad587be42",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "aab33ac9914cc5c450cd7c9ddc92f64265a76d49110d9258598fb6ddfd754693",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "cf43d3477a1a75955cde4b0fc2354515d6af06f9b5a5fdc6a603d9be4c5f666d",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "2f2d9891654df97da636309823cf6671192f7c5e633a191153ebf65e69736c7e",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "993cddf4fde68ed97b936f2639bcb5795d5413805162e911fbb773fef3e5467a",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "f914d220739c957745cdb11ba53070655a2cfb34f6a9ded531ee8bbca2dd3178",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "9a4bddda8650c35ccfa20dbd7f7fd6f78719ecee6f6823916faed6090ca9261f",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "139216163a084bdd6873d7ef2f41b5d560b61f56903bead94511c96fc4fd6489",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "75ec000e4ef5e500b74363bbf04589d36962d33b3e4a4bd72edf26e026ebba69",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "8cf695e542cf84c96749a79d0186aa940a86208fda58bf117413e6f0e00cfe53",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "a365ebc6b9f4b7635ba4cb2a7b47f8d45f0ea5198120f052568f28da92e20ae7",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "9ab7755f560106fa478abfcd1cf182a7e671c19d87f0ca29eb5025034203c4f7",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "e8287e1628dff20439bf6a67457ad155fad99564c715070b1dba2d242b777be4",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "2e50d61a23fcdfe5840ac79ecab303e93c71504f332d04bf89e678f4c0235f34",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "ebf6c43c1a93e307ca8cec9533302346bf0085ae06ac56e6292b7d156a71e9e2",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "307a774129139dd9a375e6ae20ddaa7741deab9c8f6a398c888aed30e655a1ec",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "bd447735f05492de90e4f8b4a03c3553c6c9d4e2f9bd5b30ede6002632b77b8b",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "0d411ac649ca5d04356a7a4fb151315aa0d74a9ab5e24db7e9271057266aba35",
+      "project": "default",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    }
+  ],
+  "globalErrorCount": 0,
+  "toolVersion": "1.60.0",
+  "shard": null,
+  "rawAttempts": 21,
+  "inputSha256": "67ac6496a1113b3c3be3cdf22f061a51132850680819f0b2569e77d8f14461e8"
+}

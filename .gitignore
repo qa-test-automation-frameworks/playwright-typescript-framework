@@ -13,6 +13,7 @@ node_modules/
 # Playwright reports & results
 /playwright-report/
 /test-results/
+/work/
 /allure-results/
 /allure-report/
 /allure-history/

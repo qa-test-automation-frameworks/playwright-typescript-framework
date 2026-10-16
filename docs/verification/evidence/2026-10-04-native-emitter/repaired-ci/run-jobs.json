@@ -1,0 +1,1119 @@
+{
+  "conclusion": "success",
+  "headSha": "378520037ff1e67be2902e7868764d8701e0f8f1",
+  "jobs": [
+    {
+      "completedAt": "2026-10-04T14:21:18Z",
+      "conclusion": "success",
+      "databaseId": 111455641633,
+      "name": "lint-typecheck",
+      "startedAt": "2026-10-04T14:19:32Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 5,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 6, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run format:check",
+          "number": 7,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm run lint", "number": 8, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run type-check",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run test:unit",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect framework-unit native evidence",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run node --test scripts/evidence/*.test.mjs",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 13,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run check:secrets",
+          "number": 14,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run check:anti-patterns",
+          "number": 15,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run check:quarantine",
+          "number": 16,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run check:visual-snapshots",
+          "number": 17,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run check:openapi-contract",
+          "number": 18,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npm run check:env",
+          "number": 19,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 36,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 37,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Stop containers", "number": 38, "status": "completed" },
+        { "conclusion": "success", "name": "Complete job", "number": 39, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455641633"
+    },
+    {
+      "completedAt": "2026-10-04T14:20:21Z",
+      "conclusion": "success",
+      "databaseId": 111455641943,
+      "name": "evidence-negative-control",
+      "startedAt": "2026-10-04T14:19:32Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 4,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 5, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Execute real intentional native assertion failure",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect actual failed native execution",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require the intended assertion failure and failed evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 17,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 18,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Complete job", "number": 19, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455641943"
+    },
+    {
+      "completedAt": "2026-10-04T14:20:30Z",
+      "conclusion": "success",
+      "databaseId": 111455641984,
+      "name": "fresh-clone-format (ubuntu-latest)",
+      "startedAt": "2026-10-04T14:19:32Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 4,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 5, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run format:check",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 12,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Complete job", "number": 13, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455641984"
+    },
+    {
+      "completedAt": "2026-10-04T14:20:56Z",
+      "conclusion": "success",
+      "databaseId": 111455642028,
+      "name": "fresh-clone-format (windows-latest)",
+      "startedAt": "2026-10-04T14:19:32Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 4,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 5, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run format:check",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 12,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Complete job", "number": 13, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455642028"
+    },
+    {
+      "completedAt": "2026-10-04T14:22:51Z",
+      "conclusion": "success",
+      "databaseId": 111455976987,
+      "name": "test-e2e (1/2, 1-of-2)",
+      "startedAt": "2026-10-04T14:21:22Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 5,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 6, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=1/2",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect native execution evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:report",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:check",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 20,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 21,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Stop containers", "number": 22, "status": "completed" },
+        { "conclusion": "success", "name": "Complete job", "number": 23, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455976987"
+    },
+    {
+      "completedAt": "2026-10-04T14:22:39Z",
+      "conclusion": "success",
+      "databaseId": 111455977020,
+      "name": "test-accessibility",
+      "startedAt": "2026-10-04T14:21:21Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 5,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 6, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npm run test:accessibility",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect native execution evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:report",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:check",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 20,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 21,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Stop containers", "number": 22, "status": "completed" },
+        { "conclusion": "success", "name": "Complete job", "number": 23, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455977020"
+    },
+    {
+      "completedAt": "2026-10-04T14:23:45Z",
+      "conclusion": "success",
+      "databaseId": 111455977043,
+      "name": "test-visual (1/2, 1-of-2)",
+      "startedAt": "2026-10-04T14:21:22Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 4,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 5, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npx playwright install chromium",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npx playwright test --project=visual --shard=1/2",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect native execution evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run check:visual-snapshots",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:report",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:check",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 23,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 24,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Complete job", "number": 25, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455977043"
+    },
+    {
+      "completedAt": "2026-10-04T14:22:38Z",
+      "conclusion": "success",
+      "databaseId": 111455977044,
+      "name": "test-api",
+      "startedAt": "2026-10-04T14:21:21Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 5,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 6, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npm run test:api",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect native execution evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:report",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:check",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 20,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 21,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Stop containers", "number": 22, "status": "completed" },
+        { "conclusion": "success", "name": "Complete job", "number": 23, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455977044"
+    },
+    {
+      "completedAt": "2026-10-04T14:23:38Z",
+      "conclusion": "success",
+      "databaseId": 111455977048,
+      "name": "test-visual (2/2, 2-of-2)",
+      "startedAt": "2026-10-04T14:21:21Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 4,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 5, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npx playwright install chromium",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npx playwright test --project=visual --shard=2/2",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect native execution evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run check:visual-snapshots",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:report",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:check",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 23,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 24,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Complete job", "number": 25, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455977048"
+    },
+    {
+      "completedAt": "2026-10-04T14:22:51Z",
+      "conclusion": "success",
+      "databaseId": 111455977060,
+      "name": "test-selector-contract",
+      "startedAt": "2026-10-04T14:21:21Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 5,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 6, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npm run test:contracts",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect native execution evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:report",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:check",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 20,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 21,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Stop containers", "number": 22, "status": "completed" },
+        { "conclusion": "success", "name": "Complete job", "number": 23, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455977060"
+    },
+    {
+      "completedAt": "2026-10-04T14:22:52Z",
+      "conclusion": "success",
+      "databaseId": 111455977068,
+      "name": "test-e2e (2/2, 2-of-2)",
+      "startedAt": "2026-10-04T14:21:21Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 5,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 6, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npx playwright test --project=chromium-authenticated --project=chromium-anonymous --shard=2/2",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect native execution evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:report",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:check",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 20,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 21,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Stop containers", "number": 22, "status": "completed" },
+        { "conclusion": "success", "name": "Complete job", "number": 23, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455977068"
+    },
+    {
+      "completedAt": "2026-10-04T14:22:47Z",
+      "conclusion": "success",
+      "databaseId": 111455977381,
+      "name": "test-cross-browser",
+      "startedAt": "2026-10-04T14:21:22Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Initialize containers",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 5,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 6, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run npm run with:target -- npm run test:cross-browser",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Collect native execution evidence",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:report",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm run flake:check",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 20,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 21,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Stop containers", "number": 22, "status": "completed" },
+        { "conclusion": "success", "name": "Complete job", "number": 23, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455977381"
+    },
+    {
+      "completedAt": "2026-10-04T14:21:19Z",
+      "conclusion": "skipped",
+      "databaseId": 111455978266,
+      "name": "scheduled-full-cross-browser",
+      "startedAt": "2026-10-04T14:21:19Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111455978266"
+    },
+    {
+      "completedAt": "2026-10-04T14:24:51Z",
+      "conclusion": "success",
+      "databaseId": 111456426088,
+      "name": "generate-allure-report",
+      "startedAt": "2026-10-04T14:23:48Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run npm install --global npm@10.9.4",
+          "number": 5,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Run npm ci", "number": 6, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Validate native evidence and every required shard",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Validate and collect every required report shard",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Render with the lockfile-pinned Allure CLI",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Include validated execution manifests in the rendered report",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Record the tested source and run",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "number": 13,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a",
+          "number": 24,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 25,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 26,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Complete job", "number": 27, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111456426088"
+    },
+    {
+      "completedAt": "2026-10-04T14:25:01Z",
+      "conclusion": "success",
+      "databaseId": 111456622381,
+      "name": "required-ci",
+      "startedAt": "2026-10-04T14:24:54Z",
+      "status": "completed",
+      "steps": [
+        { "conclusion": "success", "name": "Set up job", "number": 1, "status": "completed" },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require substantive native success and evidence",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "number": 8,
+          "status": "completed"
+        },
+        { "conclusion": "success", "name": "Complete job", "number": 9, "status": "completed" }
+      ],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111456622381"
+    },
+    {
+      "completedAt": "2026-10-04T14:25:01Z",
+      "conclusion": "skipped",
+      "databaseId": 111456654305,
+      "name": "publish-allure-report",
+      "startedAt": "2026-10-04T14:25:02Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825/job/111456654305"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/37208832825"
+}

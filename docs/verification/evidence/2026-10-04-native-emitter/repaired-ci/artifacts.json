@@ -1,0 +1,225 @@
+{
+  "total_count": 11,
+  "artifacts": [
+    {
+      "id": 11306075248,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNjA3NTI0OA==",
+      "name": "reports-e2e-1-of-2",
+      "size_in_bytes": 249215,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11306075248",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11306075248/zip",
+      "expired": false,
+      "digest": "sha256:62bb2bdc429b0f0c365e29acb5f5c56b839f4e1c0692adb22b85acea444121ae",
+      "created_at": "2026-10-04T14:22:47Z",
+      "updated_at": "2026-10-04T14:22:47Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11306055732,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNjA1NTczMg==",
+      "name": "rendered-allure-report",
+      "size_in_bytes": 1316987,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11306055732",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11306055732/zip",
+      "expired": false,
+      "digest": "sha256:7374fed6b94e6f64e313e1bc60c8f01c16405ff94f17e4ba7295bfd5a03c335f",
+      "created_at": "2026-10-04T14:24:49Z",
+      "updated_at": "2026-10-04T14:24:49Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305957428,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTk1NzQyOA==",
+      "name": "framework-unit-evidence",
+      "size_in_bytes": 6441,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305957428",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305957428/zip",
+      "expired": false,
+      "digest": "sha256:474ca480f096570be0c97552c4dc21b3ddaffd0bf65eb9791a3ce2a34899b4d9",
+      "created_at": "2026-10-04T14:21:09Z",
+      "updated_at": "2026-10-04T14:21:09Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305937807,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTkzNzgwNw==",
+      "name": "reports-cross-browser",
+      "size_in_bytes": 253032,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305937807",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305937807/zip",
+      "expired": false,
+      "digest": "sha256:304d5a3140c382d4b50a7a74c450d15954205b42e8a37250cb55ca06e0dbc5fc",
+      "created_at": "2026-10-04T14:22:45Z",
+      "updated_at": "2026-10-04T14:22:45Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305798664,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTc5ODY2NA==",
+      "name": "reports-api",
+      "size_in_bytes": 282017,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305798664",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305798664/zip",
+      "expired": false,
+      "digest": "sha256:2d8b2dc9acff8f07b842135e1331a63bc34d40d804ad440dcc08eea4e6275cef",
+      "created_at": "2026-10-04T14:22:34Z",
+      "updated_at": "2026-10-04T14:22:34Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305723968,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTcyMzk2OA==",
+      "name": "reports-selector-contract",
+      "size_in_bytes": 224624,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305723968",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305723968/zip",
+      "expired": false,
+      "digest": "sha256:85d07cfd3c6d2a4f0a8149814dcdd1a1120817ce3f2c2c019a67a37dd987a91e",
+      "created_at": "2026-10-04T14:22:49Z",
+      "updated_at": "2026-10-04T14:22:49Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305554341,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTU1NDM0MQ==",
+      "name": "reports-e2e-2-of-2",
+      "size_in_bytes": 239126,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305554341",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305554341/zip",
+      "expired": false,
+      "digest": "sha256:cf897fa6239803604276608d11b68e4922589c1a0c7b45bdf69d6fc882d59f58",
+      "created_at": "2026-10-04T14:22:49Z",
+      "updated_at": "2026-10-04T14:22:49Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305502847,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTUwMjg0Nw==",
+      "name": "reports-visual-2-of-2",
+      "size_in_bytes": 609773,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305502847",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305502847/zip",
+      "expired": false,
+      "digest": "sha256:b822d80b617621daeb6df3c62e4923070b30fa6ff38e4d040d0a0c4f48b18599",
+      "created_at": "2026-10-04T14:23:34Z",
+      "updated_at": "2026-10-04T14:23:34Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305444583,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTQ0NDU4Mw==",
+      "name": "reports-accessibility",
+      "size_in_bytes": 229691,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305444583",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305444583/zip",
+      "expired": false,
+      "digest": "sha256:bbe6b29a15d789e8ca561c1451541d9f534385dfcda47f516ede655d4c42d750",
+      "created_at": "2026-10-04T14:22:37Z",
+      "updated_at": "2026-10-04T14:22:37Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305173555,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTE3MzU1NQ==",
+      "name": "reports-visual-1-of-2",
+      "size_in_bytes": 608860,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305173555",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305173555/zip",
+      "expired": false,
+      "digest": "sha256:c0d80b3071f6de20dc4cc6fc296026103a868f19f7d15b45df27eddb0c24da21",
+      "created_at": "2026-10-04T14:23:41Z",
+      "updated_at": "2026-10-04T14:23:41Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    },
+    {
+      "id": 11305148390,
+      "node_id": "MDg6QXJ0aWZhY3QxMTMwNTE0ODM5MA==",
+      "name": "evidence-negative-control",
+      "size_in_bytes": 52492,
+      "url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305148390",
+      "archive_download_url": "https://api.github.com/repos/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/11305148390/zip",
+      "expired": false,
+      "digest": "sha256:f5d8516291f9c4a66966b6f0192bf37fcb25aaf333e8d37bc656701e35b04a33",
+      "created_at": "2026-10-04T14:20:19Z",
+      "updated_at": "2026-10-04T14:20:19Z",
+      "expires_at": "2027-01-02T14:19:29Z",
+      "workflow_run": {
+        "id": 37208832825,
+        "repository_id": 1260612226,
+        "head_repository_id": 1260612226,
+        "head_branch": "portfolio/roadmap-implementation",
+        "head_sha": "378520037ff1e67be2902e7868764d8701e0f8f1"
+      }
+    }
+  ]
+}

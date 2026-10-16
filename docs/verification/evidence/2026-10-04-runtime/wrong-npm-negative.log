@@ -1,0 +1,1 @@
+npm 10.9.4 is required; detected 11.0.0. Run npx --yes npm@10.9.4 ci.

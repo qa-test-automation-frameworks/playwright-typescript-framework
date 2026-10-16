@@ -74,6 +74,9 @@ const requestBodySchema = z
   .strict();
 
 const port = Number(process.env.TARGET_PORT || 4300);
+const reliabilityFault =
+  process.env.CONTROLLED_TARGET_MODE === '1' ? process.env.RELIABILITY_FAULT : undefined;
+const hasReliabilityFault = (name: string) => reliabilityFault === name;
 const seedUser = {
   email: process.env.TEST_USER_EMAIL || 'seed.user@example.test',
   password: process.env.TEST_USER_PASSWORD || `Seed-${randomUUID()}!`,
@@ -215,7 +218,13 @@ const requireUser = (req: IncomingMessage, res: ServerResponse) => {
 };
 
 const sendUi = (res: ServerResponse) => {
-  const html = readFileSync(join(__dirname, 'ui.html'), 'utf8');
+  let html = readFileSync(join(__dirname, 'ui.html'), 'utf8');
+  if (hasReliabilityFault('accessibility')) {
+    html = html.replace(
+      '</main>',
+      '</main><button aria-hidden="true">Intentional accessibility fault</button>',
+    );
+  }
   res.writeHead(200, { 'Content-Type': 'text/html' });
   res.end(html);
 };
@@ -304,10 +313,10 @@ const handleApi = async (req: IncomingMessage, res: ServerResponse, url: URL) =>
     const offset = Number(url.searchParams.get('offset') || 0);
     const limit = Number(url.searchParams.get('limit') || list.length);
     list = list.slice(offset, offset + limit);
-    return json(res, 200, {
-      articles: list.map((a) => articleDto(viewer, a)),
-      articlesCount,
-    });
+    const articleDtos = list.map((a) => articleDto(viewer, a));
+    return hasReliabilityFault('api-schema')
+      ? json(res, 200, { items: articleDtos, articlesCount })
+      : json(res, 200, { articles: articleDtos, articlesCount });
   }
   if (path === '/articles/feed' && method === 'GET') {
     const user = requireUser(req, res);
@@ -366,6 +375,9 @@ const handleApi = async (req: IncomingMessage, res: ServerResponse, url: URL) =>
       const user = requireUser(req, res);
       if (!user || user.username !== article.author)
         return json(res, 404, { errors: { body: ['article not found'] } });
+      if (hasReliabilityFault('cleanup')) {
+        return json(res, 503, { errors: { body: ['intentional cleanup reliability fault'] } });
+      }
       articles.delete(slug);
       return json(res, 200, {});
     }
@@ -443,7 +455,18 @@ createServer((req, res) => {
     const file = normalize(join(__dirname, url.pathname));
     const types: Record<string, string> = { '.js': 'text/javascript', '.css': 'text/css' };
     res.writeHead(200, { 'Content-Type': types[extname(file)] || 'text/plain' });
-    res.end(readFileSync(file));
+    let asset = readFileSync(file, 'utf8');
+    if (hasReliabilityFault('selector') && extname(file) === '.js') {
+      asset = asset.replaceAll(
+        'data-testid="article-title"',
+        'data-testid="faulted-article-title"',
+      );
+    }
+    if (hasReliabilityFault('visual') && extname(file) === '.css') {
+      asset +=
+        '\n/* Intentional visual reliability fault */\nbody { background: #000 !important; }\n';
+    }
+    res.end(asset);
     return;
   }
   sendUi(res);

@@ -1,6 +1,22 @@
 type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR';
 
-const SENSITIVE_KEYS = new Set(['authorization', 'email', 'jwt', 'jwtToken', 'password', 'token']);
+const SENSITIVE_KEYS = new Set(
+  [
+    'authorization',
+    'email',
+    'jwt',
+    'jwtToken',
+    'password',
+    'token',
+    'accessToken',
+    'refreshToken',
+    'cookie',
+    'set-cookie',
+    'errorName',
+    'errorMessage',
+    'errorStack',
+  ].map((key) => key.toLowerCase()),
+);
 
 export class Logger {
   private static getTimestamp(): string {

@@ -1,0 +1,77 @@
+{
+  "startedAt": "2026-10-04T14:22:43.297Z",
+  "completedAt": "2026-10-04T14:22:48.038Z",
+  "counts": {
+    "unit": "parameter_case",
+    "selected": 8,
+    "executed": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "retried": 0,
+    "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+  },
+  "cases": [
+    {
+      "id": "a0fcd1a7316ec0123247a8d20ed78949dc8695f751279c797b43595e0f9310da",
+      "project": "teardown",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "2132966d81a4fbaf061d8bfb4e14eb8493b07bc3c145ea82bf0106cfb71d3890",
+      "project": "setup",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "e0ec4a7ddabd518a367ac8569ea57350c2ba10b86ebbc872c9ff36ccff35be68",
+      "project": "selector-contract",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "6b80478b9e0a44c0482ed8123f9d1e196545f8ee7496abae4ad255b9e8510289",
+      "project": "selector-contract",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "cbad6d5f0215b63b065bd7b432946eefdc2866889aad557e6a55074c72b13b8b",
+      "project": "selector-contract",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "4f4debdf91ede846d0af717ea3237fab19d1d3872f9e26e270d6c838221be811",
+      "project": "selector-contract",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "8141deb64480187bc78884d65fb1037c8f08dfb73dea52c7d804cf34d51f937f",
+      "project": "selector-contract",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    },
+    {
+      "id": "41ff36b5dbb01c470adeec0b3a1d252d0544abca9430663012904e7112114d70",
+      "project": "selector-contract",
+      "outcome": "expected",
+      "retried": false,
+      "attempts": ["passed"]
+    }
+  ],
+  "globalErrorCount": 0,
+  "toolVersion": "1.60.0",
+  "shard": null,
+  "rawAttempts": 8,
+  "inputSha256": "d45d36b110bb1de9dbeba955936fb8a13f0336c405647538429353f9450b0646"
+}

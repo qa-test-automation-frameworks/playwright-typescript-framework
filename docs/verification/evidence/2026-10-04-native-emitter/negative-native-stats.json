@@ -1,0 +1,14 @@
+{
+  "nativeInputSha256": "ffc27d14e1d85911e199536ec86dea2037e94d124e71f647bdb54cbabd3b5fd8",
+  "stats": {
+    "startTime": "2026-10-04T14:00:58.984Z",
+    "duration": 601.731,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "nativeToolVersion": "1.60.0",
+  "globalErrorCount": 0,
+  "limitation": "Local raw report; no GitHub source/run identity or execution manifest claimed."
+}
