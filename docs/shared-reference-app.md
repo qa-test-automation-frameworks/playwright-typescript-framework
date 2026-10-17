@@ -33,6 +33,14 @@ the v1 limit. The job uploads a compact result summary. This proves the pinned
 recovery artifact still serves the old contract; it does not change or roll
 back any deployed environment or persisted data.
 
+The first exact-head execution of this rollback check passed in [PR #59 CI run
+`39046808684`](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39046808684).
+Its uploaded `shared-app-rollback-proof` artifact records the image digest,
+source, fixture, readiness result, and both amount-boundary outcomes. The
+artifact summary SHA-256 is
+`a75cde0a84f944fef19aefc4647d8a2b82b444f2c0d10e92fd9a53a637d59c3c`. The
+workflow implementation is in PR #59 and remains subject to merge review.
+
 ## Run locally
 
 Requirements: Node.js `24.21.0`, npm `10.9.4`, Docker Engine with Compose v2,
