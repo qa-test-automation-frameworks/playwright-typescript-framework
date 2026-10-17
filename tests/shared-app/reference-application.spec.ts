@@ -56,7 +56,7 @@ test('UI follows API v2 claim limit and accepts the advertised maximum', async (
   const amount = page.getByLabel('Requested amount (USD)');
   await expect(amount).toHaveAttribute('max', '5000.00');
   await expect(page.locator('#amount-limit-help')).toHaveText(
-    'API v2 accepts claims up to $5,000.00.',
+    'API v2 accepts claims up to $5000.00.',
   );
   expect(requestedUrls.some((url) => url.endsWith('/api/v2/policies'))).toBe(true);
 
