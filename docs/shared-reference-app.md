@@ -1,13 +1,16 @@
 # Shared reference application pilot
 
 The framework keeps its existing Conduit projects and adds a separate Chromium
-pilot for the quality reference application. The A07 compatibility job now
-pulls the published v0.2.0 image by immutable digest
-`sha256:88d550587cdb0f07cf5c3b5afad1162641196f07e70afae25f568fb402d73c26`
-(source `30375e5250ae33dde6f0041f7a40f2c8af86b40e`) with fixture `v0.1.0`.
-Before testing, it checks the image's OCI source-revision label and then checks
-the running service's source and fixture identity. The image is public and
-supports `linux/amd64` and `linux/arm64`; the job tests its runner's platform.
+pilot for the quality reference application. The A07 compatibility job pulls
+the published v0.2.0 image by immutable digest
+`sha256:20db5afded9fcec74b373d7e1de01efd8211a73ef0a811b3f7d30a0877cd70c9`
+(source `c0018c1e50de55a66bb8b846d905a3d72e30e7b1`) with fixture `v0.1.0`.
+This is the latest image published from the merged compatibility guide; its
+product source is the same versioned v2 application, and the OCI label is
+checked before the service's source and fixture identity. The image is public
+and supports `linux/amd64` and `linux/arm64`; the job tests its runner's
+platform. The [post-merge app verification and image-publish run](https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39028361087)
+records this digest and source revision.
 
 `tests/shared-app/reference-application.spec.ts` covers member claim submission,
 reviewer approval, API v2 limit display and boundary submission, concurrent
@@ -29,9 +32,9 @@ OpenSSL, and anonymous pull access to the public GHCR image. Pull and verify the
 immutable image before starting Compose:
 
 ```bash
-export APP_IMAGE='ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:88d550587cdb0f07cf5c3b5afad1162641196f07e70afae25f568fb402d73c26'
-export APP_IMAGE_DIGEST='sha256:88d550587cdb0f07cf5c3b5afad1162641196f07e70afae25f568fb402d73c26'
-export APP_SOURCE_REVISION=30375e5250ae33dde6f0041f7a40f2c8af86b40e
+export APP_IMAGE='ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:20db5afded9fcec74b373d7e1de01efd8211a73ef0a811b3f7d30a0877cd70c9'
+export APP_IMAGE_DIGEST='sha256:20db5afded9fcec74b373d7e1de01efd8211a73ef0a811b3f7d30a0877cd70c9'
+export APP_SOURCE_REVISION=c0018c1e50de55a66bb8b846d905a3d72e30e7b1
 docker pull "$APP_IMAGE"
 test "$(docker image inspect "$APP_IMAGE" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')" = "$APP_SOURCE_REVISION"
 export COMPOSE_PROJECT_NAME="pw-reference-$(openssl rand -hex 6)"
