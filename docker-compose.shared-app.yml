@@ -14,13 +14,17 @@ services:
       - reference-data
 
   app:
-    image: ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:284ae3fa4f2a31a4322b74a6f37e38f0d101879389c656bf1d553df7ec616469
+    image: quality-reference-application:a07-${APP_SOURCE_REVISION:?Set an immutable APP_SOURCE_REVISION}
+    build:
+      context: ./.reference-app
+      args:
+        APP_SOURCE_SHA: ${APP_SOURCE_REVISION:?Set an immutable APP_SOURCE_REVISION}
     environment:
       NODE_ENV: production
       PORT: 4300
       DATABASE_URL: postgres://reference_app:${APP_POSTGRES_PASSWORD:?Set a unique synthetic APP_POSTGRES_PASSWORD}@db:5432/reference_app
       APP_NAMESPACE: ${APP_NAMESPACE:?Set a unique APP_NAMESPACE for this run}
-      APP_SOURCE_SHA: e9f438e06a2b092dccfc6e9ab1820ff2562ddad7
+      APP_SOURCE_SHA: ${APP_SOURCE_REVISION:?Set an immutable APP_SOURCE_REVISION}
       SEED_VERSION: v0.1.0
       TEST_MODE: 'true'
     command:

@@ -312,15 +312,20 @@ jobs:
       EVIDENCE_SCOPE: shared-app-ui
       EVIDENCE_CLASS: controlled
       SHARED_APP_BASE_URL: http://127.0.0.1:4310
-      APP_SOURCE_REVISION: e9f438e06a2b092dccfc6e9ab1820ff2562ddad7
+      APP_SOURCE_REVISION: 3bc1c12abbbd4b891dc0cf09616253b86e90bae4
       APP_FIXTURE_VERSION: v0.1.0
-      APP_IMAGE_DIGEST: sha256:284ae3fa4f2a31a4322b74a6f37e38f0d101879389c656bf1d553df7ec616469
       APP_NAMESPACE: pw-${{ github.run_id }}-${{ github.run_attempt }}
       APP_POSTGRES_PASSWORD: qra-${{ github.run_id }}-${{ github.run_attempt }}-postgres
       APP_PORT: '4310'
       COMPOSE_PROJECT_NAME: pw-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Check out the immutable A07 reference app source
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          repository: qa-test-automation-frameworks/quality-reference-application
+          ref: 3bc1c12abbbd4b891dc0cf09616253b86e90bae4
+          path: .reference-app
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version-file: .nvmrc
@@ -340,7 +345,7 @@ jobs:
         env:
           EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
           EVIDENCE_TARGET_IDENTITY: quality-reference-application
-          EVIDENCE_TARGET_REVISION: ${{ env.APP_IMAGE_DIGEST }}
+          EVIDENCE_TARGET_REVISION: git:${{ env.APP_SOURCE_REVISION }}
           EVIDENCE_FIXTURE_VERSION: ${{ env.APP_FIXTURE_VERSION }}
           EVIDENCE_TARGET_ENVIRONMENT: isolated-github-actions
         run: node scripts/evidence/collect.mjs
