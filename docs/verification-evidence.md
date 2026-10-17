@@ -1,12 +1,15 @@
 # Verification Evidence
 
-Last local remediation verification: **2026-06-06**
+Historical local remediation verification: **2026-06-06**. These results record
+the environment and implementation state on that date; they are not current
+runtime compatibility evidence. See the [current runtime policy](configuration-guide.md#requirements)
+and current default-branch CI for supported-runtime evidence.
 
 Runtime used for local checks:
 
 - Node: `v24.13.0`
 - npm: `11.6.2`
-- Project engine baseline: Node `>=20`, npm `>=10`
+- Project engine baseline recorded at that time: Node `>=20`, npm `>=10`
 
 ## Local Quality Gates
 

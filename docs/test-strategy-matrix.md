@@ -14,7 +14,9 @@
 
 ## Execution Layers
 
-- **Runtime gate:** `npm run check:runtime` enforces Node 20 and npm 10+.
+- **Runtime gate:** `npm run check:runtime` requires Node `24.21.0` or newer
+  stable patch/minor within major 24, and npm `10.9.4` exactly. The policy is
+  pinned by `.nvmrc`, `.node-version`, `package.json`, and `packageManager`.
 - **Static gates:** formatting, ESLint, TypeScript.
 - **Environment gate:** `npm run check:env`.
 - **Secret gate:** `npm run check:secrets`.
