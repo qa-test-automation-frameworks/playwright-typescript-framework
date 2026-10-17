@@ -12,7 +12,7 @@ async function startSession(
   await page.getByLabel('Sign in as').selectOption(identity);
   await page.getByRole('button', { name: 'Start session' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'Active as' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Claims' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Claims', exact: true })).toBeVisible();
 }
 
 async function submitClaim(page: Page, amount: string): Promise<string> {
@@ -86,7 +86,7 @@ test('two concurrent member contexts keep claim visibility isolated', async ({ b
       'submitted',
     );
     await expect(memberB.page.getByRole('row').filter({ hasText: claimId })).toHaveCount(0);
-    await expect(memberB.page.getByRole('heading', { name: 'Claims' })).toBeVisible();
+    await expect(memberB.page.getByRole('heading', { name: 'Claims', exact: true })).toBeVisible();
   } finally {
     await Promise.all(contexts.map((context) => context.close()));
   }
