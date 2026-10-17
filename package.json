@@ -13,6 +13,7 @@
     "test:visual": "playwright test --project=visual",
     "test:accessibility": "playwright test --project=accessibility",
     "test:contracts": "playwright test --project=selector-contract",
+    "test:shared-app": "playwright test --config=playwright.shared-app.config.ts",
     "test:cross-browser": "playwright test --project=firefox-smoke --project=webkit-smoke --project=mobile-chrome-smoke --workers=1",
     "test:cross-browser:full": "playwright test --project=firefox-regression --project=webkit-regression --project=mobile-chrome-regression --workers=1",
     "test:e2e:shard": "node scripts/run-shard.js e2e",

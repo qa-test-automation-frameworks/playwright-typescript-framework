@@ -16,6 +16,7 @@ const groups = [
   ['visual', ['reports-visual-1-of-2', 'reports-visual-2-of-2']],
   ['accessibility', ['reports-accessibility']],
   ['selector-contract', ['reports-selector-contract']],
+  ['shared-app-ui', ['reports-shared-app-ui']],
   ['cross-browser', ['reports-cross-browser']],
 ];
 if (process.env.GITHUB_EVENT_NAME === 'schedule') {

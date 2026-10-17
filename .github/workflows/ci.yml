@@ -305,6 +305,64 @@ jobs:
             test-results/
             playwright-report/
 
+  shared-app-ui:
+    needs: lint-typecheck
+    runs-on: ubuntu-latest
+    env:
+      EVIDENCE_SCOPE: shared-app-ui
+      EVIDENCE_CLASS: controlled
+      SHARED_APP_BASE_URL: http://127.0.0.1:4310
+      APP_SOURCE_REVISION: 21af1f41561a6d83ae44933dd36d9daa5e6a6e4c
+      APP_FIXTURE_VERSION: v0.1.0
+      APP_NAMESPACE: pw-${{ github.run_id }}-${{ github.run_attempt }}
+      APP_POSTGRES_PASSWORD: qra-${{ github.run_id }}-${{ github.run_attempt }}-postgres
+      APP_PORT: '4310'
+      COMPOSE_PROJECT_NAME: pw-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Check out the immutable A07 reference app source
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          repository: qa-test-automation-frameworks/quality-reference-application
+          ref: 21af1f41561a6d83ae44933dd36d9daa5e6a6e4c
+          path: .reference-app
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install --global npm@10.9.4
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Start pinned app and database in an isolated Compose project
+        run: docker compose -f docker-compose.shared-app.yml up --detach
+      - name: Verify isolated APP readiness and exact identity
+        run: node scripts/wait-shared-app.mjs
+      - name: Run shared application UI pilot
+        id: native-tests
+        run: npm run test:shared-app
+      - name: Collect native execution evidence
+        if: always()
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+          EVIDENCE_TARGET_IDENTITY: quality-reference-application
+          EVIDENCE_TARGET_REVISION: git:${{ env.APP_SOURCE_REVISION }}
+          EVIDENCE_FIXTURE_VERSION: ${{ env.APP_FIXTURE_VERSION }}
+          EVIDENCE_TARGET_ENVIRONMENT: isolated-github-actions
+        run: node scripts/evidence/collect.mjs
+      - name: Upload APP UI evidence, screenshot, and reports
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: reports-shared-app-ui
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/shared-app/
+          if-no-files-found: error
+      - name: Stop app and remove run data
+        if: always()
+        run: docker compose -f docker-compose.shared-app.yml down --volumes --remove-orphans
+
   reliability-lab:
     needs: lint-typecheck
     runs-on: windows-latest
@@ -420,6 +478,7 @@ jobs:
         test-visual,
         test-accessibility,
         test-selector-contract,
+        shared-app-ui,
         test-cross-browser,
       ]
     runs-on: ubuntu-latest
@@ -474,6 +533,7 @@ jobs:
         test-visual,
         test-accessibility,
         test-selector-contract,
+        shared-app-ui,
         test-cross-browser,
         scheduled-full-cross-browser,
         reliability-lab,
