@@ -8,10 +8,11 @@ if (!baseURL)
 export default defineConfig({
   metadata: nativeEvidenceMetadata(),
   testDir: './tests/shared-app',
-  fullyParallel: true,
+  // Tests share one disposable backend namespace; keep test cases isolated.
+  fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,
-  workers: process.env.CI ? 2 : 2,
+  workers: 1,
   reporter: [
     ['list'],
     ['html', { outputFolder: 'playwright-report/shared-app', open: 'never' }],
