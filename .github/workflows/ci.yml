@@ -312,7 +312,7 @@ jobs:
       EVIDENCE_SCOPE: shared-app-ui
       EVIDENCE_CLASS: controlled
       SHARED_APP_BASE_URL: http://127.0.0.1:4310
-      APP_SOURCE_REVISION: 251f4452baeb9e33b85c04024a6ebf86ccf32fe7
+      APP_SOURCE_REVISION: 21af1f41561a6d83ae44933dd36d9daa5e6a6e4c
       APP_FIXTURE_VERSION: v0.1.0
       APP_NAMESPACE: pw-${{ github.run_id }}-${{ github.run_attempt }}
       APP_POSTGRES_PASSWORD: qra-${{ github.run_id }}-${{ github.run_attempt }}-postgres
@@ -324,7 +324,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           repository: qa-test-automation-frameworks/quality-reference-application
-          ref: 251f4452baeb9e33b85c04024a6ebf86ccf32fe7
+          ref: 21af1f41561a6d83ae44933dd36d9daa5e6a6e4c
           path: .reference-app
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
