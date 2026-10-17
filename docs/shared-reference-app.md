@@ -3,7 +3,7 @@
 The framework keeps its existing Conduit projects and adds a separate Chromium
 pilot for the quality reference application. Its A07 compatibility run builds
 public APP source at immutable commit
-`3bc1c12abbbd4b891dc0cf09616253b86e90bae4` with fixture `v0.1.0` in the
+`251f4452baeb9e33b85c04024a6ebf86ccf32fe7` with fixture `v0.1.0` in the
 isolated job. This enables verification of the proposed v2 behavior before it
 is merged or published. Readiness checks fail if the service reports another
 source revision or fixture. The original A03 target was the
@@ -33,8 +33,8 @@ app source commit before starting Compose:
 
 ```bash
 git clone https://github.com/qa-test-automation-frameworks/quality-reference-application.git .reference-app
-git -C .reference-app checkout 3bc1c12abbbd4b891dc0cf09616253b86e90bae4
-export APP_SOURCE_REVISION=3bc1c12abbbd4b891dc0cf09616253b86e90bae4
+git -C .reference-app checkout 251f4452baeb9e33b85c04024a6ebf86ccf32fe7
+export APP_SOURCE_REVISION=251f4452baeb9e33b85c04024a6ebf86ccf32fe7
 export COMPOSE_PROJECT_NAME="pw-reference-$(openssl rand -hex 6)"
 export APP_NAMESPACE="pw-$(openssl rand -hex 8)"
 export APP_POSTGRES_PASSWORD="$(openssl rand -hex 32)"
