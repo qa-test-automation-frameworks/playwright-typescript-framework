@@ -39,6 +39,7 @@ const scopeProjects = {
   visual: ['visual'],
   accessibility: ['accessibility'],
   'selector-contract': ['selector-contract'],
+  'shared-app-ui': ['shared-app-ui'],
   'cross-browser': ['firefox-smoke', 'webkit-smoke', 'mobile-chrome-smoke'],
   'firefox-regression': ['firefox-regression'],
   'webkit-regression': ['webkit-regression'],
@@ -46,6 +47,7 @@ const scopeProjects = {
 };
 const businessProjects = scopeProjects[required('EVIDENCE_SCOPE')];
 if (!businessProjects) throw new Error('Unknown evidence suite scope');
+const sharedAppScope = env.EVIDENCE_SCOPE === 'shared-app-ui';
 const context = {
   repository: required('GITHUB_REPOSITORY'),
   sourceSha,
@@ -66,13 +68,24 @@ const context = {
   shardCurrent: Number(env.EVIDENCE_SHARD_CURRENT ?? 1),
   shardTotal: Number(env.EVIDENCE_SHARD_TOTAL ?? 1),
   target: {
-    identity: env.EVIDENCE_CLASS === 'hermetic' ? 'framework-unit-fakes' : 'owned-conduit-target',
-    revision: env.EVIDENCE_CLASS === 'hermetic' ? `git:${sourceSha}` : targetDigest(),
-    fixtureVersion:
-      env.EVIDENCE_CLASS === 'hermetic'
+    identity: sharedAppScope
+      ? required('EVIDENCE_TARGET_IDENTITY')
+      : env.EVIDENCE_CLASS === 'hermetic'
+        ? 'framework-unit-fakes'
+        : 'owned-conduit-target',
+    revision: sharedAppScope
+      ? required('EVIDENCE_TARGET_REVISION')
+      : env.EVIDENCE_CLASS === 'hermetic'
+        ? `git:${sourceSha}`
+        : targetDigest(),
+    fixtureVersion: sharedAppScope
+      ? required('EVIDENCE_FIXTURE_VERSION')
+      : env.EVIDENCE_CLASS === 'hermetic'
         ? `git-${sourceSha}`
         : `sha256-${hash(readFileSync('scripts/target-seed.js'))}`,
-    environment: `github_actions-${required('RUNNER_OS').toLowerCase()}`,
+    environment: sharedAppScope
+      ? required('EVIDENCE_TARGET_ENVIRONMENT')
+      : `github_actions_${required('RUNNER_OS').toLowerCase()}`,
     profile: required('EVIDENCE_SCOPE'),
     tools: {
       node: process.versions.node,
@@ -84,6 +97,11 @@ const context = {
     env.EVIDENCE_CLASS === 'hermetic'
       ? 'Hermetic fakes/probe are versioned in the tested source; no target service or browser is contacted.'
       : 'Target digest covers owned target files, seed implementation and dependency lock; target is co-versioned with the framework, not independently deployed.',
+    ...(sharedAppScope
+      ? [
+          'Shared reference target is an independently pinned OCI image; the workflow checks readiness source and fixture before browser tests.',
+        ]
+      : []),
   ],
 };
 if (!['success', 'failure', 'cancelled', 'skipped'].includes(context.testOutcome))

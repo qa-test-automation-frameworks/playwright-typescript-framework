@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:18.6-alpine3.23@sha256:885cf05d376c7cf27afef02073e6bdac3841252537f16e244fd1c1e6a7c99fb1
+    environment:
+      POSTGRES_DB: reference_app
+      POSTGRES_USER: reference_app
+      POSTGRES_PASSWORD: ${APP_POSTGRES_PASSWORD:?Set a unique synthetic APP_POSTGRES_PASSWORD}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U reference_app -d reference_app']
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    networks:
+      - reference-data
+
+  app:
+    image: ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:284ae3fa4f2a31a4322b74a6f37e38f0d101879389c656bf1d553df7ec616469
+    environment:
+      NODE_ENV: production
+      PORT: 4300
+      DATABASE_URL: postgres://reference_app:${APP_POSTGRES_PASSWORD:?Set a unique synthetic APP_POSTGRES_PASSWORD}@db:5432/reference_app
+      APP_NAMESPACE: ${APP_NAMESPACE:?Set a unique APP_NAMESPACE for this run}
+      APP_SOURCE_SHA: e9f438e06a2b092dccfc6e9ab1820ff2562ddad7
+      SEED_VERSION: v0.1.0
+      TEST_MODE: 'true'
+    command:
+      - sh
+      - -ec
+      - |
+        export TEST_CONTROL_TOKEN="$(node -p 'require("node:crypto").randomBytes(32).toString("hex")')"
+        exec node src/server.js
+    ports:
+      - '127.0.0.1:${APP_PORT:-4310}:4300'
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - reference-frontend
+      - reference-data
+
+networks:
+  reference-frontend:
+  reference-data:
+    internal: true

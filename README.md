@@ -26,13 +26,14 @@ report-grade failure diagnostics.
 
 ## What This Framework Proves
 
-| Engineering question                               | Implemented answer                                                                                     |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| How can broad browser coverage stay deterministic? | A repo-owned Conduit target, stable seed data, explicit project boundaries, and pinned browser images. |
-| How are API and UI layers kept coherent?           | Typed API clients, Zod validation, API-driven setup, and page objects share controlled contracts.      |
-| How are failures made actionable?                  | Screenshots, traces, HTML and Allure reports, redacted logs, runtime metrics, and documented triage.   |
-| How is flakiness governed?                         | Project-specific retry rules, a retry budget, expiring quarantine metadata, and scheduled analytics.   |
-| How does CI scale?                                 | Linux and Windows jobs, UI and visual shards, browser smoke projects, and machine-readable metrics.    |
+| Engineering question                               | Implemented answer                                                                                               |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| How can broad browser coverage stay deterministic? | A repo-owned Conduit target, stable seed data, explicit project boundaries, and pinned browser images.           |
+| How are API and UI layers kept coherent?           | Typed API clients, Zod validation, API-driven setup, and page objects share controlled contracts.                |
+| How are failures made actionable?                  | Screenshots, traces, HTML and Allure reports, redacted logs, runtime metrics, and documented triage.             |
+| How is flakiness governed?                         | Project-specific retry rules, a retry budget, expiring quarantine metadata, and scheduled analytics.             |
+| How does CI scale?                                 | Linux and Windows jobs, UI and visual shards, browser smoke projects, and machine-readable metrics.              |
+| How do I exercise the shared portfolio app?        | See [the standalone pinned Playwright pilot](docs/shared-reference-app.md); Conduit projects remain independent. |
 
 ## Release Notes Summary
 
