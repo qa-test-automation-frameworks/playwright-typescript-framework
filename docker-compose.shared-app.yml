@@ -14,11 +14,7 @@ services:
       - reference-data
 
   app:
-    image: quality-reference-application:a07-${APP_SOURCE_REVISION:?Set an immutable APP_SOURCE_REVISION}
-    build:
-      context: ./.reference-app
-      args:
-        APP_SOURCE_SHA: ${APP_SOURCE_REVISION:?Set an immutable APP_SOURCE_REVISION}
+    image: ${APP_IMAGE:?Set APP_IMAGE to an immutable published image digest}
     environment:
       NODE_ENV: production
       PORT: 4300
