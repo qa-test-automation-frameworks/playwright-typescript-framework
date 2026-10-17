@@ -2,8 +2,12 @@
 
 ## Requirements
 
-- Node.js `20.x`, matching `.nvmrc`, `.node-version`, and `package.json`.
-- npm `10+`.
+- Node.js `24.21.0` or a newer stable patch/minor in the Node 24 line, matching
+  `.nvmrc`, `.node-version`, and `package.json`.
+- npm `10.9.4` exactly; `package.json` declares `packageManager: npm@10.9.4`.
+- `npm run check:runtime` enforces both the Node and npm requirements before
+  project commands run. Use `npx --yes npm@10.9.4 ci` when your installed npm
+  version differs.
 - Playwright browsers installed for the projects being run.
 - A Conduit RealWorld-compatible UI and API target.
 
