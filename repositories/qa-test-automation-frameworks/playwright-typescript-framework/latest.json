@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "scopes": {
+    "api": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "passed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    },
+    "e2e": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "passed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    },
+    "visual": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "passed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    },
+    "accessibility": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "passed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    },
+    "selector-contract": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "passed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    },
+    "cross-browser": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "passed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    },
+    "evidence-negative-control": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "failed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    },
+    "framework-unit": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "passed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    },
+    "shared-app-ui": {
+      "runId": "39039485122",
+      "attempt": 1,
+      "completedAt": "2026-10-17T14:14:22.000Z",
+      "sourceSha": "800b73104be43df383a5227ff21ba7d4a2369a28",
+      "execution": "passed",
+      "workflowConclusion": "success",
+      "bundle": "repositories/qa-test-automation-frameworks/playwright-typescript-framework/runs/39039485122/1",
+      "manifestSha256": "a8b47a17d291ddaaed584aea1a964f6fde333705502ced052fc40c5861622135"
+    }
+  }
+}

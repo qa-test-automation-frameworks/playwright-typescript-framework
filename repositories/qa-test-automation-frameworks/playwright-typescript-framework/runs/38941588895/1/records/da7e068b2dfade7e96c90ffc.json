@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 3,
+  "kind": "execution",
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "sourceSha": "4d8fca46c1b3f09b122a7ba4f2925767017d3d80",
+  "workflow": {
+    "id": "ci.yml",
+    "name": "CI",
+    "runId": "38941588895",
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/38941588895",
+    "trigger": "push",
+    "branch": "main"
+  },
+  "scope": {
+    "id": "framework-unit",
+    "required": true,
+    "evidenceClass": "hermetic",
+    "freshnessPolicy": "daily_gate_v1"
+  },
+  "target": {
+    "identity": "framework-unit-fakes",
+    "revision": "git:4d8fca46c1b3f09b122a7ba4f2925767017d3d80",
+    "fixtureVersion": "git-4d8fca46c1b3f09b122a7ba4f2925767017d3d80",
+    "environment": "github_actions-linux",
+    "profile": "framework-unit",
+    "tools": {
+      "node": "24.21.0",
+      "playwright": "1.64.0"
+    }
+  },
+  "execution": {
+    "disposition": "passed",
+    "reason": null,
+    "startedAt": "2026-10-16T17:42:21.006Z",
+    "completedAt": "2026-10-16T17:42:22.553Z",
+    "integrity": "complete",
+    "counts": {
+      "unit": "parameter_case",
+      "selected": 23,
+      "executed": 23,
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0,
+      "retried": 0,
+      "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+    },
+    "measurements": [],
+    "shards": {
+      "expected": [
+        "shard-1-of-1"
+      ],
+      "received": [
+        "shard-1-of-1"
+      ]
+    }
+  },
+  "publication": {
+    "disposition": "pending",
+    "reason": null,
+    "publishedAt": null,
+    "reportUrl": null,
+    "artifacts": []
+  },
+  "generator": {
+    "name": "playwright_native_v3",
+    "version": "3.0.0"
+  },
+  "limitations": [
+    "Publication pending; E03 artifact references and retention not certified.",
+    "Native duration rounded to millisecond manifest precision.",
+    "Hermetic fakes/probe are versioned in the tested source; no target service or browser is contacted."
+  ]
+}
