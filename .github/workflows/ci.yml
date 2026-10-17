@@ -371,6 +371,45 @@ jobs:
         if: always()
         run: docker compose -f docker-compose.shared-app.yml down --volumes --remove-orphans
 
+  shared-app-rollback:
+    needs: lint-typecheck
+    runs-on: ubuntu-latest
+    env:
+      SHARED_APP_BASE_URL: http://127.0.0.1:4311
+      APP_IMAGE: ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:284ae3fa4f2a31a4322b74a6f37e38f0d101879389c656bf1d553df7ec616469
+      APP_IMAGE_DIGEST: sha256:284ae3fa4f2a31a4322b74a6f37e38f0d101879389c656bf1d553df7ec616469
+      APP_SOURCE_REVISION: e9f438e06a2b092dccfc6e9ab1820ff2562ddad7
+      APP_FIXTURE_VERSION: v0.1.0
+      APP_NAMESPACE: pw-rollback-${{ github.run_id }}-${{ github.run_attempt }}
+      APP_POSTGRES_PASSWORD: qra-${{ github.run_id }}-${{ github.run_attempt }}-rollback
+      APP_PORT: '4311'
+      COMPOSE_PROJECT_NAME: pw-rollback-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@9c091bb21bda9f5d6aeb4c2d9c7362e8dae4041e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .nvmrc
+      - name: Pull the previous immutable image and verify its source label
+        run: |
+          set -euo pipefail
+          [[ "${APP_IMAGE##*@}" == "$APP_IMAGE_DIGEST" ]]
+          docker pull "$APP_IMAGE"
+          image_revision="$(docker image inspect "$APP_IMAGE" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')"
+          [[ "$image_revision" == "$APP_SOURCE_REVISION" ]]
+      - name: Start previous image and disposable database
+        run: docker compose -f docker-compose.shared-app.yml up --detach
+      - name: Verify the previous pinned image preserves the v1 contract
+        run: node scripts/test-shared-app-rollback.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: shared-app-rollback-proof
+          path: test-results/shared-app-rollback/rollback-summary.json
+          if-no-files-found: error
+      - name: Stop previous image and remove run data
+        if: always()
+        run: docker compose -f docker-compose.shared-app.yml down --volumes --remove-orphans
+
   reliability-lab:
     needs: lint-typecheck
     runs-on: windows-latest
@@ -487,6 +526,7 @@ jobs:
         test-accessibility,
         test-selector-contract,
         shared-app-ui,
+        shared-app-rollback,
         test-cross-browser,
       ]
     runs-on: ubuntu-latest
@@ -542,6 +582,7 @@ jobs:
         test-accessibility,
         test-selector-contract,
         shared-app-ui,
+        shared-app-rollback,
         test-cross-browser,
         scheduled-full-cross-browser,
         reliability-lab,
