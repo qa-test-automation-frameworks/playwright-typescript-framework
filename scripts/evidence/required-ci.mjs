@@ -8,6 +8,7 @@ export const requiredJobs = [
   'test-accessibility',
   'test-selector-contract',
   'shared-app-ui',
+  'shared-app-rollback',
   'test-cross-browser',
   'generate-allure-report',
 ];
