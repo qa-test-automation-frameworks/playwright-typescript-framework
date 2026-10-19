@@ -27,3 +27,8 @@ that every Playwright feature belongs in this API/UI framework.
 
 The 1.64.0 upgrade and shuffle gate are compatibility changes, not a dependency-only green check.
 Exact-head CI `38925779907` passed the 1.64.0 browser, accessibility, visual, evidence and required report jobs. Optional PR-event Allure publication remains skipped; the default-branch publication path is separately tracked.
+
+
+## Runtime type alignment — 2026-10-19
+
+The project supports Node 24.21.0 and pins `@types/node` 24.19.2 with `undici-types` 7.24.6. Node 24 typings keep compile-time APIs aligned with the runtime; Node 26 declarations would permit APIs unavailable to the supported Node 24 process. PR #62 merged as `a32f76f`; exact-head required checks and main CI run `39277089888` passed. The trusted evidence publisher run `39279083638` is still queued, so the public dashboard correctly remains `code-mismatch` until current evidence is published and the dashboard refreshed.
