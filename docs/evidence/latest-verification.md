@@ -15,6 +15,23 @@ and follow the Playwright source-run link for current status.
 The detailed counts below are from the retained July run, not run `38997501017`.
 They are kept as historical context and are not a current suite summary.
 
+## Newer main-branch execution and publication — 2026-10-19
+
+After the fresh-clone review above, main CI run
+[`39277089888`](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39277089888)
+passed on merge commit
+[`a32f76f`](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commit/a32f76f83270174bffc667ba70b07e2be59f0867).
+Trusted publisher run
+[`39279083638`](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39279083638)
+completed successfully. Its latest index, manifest, checksum file, and all nine
+records were fetched and verified; each record's integrity fields and checksums
+matched. The dashboard's deployed JSON still predates this publication, so
+inspect its generation time and source SHA before treating the public card as
+current. Dashboard refresh run
+[`39280124063`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39280124063)
+was queued when this note was written. This update records the execution and
+publication facts; it does not claim that the dashboard has refreshed.
+
 ## Historical run — 2026-07-11
 
 | Field              | Value                                                                                                                                                                                                                                                                          |
