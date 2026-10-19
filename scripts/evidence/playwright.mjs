@@ -175,7 +175,6 @@ export function buildEvidence(report, context) {
     },
     generator: { name: 'playwright_native_v3', version: '3.0.0' },
     limitations: [
-      'Publication pending; E03 artifact references and retention not certified.',
       'Native duration rounded to millisecond manifest precision.',
       ...(context.limitations ?? []),
     ],

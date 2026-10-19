@@ -90,6 +90,11 @@ test('final cases reconcile; retries remain attempts rather than extra tests', (
     { selected: 3, executed: 2, passed: 2, skipped: 1, retried: 1, attempts: 3 },
   );
 });
+test('execution limitations do not misstate publication after evidence is published', () => {
+  const { record } = buildEvidence(fixture(), context);
+  assert.equal(record.publication.disposition, 'pending');
+  assert.ok(record.limitations.every((item) => !item.toLowerCase().includes('publication pending')));
+});
 test('expected native failures retain Playwright final-outcome semantics', () => {
   const report = fixture();
   report.suites[0].suites[0].specs[0].tests[0].expectedStatus = 'failed';
