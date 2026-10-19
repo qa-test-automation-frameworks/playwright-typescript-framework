@@ -232,7 +232,7 @@ See [Commands](docs/commands.md) for the full npm script reference and
 
 ## Known Limitations
 
-- User accounts cannot be deleted through the public API, so tests use unique generated users and clean up deletable resources such as articles/comments.
+- Some external RealWorld-compatible APIs do not expose account deletion. Those deployments use unique generated users; the repository-owned target instead uses disposable seeded credentials. Article/comment cleanup failures are reported rather than silently suppressed.
 - Generated reports are intentionally ignored by Git; publish only clean CI artifacts from green runs.
 - The Docker Compose harness runs the repo-owned Conduit-compatible target for deterministic local checks. External RealWorld-compatible deployments remain supported through explicit `BASE_URL`, `API_URL`, and seeded-user environment variables.
 - User retention and cleanup rules are documented in [Data isolation and retention](docs/data-isolation-and-retention.md).

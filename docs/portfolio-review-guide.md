@@ -1,62 +1,72 @@
 # Portfolio Review Guide
 
-![Passing login page visual check](assets/screenshots/passing-login-page.png)
+This repository demonstrates Playwright and TypeScript checks against a
+repository-owned Conduit-compatible target. The target makes test data,
+failure modes, and browser journeys reproducible; it is not independent
+validation of a separate production application.
 
-This repository is structured to show a maintainable Playwright and TypeScript testing framework for a RealWorld-style application.
+## A 12-minute, browser-free review
 
-## What To Review
+Prerequisites are Git, Node.js `24.21.0`, npm `10.9.4`, and access to GitHub
+and npm. From a disposable directory:
 
-- `playwright.config.ts` for project separation, retries, workers, reporters, artifacts, setup dependencies, visual settings, and cross-browser smoke coverage.
-- `src/api` for typed API clients, Zod models, schema validation, and centralized error handling.
-- `src/fixtures` for fixture composition across auth, API clients, page objects, and cleanup.
-- `src/pages` for page object design and selector containment.
-- `tests/api`, `tests/e2e`, `tests/visual`, and `tests/accessibility` for coverage across contract, workflow, visual, and accessibility concerns.
-- `.github/workflows/ci.yml` for quality gates, sharding, artifact upload, and Allure publication flow.
-
-## Verification Commands
-
-Run the complete gate:
-
-```bash
-npm run verify:target
+```sh
+git clone https://github.com/qa-test-automation-frameworks/playwright-typescript-framework.git
+cd playwright-typescript-framework
+npx --yes npm@10.9.4 ci
+npm run test:unit
 ```
 
-Run smaller checks while reviewing:
+The unit command should exit `0`; it uses fake request contexts and synthetic
+configuration and does not contact the target. Its JSON and JUnit output are
+under `test-results/framework-unit/`.
 
-```bash
-npm run lint
-npm run type-check
-npm run check:secrets
-npm run check:env
-npm run test:api
-npm run test:e2e
+Then run the intentional negative control:
+
+```sh
+npx playwright test --config=playwright.evidence-control.config.ts
 ```
 
-## Engineering Signals
+This command should exit nonzero with exactly one failure named
+`E02_EXPECTED_FAILURE_CONTROL`; its JSON report is
+`test-results/evidence-control/results.json`. That red result is the expected
+behavior of the probe, not a product or CI regression. Both commands are
+browser-free and do not call the application target.
 
-The framework demonstrates:
+## Where to look next
 
-- Strict TypeScript and schema-validated API responses.
-- Clear separation between API clients, builders, fixtures, page objects, and specs.
-- API-backed setup and cleanup to keep browser tests focused.
-- Visual regression checks with stable browser settings.
-- Axe accessibility checks on critical pages.
-- CI sharding for longer-running browser suites.
-- Redacted debug logging and a local secret scan.
+- `playwright.config.ts` — project boundaries, retries, reporters, artifacts,
+  and browser configuration.
+- `scripts/run-framework-unit.js` and `tests/unit/` — hermetic unit checks and
+  the fake target configuration.
+- `playwright.evidence-control.config.ts` — the isolated expected-failure
+  control.
+- `src/fixtures/`, `src/api/`, and `src/pages/` — shared setup, typed API
+  clients, and page objects.
+- `docs/CONTROLLED_TEST_ENVIRONMENT.md` — the repository-owned target,
+  supported external compatibility mode, and their limits.
+- The [live evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/)
+  — start with its generation time, then follow the Playwright source-run link.
 
-## Evidence To Publish
+For the longer browser and target checks, `npm run verify:target` starts the
+repository-owned target and runs the full verification sequence. These results
+show that the framework works with its controlled contract; because the target
+and tests can change together, they do not establish independent product
+validation. Public RealWorld demo endpoints are optional exploratory targets,
+not the required or deterministic CI target.
 
-For a public portfolio repository, useful evidence includes:
+## Review questions and limitations
 
-- A green CI run on the default branch.
-- Published Allure or Playwright HTML report artifacts from CI.
-- Clear environment setup instructions without committed secrets.
-- A concise README with commands, strategy, and limitations.
-- Incremental commit history that shows test design and framework decisions.
+1. Can you distinguish test execution, evidence publication, and dashboard
+   freshness?
+2. Does the negative control fail for the intended reason and retain its
+   report?
+3. Do the setup and cleanup fixtures make data ownership and failure behavior
+   clear?
+4. Which part of the framework would need adaptation for a separately governed
+   application's authentication, data model, and release process?
 
-## Known Limitations To Explain
-
-- Public demo targets are useful for exploration but not deterministic enough for reliable CI.
-- User accounts cannot be deleted through the public API, so tests rely on unique generated users.
-- Cross-browser coverage is intentionally smoke-level to keep runtime practical.
-- Visual baselines require review whenever UI changes are expected.
+Cross-browser, accessibility, visual, and shared-application checks are present
+in CI, but this short review does not run them. The controlled target is not an
+external customer's system, and this exercise does not establish production
+readiness or independent adoption by users of the other frameworks.

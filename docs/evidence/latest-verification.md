@@ -1,13 +1,16 @@
 # Verification Status and Historical Results
 
-## Latest main-branch run observed — 2026-10-17
+## Latest main-branch run observed — 2026-10-19
 
-At the time of this review, the default-branch CI run was
-[`38997501017`](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/38997501017)
-on `main` at `18c2f01d23f344c3334d3418cae12f72095b4cfb`; it completed
-successfully on 2026-10-17. For a newer run, inspect the
+The independent AI-assisted fresh-clone review on 2026-10-19 checked
+`main` at `caebfb104223c2ef285c451c0ab75532655d0d44` and followed the linked
+default-branch run
+[`39230687804`](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39230687804).
+The reviewer reported that the run completed successfully and its listed
+artifacts were available. This is the latest run verified in that review, not
+a guarantee that it remains the latest; inspect the
 [live evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/)
-and follow the Playwright source-run link.
+and follow the Playwright source-run link for current status.
 
 The detailed counts below are from the retained July run, not run `38997501017`.
 They are kept as historical context and are not a current suite summary.
