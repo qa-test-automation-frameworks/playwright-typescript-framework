@@ -1,8 +1,12 @@
 import { nativeEvidenceMetadata } from './scripts/evidence/native-metadata';
 import { defineConfig, devices } from '@playwright/test';
+import { browserTraceMode } from './src/utils/browser-trace-policy';
 import { config } from './src/utils/config';
 
 const uiRetries = process.env.CI ? 1 : 0;
+const syntheticTarget = process.env.CONTROLLED_TARGET_MODE === '1';
+const uiTrace = browserTraceMode(uiRetries, syntheticTarget);
+const zeroRetryTrace = browserTraceMode(0, syntheticTarget);
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -61,6 +65,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         storageState: '.auth/user.json',
+        trace: uiTrace,
       },
       dependencies: ['setup'],
     },
@@ -72,6 +77,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Firefox'],
         storageState: '.auth/user.json',
+        trace: uiTrace,
       },
       dependencies: ['setup'],
     },
@@ -83,6 +89,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Firefox'],
         storageState: '.auth/user.json',
+        trace: uiTrace,
       },
       dependencies: ['setup'],
     },
@@ -94,6 +101,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Safari'],
         storageState: '.auth/user.json',
+        trace: uiTrace,
       },
       dependencies: ['setup'],
     },
@@ -105,6 +113,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Safari'],
         storageState: '.auth/user.json',
+        trace: uiTrace,
       },
       dependencies: ['setup'],
     },
@@ -115,6 +124,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         storageState: { cookies: [], origins: [] },
+        trace: uiTrace,
       },
     },
     {
@@ -127,6 +137,7 @@ export default defineConfig({
         locale: 'en-US',
         timezoneId: 'UTC',
         viewport: { width: 1280, height: 720 },
+        trace: zeroRetryTrace,
       },
       dependencies: ['setup'],
     },
@@ -136,6 +147,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         storageState: '.auth/user.json',
+        trace: zeroRetryTrace,
       },
       dependencies: ['setup'],
     },
@@ -145,6 +157,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         storageState: '.auth/user.json',
+        trace: zeroRetryTrace,
       },
       dependencies: ['setup'],
     },
@@ -156,6 +169,7 @@ export default defineConfig({
       use: {
         ...devices['Pixel 5'],
         storageState: '.auth/user.json',
+        trace: uiTrace,
       },
       dependencies: ['setup'],
     },
@@ -167,6 +181,7 @@ export default defineConfig({
       use: {
         ...devices['Pixel 5'],
         storageState: '.auth/user.json',
+        trace: uiTrace,
       },
       dependencies: ['setup'],
     },

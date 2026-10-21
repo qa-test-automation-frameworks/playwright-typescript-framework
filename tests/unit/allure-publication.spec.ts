@@ -29,9 +29,64 @@ function fixture(
 
 test('complete artifacts merge without dropping a failed result', () => {
   const { input, output, expected } = fixture();
-  expect(prepareAllureResults(input, output, expected)).toEqual({ artifacts: 2, results: 2 });
+  expect(prepareAllureResults(input, output, expected)).toEqual({
+    artifacts: 2,
+    results: 2,
+    traceAttachmentsExcluded: 0,
+  });
   const result: unknown = JSON.parse(readFileSync(join(output, 'second-result.json'), 'utf8'));
   expect(result).toMatchObject({ status: 'failed' });
+});
+
+test('Playwright traces stay out of the Allure report published to Pages', () => {
+  const { input, output, expected } = fixture();
+  const source = join(input, expected[0]!, 'allure-results');
+  writeFileSync(join(source, 'trace-a.zip'), 'private DOM and network trace');
+  writeFileSync(join(source, 'screenshot.png'), 'bounded screenshot');
+  writeFileSync(
+    join(source, 'first-result.json'),
+    JSON.stringify({
+      uuid: 'first',
+      name: 'actual test',
+      status: 'failed',
+      attachments: [
+        {
+          name: 'trace',
+          source: 'trace-a.zip',
+          type: 'application/vnd.allure.playwright-trace',
+        },
+        { name: 'screenshot', source: 'screenshot.png', type: 'image/png' },
+      ],
+      steps: [
+        {
+          name: 'nested step',
+          attachments: [
+            {
+              name: 'trace',
+              source: 'trace-a.zip',
+              type: 'application/vnd.allure.playwright-trace',
+            },
+          ],
+        },
+      ],
+    }),
+  );
+
+  expect(prepareAllureResults(input, output, expected)).toMatchObject({
+    artifacts: 2,
+    results: 2,
+    traceAttachmentsExcluded: 2,
+  });
+  const result = JSON.parse(readFileSync(join(output, 'first-result.json'), 'utf8')) as unknown as {
+    attachments: unknown[];
+    steps: Array<{ attachments: unknown[] }>;
+  };
+  expect(result.attachments).toEqual([
+    { name: 'screenshot', source: 'screenshot.png', type: 'image/png' },
+  ]);
+  expect(result.steps[0]!.attachments).toEqual([]);
+  expect(readFileSync(join(output, 'screenshot.png'), 'utf8')).toBe('bounded screenshot');
+  expect(() => readFileSync(join(output, 'trace-a.zip'))).toThrow();
 });
 
 test('a missing shard rejects publication', () => {

@@ -19,6 +19,7 @@ const result = spawnSync(
       TEST_USER_EMAIL: 'framework.unit@example.test',
       TEST_USER_PASSWORD: 'synthetic-unit-password',
       TEST_USER_USERNAME: 'framework-unit',
+      CONTROLLED_TARGET_MODE: '1',
       OTEL_ENABLED: 'false',
     },
   },

@@ -2,6 +2,7 @@ export const requiredJobs = [
   'fresh-clone-format',
   'lint-typecheck',
   'evidence-negative-control',
+  'browser-trace-contract',
   'test-api',
   'test-e2e',
   'test-visual',

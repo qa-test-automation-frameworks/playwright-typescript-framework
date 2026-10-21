@@ -58,6 +58,19 @@ test('reliability-lab must succeed in the aggregate result matrix', () => {
   }
 });
 
+test('browser-trace-contract must succeed in the aggregate result matrix', () => {
+  for (const result of ['success', 'failure', 'cancelled', 'skipped', 'unknown', undefined]) {
+    const needs = successful();
+    needs['browser-trace-contract'] = result === undefined ? undefined : { result };
+    if (result === 'success') assert.doesNotThrow(() => assertRequiredJobs(needs, 'pull_request'));
+    else
+      assert.throws(
+        () => assertRequiredJobs(needs, 'pull_request'),
+        /Required job browser-trace-contract/,
+      );
+  }
+});
+
 test('unexpected result dependencies cannot pass silently', () => {
   const needs = successful();
   needs['new-required-job'] = { result: 'success' };
