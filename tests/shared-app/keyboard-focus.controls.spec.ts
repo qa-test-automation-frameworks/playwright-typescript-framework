@@ -56,10 +56,9 @@ async function expectInjectedFaultToFailContract(
   } catch (error) {
     failure = error;
   }
-  expect(
-    failure,
-    `${contractName} should fail against the injected regression`,
-  ).toBeInstanceOf(Error);
+  expect(failure, `${contractName} should fail against the injected regression`).toBeInstanceOf(
+    Error,
+  );
   expect((failure as Error).message).toContain('Expected: true');
 }
 
