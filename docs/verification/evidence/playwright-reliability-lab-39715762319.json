@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "package": "B5",
+  "experiment": "Playwright native controlled fault attribution and bounded API repeat sample",
+  "workflow": {
+    "runId": 39715762319,
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39715762319",
+    "ref": "refs/pull/66/merge"
+  },
+  "source": {
+    "pullRequest": 66,
+    "pullRequestHeadSha": "3266cb188890b4c69b873daa6c3fec49bdbeb874",
+    "testedCheckoutSha": "cbe8b1212eee5ef8bf1db5c4600bcdc052ec7928",
+    "baseSha": "9b5a63fbf571884b2b12be5b62549da1ccd5adf1"
+  },
+  "target": {
+    "identity": "repo-owned controlled RealWorld target; new target process for every clean/mutated run",
+    "treeSha": "ab836d4debc1ebd6e9ac51644788cf9aa2b7732c",
+    "freshProcessPerControlRun": true,
+    "visualBaseline": {
+      "path": "tests/visual/critical-pages.visual.spec.ts-snapshots/home-feed-guest-visual-win32.png",
+      "sha256": "4537f3d90099e673c35f46fe78f3a2dcb625081e9be7aaa99d2c45ca91c62781",
+      "valid": true
+    }
+  },
+  "environment": {
+    "os": "Windows Server 2025",
+    "platform": "win32",
+    "architecture": "x64",
+    "node": "v24.21.0",
+    "playwright": "1.64.0",
+    "cpuCount": 4,
+    "totalMemoryBytes": 17174360064
+  },
+  "faultControls": {
+    "expected": 5,
+    "detected": 5,
+    "missed": 0,
+    "invalid": 0,
+    "nativeCaseCountPerCleanOrMutatedRun": 3,
+    "controls": [
+      {
+        "fault": "selector",
+        "identity": {
+          "project": "selector-contract",
+          "file": "tests/contracts/selectors/controlled-ui.selectors.spec.ts",
+          "suites": ["Contract: controlled UI selectors"],
+          "title": "feed exposes article-card selector surfaces @contract"
+        },
+        "clean": {
+          "disposition": "CLEAN",
+          "processExitCode": 0,
+          "nativeCaseCount": 3
+        },
+        "mutated": {
+          "disposition": "DETECTED",
+          "category": "selector-assertion",
+          "origin": "test-assertion",
+          "processExitCode": 1,
+          "nativeCaseCount": 3
+        }
+      },
+      {
+        "fault": "api-schema",
+        "identity": {
+          "project": "api",
+          "file": "tests/api/articles.api.spec.ts",
+          "suites": ["API: Articles & Comments"],
+          "title": "List articles with tag filter @api"
+        },
+        "clean": {
+          "disposition": "CLEAN",
+          "processExitCode": 0,
+          "nativeCaseCount": 3
+        },
+        "mutated": {
+          "disposition": "DETECTED",
+          "category": "api-schema",
+          "origin": "response-schema",
+          "processExitCode": 1,
+          "nativeCaseCount": 3
+        }
+      },
+      {
+        "fault": "accessibility",
+        "identity": {
+          "project": "accessibility",
+          "file": "tests/accessibility/critical-pages.accessibility.spec.ts",
+          "suites": ["Accessibility: Critical Pages", "Unauthenticated pages"],
+          "title": "Login page has no detectable WCAG violations @accessibility"
+        },
+        "clean": {
+          "disposition": "CLEAN",
+          "processExitCode": 0,
+          "nativeCaseCount": 3
+        },
+        "mutated": {
+          "disposition": "DETECTED",
+          "category": "axe-rule",
+          "ruleId": "aria-hidden-focus",
+          "processExitCode": 1,
+          "nativeCaseCount": 3
+        }
+      },
+      {
+        "fault": "visual",
+        "identity": {
+          "project": "visual",
+          "file": "tests/visual/critical-pages.visual.spec.ts",
+          "suites": ["Visual: Critical Pages Screenshot Comparison", "Unauthenticated Pages"],
+          "title": "Home feed matches baseline @visual"
+        },
+        "clean": {
+          "disposition": "CLEAN",
+          "processExitCode": 0,
+          "nativeCaseCount": 3
+        },
+        "mutated": {
+          "disposition": "DETECTED",
+          "category": "visual-comparison",
+          "requiredAttachments": ["expected", "actual", "diff"],
+          "processExitCode": 1,
+          "nativeCaseCount": 3
+        }
+      },
+      {
+        "fault": "cleanup",
+        "identity": {
+          "project": "api",
+          "file": "tests/api/articles.api.spec.ts",
+          "suites": ["API: Articles & Comments"],
+          "title": "Get article by slug @api"
+        },
+        "clean": {
+          "disposition": "CLEAN",
+          "processExitCode": 0,
+          "nativeCaseCount": 3
+        },
+        "mutated": {
+          "disposition": "DETECTED",
+          "category": "cleanup-teardown",
+          "origin": "test-fixture-teardown",
+          "processExitCode": 1,
+          "nativeCaseCount": 3
+        }
+      }
+    ]
+  },
+  "repeatProfile": {
+    "selectedTest": {
+      "project": "api",
+      "file": "tests/api/articles.api.spec.ts",
+      "suites": ["API: Articles & Comments"],
+      "title": "List articles with tag filter @api"
+    },
+    "workers": 1,
+    "retries": 0,
+    "sampleSize": 20,
+    "caseCountPerRun": 3,
+    "totalNativeCases": 60,
+    "successfulRuns": 20,
+    "accumulatedWallSeconds": 80.06,
+    "rawWallSeconds": [
+      3.954, 3.986, 3.838, 4.112, 4.052, 4.072, 4.049, 4.096, 3.979, 3.958, 3.964, 4.043, 4.005,
+      4.109, 4.038, 3.966, 3.92, 4.047, 3.899, 3.973
+    ],
+    "minimumWallSeconds": 3.838,
+    "medianReportedByArtifactSeconds": 3.995,
+    "medianFromRawSeconds": 3.9955,
+    "medianRoundedToMillisecond": 3.996,
+    "maximumWallSeconds": 4.112,
+    "firstAttemptOutcomes": {
+      "failures": 0,
+      "retries": 0,
+      "skips": 0
+    },
+    "p95": null
+  },
+  "decision": "Retain the existing one-worker, zero-retry API profile.",
+  "limitations": [
+    "Twenty runs on one hosted Windows runner and the repository-owned target do not estimate a production flake rate or predict another runner class.",
+    "The repeated API sample is not a browser repeatability study.",
+    "No p95 or tail-precision claim is made for this small sample."
+  ],
+  "artifact": {
+    "id": 12398832474,
+    "name": "playwright-reliability-lab",
+    "sha256": "5ca07b1c51f4b8409f3585155faed6931213607a56b80e0ad5ae47b2528c7bdd",
+    "expiresAt": "2027-01-20T03:14:38Z"
+  }
+}

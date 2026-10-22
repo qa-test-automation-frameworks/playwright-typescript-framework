@@ -249,7 +249,7 @@ function summarizeNumbers(values) {
   return {
     count: sorted.length,
     min: sorted[0],
-    median: Number(median.toFixed(3)),
+    median: Math.round((median + Number.EPSILON) * 1000) / 1000,
     max: sorted[sorted.length - 1],
   };
 }

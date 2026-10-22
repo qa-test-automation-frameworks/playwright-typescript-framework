@@ -10,7 +10,7 @@ The repository-owned RealWorld target supports five opt-in reliability faults. T
 | `visual`        | Changes the controlled target page background.              | Existing home-feed screenshot baseline |
 | `cleanup`       | Makes owned article deletion fail with HTTP 503.            | Cleanup fixture failure assertion      |
 
-Run `npm run reliability:faults` to execute each named gate against its matching fault. The command succeeds only when every controlled defect causes a nonzero test result and its diagnostic appears in the captured output. Logs and a machine-readable control summary are written under ignored `work/reliability-lab/`.
+Run `npm run reliability:faults` to execute each named gate against its matching fault. The command succeeds only when every clean testcase passes once and every mutation produces exactly the intended native failed testcase, process exit, and structured failure category or required attachment. Unrelated failures and missing or malformed reports are invalid controls; console text alone does not count as attribution. Logs and a machine-readable control summary are written under ignored `work/reliability-lab/`.
 
 Run `npm run reliability:repeat` for 20 independent clean repetitions of the bounded API article-list profile. Each repetition starts a fresh target process, uses one worker, disables retries, and records its native outcome and wall time. The JSON and Markdown summaries include first-attempt failures, retries, skips, runtime versions, and sample limitations. The CI `reliability-lab` job uploads these outputs for each tested revision.
 

@@ -536,5 +536,11 @@ test('per-run preparation removes stale reports and attachments before the next 
 
 test('small samples report raw-friendly median and range without a tail estimate', () => {
   expect(summarizeNumbers([5, 2, 9, 4])).toEqual({ count: 4, min: 2, median: 4.5, max: 9 });
+  expect(summarizeNumbers([3.995, 3.996])).toEqual({
+    count: 2,
+    min: 3.995,
+    median: 3.996,
+    max: 3.996,
+  });
   expect(summarizeNumbers([])).toBeNull();
 });
