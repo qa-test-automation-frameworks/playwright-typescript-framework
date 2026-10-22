@@ -348,9 +348,9 @@ jobs:
       EVIDENCE_CLASS: controlled
       SHARED_APP_BASE_URL: http://127.0.0.1:4310
       SHARED_APP_SYNTHETIC: '1'
-      APP_IMAGE: ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:0de7875e9c69d3e6f8954456b6f7c90160032395f87aee4d3d64e33307b062a9
-      APP_IMAGE_DIGEST: sha256:0de7875e9c69d3e6f8954456b6f7c90160032395f87aee4d3d64e33307b062a9
-      APP_SOURCE_REVISION: e90067b38bcd88fbb9118388f9fb8cc9dee6d493
+      APP_IMAGE: ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:ce993056496de8daffdede281e5f0d2bfc54f44f90ba0244edd4d56dde90173c
+      APP_IMAGE_DIGEST: sha256:ce993056496de8daffdede281e5f0d2bfc54f44f90ba0244edd4d56dde90173c
+      APP_SOURCE_REVISION: b1851e0403f6d6a1ce12e9fde5ac5ccb3c634d94
       APP_FIXTURE_VERSION: v0.1.0
       APP_NAMESPACE: pw-${{ github.run_id }}-${{ github.run_attempt }}
       APP_POSTGRES_PASSWORD: qra-${{ github.run_id }}-${{ github.run_attempt }}-postgres
