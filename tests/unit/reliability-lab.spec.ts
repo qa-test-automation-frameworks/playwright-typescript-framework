@@ -173,7 +173,7 @@ function typedFailure(control: ReliabilityFault): {
       return {
         error: { location, message: 'Error: expect(page).toHaveScreenshot(expected)' },
         attachments: paths.map((path, index) => ({
-          name: `home-feed-guest-visual-${names[index]}`,
+          name: `home-feed-guest-${names[index]}.png`,
           contentType: 'image/png',
           path,
         })),
@@ -340,6 +340,48 @@ test('native reporter paths relative to the tests directory still match configur
       report,
     }),
   ).toEqual({ disposition: 'CLEAN', reason: 'native-testcase-passed-once' });
+});
+
+test('Windows reporter paths and implementation-origin errors keep API faults attributable', () => {
+  const control = faults.find((item) => item.name === 'api-schema');
+  if (!control) throw new Error('API schema control fixture is missing');
+  const report = reportFor(control, { mutated: true });
+  const windowsReporterPath = (file: string): string =>
+    file.replace(/^tests\//, '').replace(/\//g, '\\');
+  const makePathsWindows = (suites: NativeReporterSuite[]): void => {
+    for (const suite of suites) {
+      if (suite.file) suite.file = windowsReporterPath(suite.file);
+      if (suite.line === 0 && suite.column === 0) suite.title = windowsReporterPath(suite.title);
+      for (const spec of suite.specs || []) {
+        spec.file = windowsReporterPath(spec.file || '');
+        for (const testCase of spec.tests || []) {
+          for (const result of testCase.results || []) {
+            for (const error of result.errors || []) {
+              error.location = {
+                line: error.location?.line || 1,
+                column: error.location?.column || 1,
+                file: ['D:', 'a', 'repo', 'src', 'api', 'BaseApiClient.ts'].join(
+                  String.fromCharCode(92),
+                ),
+              };
+            }
+          }
+        }
+      }
+      makePathsWindows(suite.suites || []);
+    }
+  };
+  makePathsWindows(report.suites);
+
+  expect(
+    classifyControl({
+      control: { ...control, support: supportCases },
+      phase: 'mutated',
+      execution: completedExecution(1),
+      reportState: 'valid',
+      report,
+    }),
+  ).toEqual({ disposition: 'DETECTED', category: 'api-schema', origin: 'response-schema' });
 });
 
 test('each intended failure is attributed from its native origin and typed evidence', () => {

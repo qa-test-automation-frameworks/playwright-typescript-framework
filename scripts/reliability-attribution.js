@@ -116,7 +116,7 @@ function expectedFailureEvidence(control, test, error, attachmentPaths, prefligh
     const required = ['expected', 'actual', 'diff'];
     const attachments = resultAttachments(test);
     const valid = required.every((name) => {
-      const attachment = attachments.find((item) => item.name?.endsWith(`-${name}`));
+      const attachment = attachments.find((item) => item.name?.endsWith(`-${name}.png`));
       return (
         attachment?.contentType === 'image/png' &&
         typeof attachment.path === 'string' &&

@@ -62,7 +62,7 @@ const faults = [
       suites: ['API: Articles & Comments'],
       title: 'List articles with tag filter @api',
     },
-    failure: { kind: 'api-schema', source: { file: 'tests/api/articles.api.spec.ts' } },
+    failure: { kind: 'api-schema', source: { file: 'src/api/BaseApiClient.ts' } },
     args: [
       'tests/api/articles.api.spec.ts',
       '--project=api',
@@ -120,7 +120,7 @@ const faults = [
       suites: ['API: Articles & Comments'],
       title: 'Get article by slug @api',
     },
-    failure: { kind: 'cleanup-teardown', source: { file: 'src/fixtures/cleanup.fixtures.ts' } },
+    failure: { kind: 'cleanup-teardown', source: { file: 'src/utils/cleanup-registry.ts' } },
     args: ['tests/api/articles.api.spec.ts', '--project=api', '--grep', 'Get article by slug'],
   },
 ];
