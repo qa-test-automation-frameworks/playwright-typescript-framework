@@ -16,7 +16,8 @@ export const requiredJobs = [
 ];
 
 const scheduledJob = 'scheduled-full-cross-browser';
-const recognizedJobs = new Set([...requiredJobs, scheduledJob]);
+const candidateSharedAppJob = 'candidate-shared-app-ui';
+const recognizedJobs = new Set([...requiredJobs, candidateSharedAppJob, scheduledJob]);
 
 export function assertRequiredJobs(needs, trigger) {
   if (!needs || typeof needs !== 'object' || Array.isArray(needs))
@@ -27,8 +28,16 @@ export function assertRequiredJobs(needs, trigger) {
     throw new Error(`Unexpected required-ci dependency ${unexpected.join(', ')}`);
 
   for (const job of requiredJobs) {
+    if (job === 'shared-app-ui') continue;
     if (needs[job]?.result !== 'success')
       throw new Error(`Required job ${job} is ${needs[job]?.result ?? 'missing'}`);
+  }
+
+  const pinnedTarget = needs['shared-app-ui']?.result;
+  const candidateTarget = needs[candidateSharedAppJob]?.result;
+  if (!((pinnedTarget === 'success' && candidateTarget === 'skipped')
+    || (pinnedTarget === 'skipped' && candidateTarget === 'success'))) {
+    throw new Error('Required job shared-app-ui or candidate-shared-app-ui must succeed exactly once');
   }
 
   const scheduled = needs[scheduledJob]?.result;

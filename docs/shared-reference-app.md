@@ -25,6 +25,19 @@ services are isolated to that job; the namespace includes the workflow run and
 attempt. The A07 evidence record identifies the OCI image digest and fixture
 version, while the readiness check separately verifies the source revision.
 
+## Candidate QRA runs
+
+The `candidate-shared-app-ui` job is an opt-in `workflow_dispatch` on `main`.
+Supply `candidate_run_id` and `candidate_artifact_id` from the same successful
+QRA main push. It verifies the descriptor and immutable image, checks the
+image's source and version labels, checks readiness source and seed identity,
+then emits the existing `shared-app-ui` evidence scope against that candidate
+digest. With both fields empty, CI runs the currently pinned image as usual.
+The verifier tries the public QRA artifact endpoints without credentials; an
+already provisioned `QRA_ACTIONS_READ_TOKEN` can be used if GitHub requires
+authentication. A denied read fails the candidate job, leaving candidate
+evidence unavailable. The workflow does not create or broaden credentials.
+
 A second required job boots the previously verified `0.1.0` rollback image by
 its immutable digest in a separate disposable environment. It checks the OCI
 source label and readiness identity, then creates a synthetic member session,

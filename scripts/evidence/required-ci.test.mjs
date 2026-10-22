@@ -5,9 +5,11 @@ import { parse } from 'yaml';
 import { assertRequiredJobs, requiredJobs } from './required-ci.mjs';
 
 const scheduledJob = 'scheduled-full-cross-browser';
+const candidateSharedAppJob = 'candidate-shared-app-ui';
 const successful = () =>
   Object.fromEntries([
     ...requiredJobs.map((job) => [job, { result: 'success' }]),
+    [candidateSharedAppJob, { result: 'skipped' }],
     [scheduledJob, { result: 'skipped' }],
   ]);
 
@@ -17,11 +19,11 @@ function assertWorkflowMatchesPolicy(workflowNeeds, policyJobs) {
   assert.equal(new Set(workflowNeeds).size, workflowNeeds.length, 'workflow needs has duplicates');
   assert.equal(new Set(policyJobs).size, policyJobs.length, 'requiredJobs has duplicates');
 
-  const expected = new Set([...policyJobs, scheduledJob]);
+  const expected = new Set([...policyJobs, candidateSharedAppJob, scheduledJob]);
   assert.deepEqual(
     [...workflowNeeds].sort(),
     [...expected].sort(),
-    'required-ci.needs must equal requiredJobs plus the scheduled exception',
+    'required-ci.needs must equal the required and conditional jobs plus the scheduled exception',
   );
 }
 
@@ -34,6 +36,19 @@ const workflowNeeds = workflow?.jobs?.['required-ci']?.needs;
 
 test('PR fast scopes require actual success, allowing only the scheduled tier to skip', () => {
   assert.doesNotThrow(() => assertRequiredJobs(successful(), 'pull_request'));
+});
+
+test('candidate dispatch uses candidate-bound UI evidence in place of the pinned target', () => {
+  const needs = successful();
+  needs['shared-app-ui'] = { result: 'skipped' };
+  needs[candidateSharedAppJob] = { result: 'success' };
+  assert.doesNotThrow(() => assertRequiredJobs(needs, 'workflow_dispatch'));
+
+  needs['shared-app-ui'] = { result: 'success' };
+  assert.throws(() => assertRequiredJobs(needs, 'workflow_dispatch'), /must succeed exactly once/);
+  needs['shared-app-ui'] = { result: 'skipped' };
+  needs[candidateSharedAppJob] = { result: 'skipped' };
+  assert.throws(() => assertRequiredJobs(needs, 'workflow_dispatch'), /must succeed exactly once/);
 });
 
 test('mandatory skipped, failed, cancelled or missing child cannot pass the final gate', () => {
