@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page, type TestInfo } from '@playwright/test';
 
 type Identity = 'member-a' | 'member-b' | 'reviewer';
 
@@ -39,10 +39,21 @@ async function startSessionWithKeyboard(page: Page, identity: Identity): Promise
   ).toBeFocused();
 }
 
-async function expectAccessible(page: Page): Promise<void> {
+async function expectAccessible(
+  page: Page,
+  testInfo: TestInfo,
+  state: 'member' | 'reviewer' | 'error',
+): Promise<void> {
   const accessibility = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
     .analyze();
+  await testInfo.attach(`axe-${state}-rules`, {
+    body: JSON.stringify({
+      tags: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'],
+      violations: accessibility.violations.map(({ id, impact }) => ({ id, impact })),
+    }),
+    contentType: 'application/json',
+  });
   expect(
     accessibility.violations.map(({ id, impact }) => ({ id, impact })),
     JSON.stringify(accessibility.violations.map(({ id, impact }) => ({ id, impact }))),
@@ -109,7 +120,7 @@ test('keyboard users can submit a claim and land on its exact row', async ({ pag
   });
 
   await startSessionWithKeyboard(page, 'member-a');
-  await expectAccessible(page);
+  await expectAccessible(page, testInfo, 'member');
   await expect(page.locator('#policy-section')).toBeVisible();
   await expect(page.locator('#claim-form-section')).toBeVisible();
   await expect(page.locator('#claims-body button')).toHaveCount(0);
@@ -160,14 +171,19 @@ test('keyboard users can submit a claim and land on its exact row', async ({ pag
   if (!box || !viewport) throw new Error('The focused submit button must fit in the browser view.');
   const x = Math.max(0, box.x - 10);
   const y = Math.max(0, box.y - 10);
+  const screenshotPath = testInfo.outputPath('keyboard-submit-focus.png');
   const screenshot = await page.screenshot({
-    path: testInfo.outputPath('keyboard-submit-focus.png'),
+    path: screenshotPath,
     clip: {
       x,
       y,
       width: Math.min(viewport.width - x, box.width + 20),
       height: Math.min(viewport.height - y, box.height + 20),
     },
+  });
+  await testInfo.attach('keyboard-submit-focus', {
+    path: screenshotPath,
+    contentType: 'image/png',
   });
   expect(screenshot.byteLength).toBeGreaterThan(500);
 
@@ -199,10 +215,10 @@ test('keyboard users can submit a claim and land on its exact row', async ({ pag
 
 test('keyboard reviewer actions keep focus on the same claim and sign out cleanly', async ({
   page,
-}) => {
+}, testInfo) => {
   const claimId = await createClaimThroughPublicApi(page);
   await startSessionWithKeyboard(page, 'reviewer');
-  await expectAccessible(page);
+  await expectAccessible(page, testInfo, 'reviewer');
   await expect(page.locator('#policy-section')).toBeHidden();
   await expect(page.locator('#claim-form-section')).toBeHidden();
 
@@ -230,7 +246,7 @@ test('keyboard reviewer actions keep focus on the same claim and sign out cleanl
 
 test('a failed claim request focuses the alert and preserves a keyboard retry', async ({
   page,
-}) => {
+}, testInfo) => {
   await startSessionWithKeyboard(page, 'member-a');
 
   await page.keyboard.press('Tab');
@@ -268,7 +284,7 @@ test('a failed claim request focuses the alert and preserves a keyboard retry', 
   await expect(page.getByRole('status')).toHaveText('');
   await expect(amount).toHaveValue('37.41');
   await expect(submitButton).toBeEnabled();
-  await expectAccessible(page);
+  await expectAccessible(page, testInfo, 'error');
 
   await page.keyboard.press('Shift+Tab');
   await expect(submitButton).toBeFocused();
