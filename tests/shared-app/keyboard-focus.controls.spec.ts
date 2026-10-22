@@ -59,10 +59,7 @@ async function expectInjectedFaultToFailContract(
   expect(failure, `${contractName} should fail against the injected regression`).toBeInstanceOf(
     Error,
   );
-  const assertionMessage = (failure as Error).message.replace(
-    /\u001B\[[0-?]*[ -/]*[@-~]/gu,
-    '',
-  );
+  const assertionMessage = (failure as Error).message.replace(/\u001B\[[0-?]*[ -/]*[@-~]/gu, '');
   expect(assertionMessage).toMatch(/Expected:\s*true[\s\S]*Received:\s*false/u);
 }
 
