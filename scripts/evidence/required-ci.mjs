@@ -39,7 +39,9 @@ export function assertRequiredJobs(needs, trigger) {
     (pinnedTarget === 'success' && candidateTarget === 'skipped') ||
     (pinnedTarget === 'skipped' && candidateTarget === 'success');
   if (!targetResultsAreValid) {
-    throw new Error('Required job shared-app-ui or candidate-shared-app-ui must succeed exactly once');
+    throw new Error(
+      'Required job shared-app-ui or candidate-shared-app-ui must succeed exactly once',
+    );
   }
 
   const scheduled = needs[scheduledJob]?.result;
