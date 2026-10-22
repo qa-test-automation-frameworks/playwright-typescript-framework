@@ -11,7 +11,7 @@ async function startSession(
   await page.goto('/');
   await page.getByLabel('Sign in as').selectOption(identity);
   await page.getByRole('button', { name: 'Start session' }).click();
-  await expect(page.getByRole('status').filter({ hasText: 'Active as' })).toBeVisible();
+  await expect(page.locator('#session-status')).toContainText('Active as');
   await expect(page.getByRole('heading', { name: 'Claims', exact: true })).toBeVisible();
 }
 

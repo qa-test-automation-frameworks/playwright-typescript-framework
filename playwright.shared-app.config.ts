@@ -33,5 +33,15 @@ export default defineConfig({
   },
   timeout: 30_000,
   expect: { timeout: 5_000 },
-  projects: [{ name: 'shared-app-ui', testMatch: /.*\.spec\.ts/ }],
+  projects: [
+    {
+      name: 'shared-app-ui',
+      testMatch: /(?:reference-application|keyboard-focus)\.spec\.ts$/,
+    },
+    {
+      name: 'keyboard-focus-controls',
+      testMatch: /keyboard-focus\.controls\.spec\.ts$/,
+      grep: /@keyboard-focus-control/,
+    },
+  ],
 });
