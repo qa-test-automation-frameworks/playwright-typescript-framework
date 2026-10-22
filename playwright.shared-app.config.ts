@@ -36,12 +36,7 @@ export default defineConfig({
   projects: [
     {
       name: 'shared-app-ui',
-      testMatch: /(?:reference-application|keyboard-focus)\.spec\.ts$/,
-    },
-    {
-      name: 'keyboard-focus-controls',
-      testMatch: /keyboard-focus\.controls\.spec\.ts$/,
-      grep: /@keyboard-focus-control/,
+      testMatch: /(?:reference-application|keyboard-focus(?:\.controls)?)\.spec\.ts$/,
     },
   ],
 });
