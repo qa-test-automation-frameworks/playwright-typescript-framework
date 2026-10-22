@@ -42,7 +42,7 @@ The setup project authenticates the shared test user and writes `.auth/user.json
 
 ## Reporting And Artifacts
 
-The framework emits Playwright HTML and Allure results. Screenshots are captured only on failure, videos are retained on failure, and traces are recorded on first retry. Generated artifacts are ignored by git.
+The framework emits Playwright HTML and Allure results. Screenshots are captured only on failure, videos are retained on failure, and browser traces are retained on failure for zero-retry synthetic UI runs while retrying UI projects keep first-retry tracing. Trace archives stay in seven-day CI artifacts and are removed before public Allure Pages rendering. Generated artifacts are ignored by git. See [browser trace handling](browser-traces.md).
 
 ## CI Structure
 

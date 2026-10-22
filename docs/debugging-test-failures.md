@@ -41,7 +41,9 @@ API failures usually come from target environment availability, authentication, 
 
 ## Browser Flow Failures
 
-Use Playwright traces, screenshots, and videos from `test-results` or `playwright-report`.
+Use Playwright traces, screenshots, and videos from `test-results` or
+`playwright-report`. The trace policy and publication boundary are described in
+[`browser-traces.md`](browser-traces.md).
 
 ![Curated failure screenshot](assets/screenshots/debugging-failure.png)
 
@@ -51,6 +53,8 @@ Common checks:
 - Verify the correct project is being used. Auth flows run in `chromium-anonymous`; most other E2E specs use authenticated state.
 - Prefer locator and URL evidence over adding fixed waits.
 - Inspect page object selectors before changing spec assertions.
+- Treat traces as sensitive because they retain DOM and network state. CI traces
+  are kept in bounded Actions artifacts and removed from public Allure Pages.
 
 ## Visual Failures
 

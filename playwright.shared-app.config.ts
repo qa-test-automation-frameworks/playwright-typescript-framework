@@ -1,9 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 import { nativeEvidenceMetadata } from './scripts/evidence/native-metadata';
+import { sharedAppBrowserPolicy } from './src/utils/browser-trace-policy';
 
 const baseURL = process.env.SHARED_APP_BASE_URL;
 if (!baseURL)
   throw new Error('SHARED_APP_BASE_URL must target the isolated pinned reference application.');
+const browserPolicy = sharedAppBrowserPolicy(process.env.SHARED_APP_SYNTHETIC === '1');
 
 export default defineConfig({
   metadata: nativeEvidenceMetadata(),
@@ -11,7 +13,7 @@ export default defineConfig({
   // Tests share one disposable backend namespace; keep test cases isolated.
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
-  retries: 0,
+  retries: browserPolicy.retries,
   workers: 1,
   reporter: [
     ['list'],
@@ -26,7 +28,7 @@ export default defineConfig({
     baseURL,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    trace: 'on-first-retry',
+    trace: browserPolicy.trace,
     actionTimeout: 10_000,
   },
   timeout: 30_000,
