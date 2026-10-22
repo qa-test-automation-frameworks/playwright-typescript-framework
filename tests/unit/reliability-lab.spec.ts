@@ -387,6 +387,49 @@ test('zero tests, global setup errors, absent reports, malformed reports, and ti
       },
     }),
   ).toEqual({ disposition: 'INVALID_CONTROL', reason: 'process-timeout' });
+  expect(
+    classifyControl({
+      ...base,
+      execution: {
+        exitCode: null,
+        signal: null,
+        errorCode: 'ENOENT',
+        spawnError: true,
+        timedOut: false,
+      },
+    }),
+  ).toEqual({ disposition: 'INVALID_CONTROL', reason: 'process-did-not-complete' });
+});
+
+test('the native testcase and process exit must agree on an intended failure', () => {
+  const control = firstFault();
+  const classifierInput = {
+    control: { ...control, support: supportCases },
+    phase: 'mutated' as const,
+    reportState: 'valid' as const,
+  };
+
+  expect(
+    classifyControl({
+      ...classifierInput,
+      execution: completedExecution(1),
+      report: reportFor(control),
+    }),
+  ).toEqual({
+    disposition: 'INVALID_CONTROL',
+    reason: 'mutated-native-outcome-was-not-one-expected-failure',
+  });
+
+  expect(
+    classifyControl({
+      ...classifierInput,
+      execution: completedExecution(0),
+      report: reportFor(control, { mutated: true }),
+    }),
+  ).toEqual({
+    disposition: 'INVALID_CONTROL',
+    reason: 'process-and-native-result-disagree',
+  });
 });
 
 test('visual failures need an existing baseline and all three native screenshot attachments', () => {
