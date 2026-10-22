@@ -317,6 +317,31 @@ test('each control requires the exact native testcase plus passing setup and tea
   }
 });
 
+test('native reporter paths relative to the tests directory still match configured identities', () => {
+  const control = firstFault();
+  const report = reportFor(control);
+  const stripTestsRoot = (suites: NativeReporterSuite[]): void => {
+    for (const suite of suites) {
+      if (suite.file?.startsWith('tests/')) suite.file = suite.file.slice('tests/'.length);
+      for (const spec of suite.specs || []) {
+        if (spec.file?.startsWith('tests/')) spec.file = spec.file.slice('tests/'.length);
+      }
+      stripTestsRoot(suite.suites || []);
+    }
+  };
+  stripTestsRoot(report.suites);
+
+  expect(
+    classifyControl({
+      control: { ...control, support: supportCases },
+      phase: 'clean',
+      execution: completedExecution(0),
+      reportState: 'valid',
+      report,
+    }),
+  ).toEqual({ disposition: 'CLEAN', reason: 'native-testcase-passed-once' });
+});
+
 test('each intended failure is attributed from its native origin and typed evidence', () => {
   for (const control of faults) {
     expect(classifyFixture(control, 'mutated', { mutated: true }).disposition).toBe('DETECTED');

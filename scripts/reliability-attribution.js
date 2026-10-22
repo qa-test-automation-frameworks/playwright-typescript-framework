@@ -3,13 +3,14 @@ const path = require('path');
 function normalizeFile(file) {
   if (typeof file !== 'string' || !file) return '';
   const normalized = file.replace(/\\/g, '/').replace(/^\.\//, '');
-  const markers = ['/tests/', '/src/'];
-  const positions = markers
-    .map((marker) => normalized.lastIndexOf(marker))
-    .filter((index) => index >= 0);
-  return positions.length
-    ? normalized.slice(Math.max(...positions) + 1)
-    : normalized.replace(/^\/+/, '');
+  const markers = ['/tests/', '/src/', 'tests/', 'src/'];
+  const offsets = markers
+    .map((marker) => {
+      const position = normalized.lastIndexOf(marker);
+      return position < 0 ? null : position + marker.length;
+    })
+    .filter((offset) => offset !== null);
+  return offsets.length ? normalized.slice(Math.max(...offsets)) : normalized.replace(/^\/+/, '');
 }
 
 function gatherTests(suites, rows = [], ancestors = [], inheritedFile = '') {
