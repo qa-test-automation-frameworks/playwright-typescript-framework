@@ -59,7 +59,11 @@ async function expectInjectedFaultToFailContract(
   expect(failure, `${contractName} should fail against the injected regression`).toBeInstanceOf(
     Error,
   );
-  expect((failure as Error).message).toContain('Received: false');
+  const assertionMessage = (failure as Error).message.replace(
+    /\u001B\[[0-?]*[ -/]*[@-~]/gu,
+    '',
+  );
+  expect(assertionMessage).toMatch(/Expected:\s*true[\s\S]*Received:\s*false/u);
 }
 
 test('tabindex -1 on the submit control is caught by the keyboard reachability control @keyboard-focus-control', async ({
