@@ -86,7 +86,7 @@ test('schema rejection does not expose values included by parser diagnostics', a
     .catch((error: unknown) => error);
   expect(caught).toBeInstanceOf(ApiError);
   expect(JSON.stringify(caught)).not.toContain(sentinel);
-  expect((caught as ApiError).message).toContain('Schema Validation failed');
+  expect((caught as ApiError).message).toContain('API response schema validation failed');
 });
 
 test('valid response data remains available to the caller', async () => {

@@ -1,11 +1,11 @@
 import AxeBuilder from '@axe-core/playwright';
-import type { Page } from '@playwright/test';
+import type { Page, TestInfo } from '@playwright/test';
 import { test, expect } from '@src/fixtures';
 import { ArticleBuilder } from '@src/builders/ArticleBuilder';
 import { appRoutes } from '@src/routes/app-routes';
 import { installUserToken } from '@src/utils/auth-state';
 
-async function expectNoAccessibilityViolations(page: Page): Promise<void> {
+async function expectNoAccessibilityViolations(page: Page, testInfo: TestInfo): Promise<void> {
   const results = await new AxeBuilder({ page }).analyze();
   const formattedViolations = results.violations.map((violation) => ({
     id: violation.id,
@@ -17,6 +17,18 @@ async function expectNoAccessibilityViolations(page: Page): Promise<void> {
       summary: node.failureSummary,
     })),
   }));
+  if (formattedViolations.length > 0) {
+    await testInfo.attach('axe-violations.json', {
+      body: JSON.stringify(
+        formattedViolations.map(({ id, impact, nodes }) => ({
+          id,
+          impact,
+          nodeCount: nodes.length,
+        })),
+      ),
+      contentType: 'application/json',
+    });
+  }
   expect
     .soft(
       formattedViolations,
@@ -36,19 +48,19 @@ test.describe('Accessibility: Critical Pages', { tag: ['@accessibility'] }, () =
     test('Home feed has no detectable WCAG violations @accessibility', async ({
       page,
       feedPage,
-    }) => {
+    }, testInfo) => {
       await feedPage.navigate();
 
-      await expectNoAccessibilityViolations(page);
+      await expectNoAccessibilityViolations(page, testInfo);
     });
 
     test('Login page has no detectable WCAG violations @accessibility', async ({
       page,
       authPage,
-    }) => {
+    }, testInfo) => {
       await authPage.navigateToLogin();
 
-      await expectNoAccessibilityViolations(page);
+      await expectNoAccessibilityViolations(page, testInfo);
     });
   });
 
@@ -56,10 +68,10 @@ test.describe('Accessibility: Critical Pages', { tag: ['@accessibility'] }, () =
     test('Article editor has no detectable WCAG violations @accessibility', async ({
       page,
       articleEditorPage,
-    }) => {
+    }, testInfo) => {
       await articleEditorPage.navigate();
 
-      await expectNoAccessibilityViolations(page);
+      await expectNoAccessibilityViolations(page, testInfo);
     });
 
     test('Article details page has no detectable WCAG violations @accessibility', async ({
@@ -67,7 +79,7 @@ test.describe('Accessibility: Critical Pages', { tag: ['@accessibility'] }, () =
       articleApi,
       articlePage,
       cleanup,
-    }) => {
+    }, testInfo) => {
       const article = new ArticleBuilder().build();
       const created = await articleApi.createArticle(article);
       cleanup.registerResource('article', created.article.slug, () =>
@@ -77,31 +89,31 @@ test.describe('Accessibility: Critical Pages', { tag: ['@accessibility'] }, () =
       await page.goto(appRoutes.article(created.article.slug));
       await articlePage.waitForPageLoad();
 
-      await expectNoAccessibilityViolations(page);
+      await expectNoAccessibilityViolations(page, testInfo);
     });
 
     test('Profile page has no detectable WCAG violations @accessibility', async ({
       page,
       publishedArticle,
       profilePage,
-    }) => {
+    }, testInfo) => {
       await page.goto(appRoutes.profile(publishedArticle.author.username));
       await profilePage.waitForPageLoad();
       await profilePage.showMyArticles();
 
-      await expectNoAccessibilityViolations(page);
+      await expectNoAccessibilityViolations(page, testInfo);
     });
 
     test('Followed author feed has no detectable WCAG violations @accessibility', async ({
       page,
       followerPair,
       feedPage,
-    }) => {
+    }, testInfo) => {
       await installUserToken(page.context(), followerPair.follower.token, followerPair.follower);
       await page.goto('/');
       await feedPage.switchToPersonalFeed();
 
-      await expectNoAccessibilityViolations(page);
+      await expectNoAccessibilityViolations(page, testInfo);
     });
   });
 });

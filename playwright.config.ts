@@ -22,7 +22,7 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
     ['allure-playwright', { detail: true, outputFolder: 'allure-results' }],
     ['junit', { outputFile: 'test-results/junit.xml' }],
-    ['json', { outputFile: 'test-results/results.json' }],
+    ['json', { outputFile: process.env.RELIABILITY_RESULTS_PATH || 'test-results/results.json' }],
   ],
   outputDir: 'test-results/artifacts',
   use: {
