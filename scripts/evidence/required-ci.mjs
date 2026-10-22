@@ -2,6 +2,7 @@ export const requiredJobs = [
   'fresh-clone-format',
   'lint-typecheck',
   'evidence-negative-control',
+  'browser-trace-contract',
   'test-api',
   'test-e2e',
   'test-visual',
@@ -10,14 +11,27 @@ export const requiredJobs = [
   'shared-app-ui',
   'shared-app-rollback',
   'test-cross-browser',
+  'reliability-lab',
   'generate-allure-report',
 ];
+
+const scheduledJob = 'scheduled-full-cross-browser';
+const recognizedJobs = new Set([...requiredJobs, scheduledJob]);
+
 export function assertRequiredJobs(needs, trigger) {
+  if (!needs || typeof needs !== 'object' || Array.isArray(needs))
+    throw new Error('Required job results must be an object');
+
+  const unexpected = Object.keys(needs).filter((job) => !recognizedJobs.has(job));
+  if (unexpected.length > 0)
+    throw new Error(`Unexpected required-ci dependency ${unexpected.join(', ')}`);
+
   for (const job of requiredJobs) {
     if (needs[job]?.result !== 'success')
       throw new Error(`Required job ${job} is ${needs[job]?.result ?? 'missing'}`);
   }
-  const scheduled = needs['scheduled-full-cross-browser']?.result;
+
+  const scheduled = needs[scheduledJob]?.result;
   if (
     trigger === 'schedule' ? scheduled !== 'success' : !['success', 'skipped'].includes(scheduled)
   )

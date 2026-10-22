@@ -104,6 +104,36 @@ jobs:
           path: test-results/evidence-control/
           if-no-files-found: error
 
+  browser-trace-contract:
+    runs-on: ubuntu-latest
+    env:
+      BROWSER_TRACE_CONTROL_OUT: work/audit-2026-10-21/B2/trace-control
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install --global npm@10.9.4
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run the isolated trace-retention control
+        id: browser-tests
+        continue-on-error: true
+        run: npx playwright test --config=playwright.trace-control.config.ts
+      - name: Validate the native outcomes and inspect the retained trace data
+        if: always()
+        env:
+          NATIVE_TEST_OUTCOME: ${{ steps.browser-tests.outcome }}
+        run: node scripts/evidence/validate-browser-trace-control.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: browser-trace-contract
+          path: work/audit-2026-10-21/B2/trace-control/
+          if-no-files-found: error
+          retention-days: 7
+
   test-api:
     needs: lint-typecheck
     runs-on: ubuntu-latest
@@ -141,6 +171,7 @@ jobs:
             allure-results/
             test-results/
             playwright-report/
+          retention-days: 7
 
   test-e2e:
     needs: lint-typecheck
@@ -187,6 +218,7 @@ jobs:
             allure-results/
             test-results/
             playwright-report/
+          retention-days: 7
 
   test-visual:
     needs: lint-typecheck
@@ -232,6 +264,7 @@ jobs:
             allure-results/
             test-results/
             playwright-report/
+          retention-days: 7
 
   test-accessibility:
     needs: lint-typecheck
@@ -268,6 +301,7 @@ jobs:
             allure-results/
             test-results/
             playwright-report/
+          retention-days: 7
 
   test-selector-contract:
     needs: lint-typecheck
@@ -304,6 +338,7 @@ jobs:
             allure-results/
             test-results/
             playwright-report/
+          retention-days: 7
 
   shared-app-ui:
     needs: lint-typecheck
@@ -312,6 +347,7 @@ jobs:
       EVIDENCE_SCOPE: shared-app-ui
       EVIDENCE_CLASS: controlled
       SHARED_APP_BASE_URL: http://127.0.0.1:4310
+      SHARED_APP_SYNTHETIC: '1'
       APP_IMAGE: ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:0de7875e9c69d3e6f8954456b6f7c90160032395f87aee4d3d64e33307b062a9
       APP_IMAGE_DIGEST: sha256:0de7875e9c69d3e6f8954456b6f7c90160032395f87aee4d3d64e33307b062a9
       APP_SOURCE_REVISION: e90067b38bcd88fbb9118388f9fb8cc9dee6d493
@@ -367,6 +403,7 @@ jobs:
             test-results/
             playwright-report/shared-app/
           if-no-files-found: error
+          retention-days: 7
       - name: Stop app and remove run data
         if: always()
         run: docker compose -f docker-compose.shared-app.yml down --volumes --remove-orphans
@@ -469,6 +506,7 @@ jobs:
             allure-results/
             test-results/
             playwright-report/
+          retention-days: 7
 
   scheduled-full-cross-browser:
     needs: lint-typecheck
@@ -511,6 +549,7 @@ jobs:
             allure-results/
             test-results/
             playwright-report/
+          retention-days: 7
 
   generate-allure-report:
     if: ${{ !cancelled() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
@@ -576,6 +615,7 @@ jobs:
         fresh-clone-format,
         lint-typecheck,
         evidence-negative-control,
+        browser-trace-contract,
         test-api,
         test-e2e,
         test-visual,
