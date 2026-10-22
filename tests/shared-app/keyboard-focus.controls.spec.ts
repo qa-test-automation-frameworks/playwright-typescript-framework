@@ -89,10 +89,16 @@ test('removing row focus restoration is caught after a reviewer update @keyboard
   page,
 }) => {
   await page.addInitScript(() => {
-    const nativeFocus = HTMLElement.prototype.focus;
-    HTMLElement.prototype.focus = function patchedFocus(options) {
+    const nativeFocus = Reflect.get(HTMLElement.prototype, 'focus') as (
+      this: HTMLElement,
+      options?: FocusOptions,
+    ) => void;
+    HTMLElement.prototype.focus = function patchedFocus(
+      this: HTMLElement,
+      options?: FocusOptions,
+    ): void {
       if (this.matches('tr[data-claim-id], button[data-claim-action]')) return;
-      return nativeFocus.call(this, options);
+      Reflect.apply(nativeFocus, this, [options]);
     };
   });
   const claimId = await createClaimThroughPublicApi(page);
