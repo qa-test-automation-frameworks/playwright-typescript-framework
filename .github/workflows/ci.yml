@@ -7,6 +7,18 @@ on:
     branches: [main, master]
   schedule:
     - cron: '0 6 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      candidate_run_id:
+        description: Successful QRA main workflow run ID
+        required: false
+        default: ''
+        type: string
+      candidate_artifact_id:
+        description: qra-release-descriptor artifact ID from that run
+        required: false
+        default: ''
+        type: string
 
 env:
   CI: 'true'
@@ -341,6 +353,7 @@ jobs:
           retention-days: 7
 
   shared-app-ui:
+    if: github.event_name != 'workflow_dispatch' || (inputs.candidate_run_id == '' && inputs.candidate_artifact_id == '')
     needs: lint-typecheck
     runs-on: ubuntu-latest
     env:
@@ -405,6 +418,114 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - name: Stop app and remove run data
+        if: always()
+        run: docker compose -f docker-compose.shared-app.yml down --volumes --remove-orphans
+
+  candidate-dispatch-guard:
+    if: github.event_name == 'workflow_dispatch' && (inputs.candidate_run_id != '' || inputs.candidate_artifact_id != '')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require a paired numeric candidate selection on main
+        env:
+          CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
+          CANDIDATE_ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_REF" == 'refs/heads/main' ]]
+          [[ "$CANDIDATE_RUN_ID" =~ ^[1-9][0-9]*$ ]]
+          [[ "$CANDIDATE_ARTIFACT_ID" =~ ^[1-9][0-9]*$ ]]
+
+  candidate-shared-app-ui:
+    needs: [lint-typecheck, candidate-dispatch-guard]
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.candidate_run_id != '' && inputs.candidate_artifact_id != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      EVIDENCE_SCOPE: shared-app-ui
+      EVIDENCE_CLASS: controlled
+      SHARED_APP_BASE_URL: http://127.0.0.1:4310
+      SHARED_APP_SYNTHETIC: '1'
+      APP_NAMESPACE: pw-${{ github.run_id }}-${{ github.run_attempt }}
+      APP_POSTGRES_PASSWORD: qra-${{ github.run_id }}-${{ github.run_attempt }}-postgres
+      APP_PORT: '4310'
+      COMPOSE_PROJECT_NAME: pw-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Check out the release descriptor verifier
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: qa-test-automation-frameworks/.github
+          ref: dca03635318b3dc666175b94d08f34e898c4a4b2
+          path: portfolio-assurance
+          persist-credentials: false
+      - name: Verify the selected QRA release descriptor
+        id: release
+        env:
+          QRA_ACTIONS_READ_TOKEN: ${{ secrets.QRA_ACTIONS_READ_TOKEN }}
+          CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
+          CANDIDATE_ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
+        run: node portfolio-assurance/scripts/fetch-release-descriptor.mjs --run-id "$CANDIDATE_RUN_ID" --artifact-id "$CANDIDATE_ARTIFACT_ID" --output "$RUNNER_TEMP/qra-candidate.json"
+      - name: Set the immutable candidate image identity
+        env:
+          IMAGE_DIGEST: ${{ steps.release.outputs.image_digest }}
+          SOURCE_SHA: ${{ steps.release.outputs.source_sha }}
+          FIXTURE_VERSION: ${{ steps.release.outputs.fixture_version }}
+          APPLICATION_VERSION: ${{ steps.release.outputs.application_version }}
+        run: |
+          set -euo pipefail
+          printf 'APP_IMAGE=ghcr.io/qa-test-automation-frameworks/quality-reference-application@%s\n' "$IMAGE_DIGEST" >> "$GITHUB_ENV"
+          printf 'APP_IMAGE_DIGEST=%s\n' "$IMAGE_DIGEST" >> "$GITHUB_ENV"
+          printf 'APP_SOURCE_REVISION=%s\n' "$SOURCE_SHA" >> "$GITHUB_ENV"
+          printf 'APP_FIXTURE_VERSION=%s\n' "$FIXTURE_VERSION" >> "$GITHUB_ENV"
+          printf 'APP_APPLICATION_VERSION=%s\n' "$APPLICATION_VERSION" >> "$GITHUB_ENV"
+      - name: Pull the candidate image and verify its digest and labels
+        run: |
+          set -euo pipefail
+          [[ "${APP_IMAGE##*@}" == "$APP_IMAGE_DIGEST" ]]
+          [[ "$APP_IMAGE_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          docker pull "$APP_IMAGE"
+          repo_digests="$(docker image inspect "$APP_IMAGE" --format '{{range .RepoDigests}}{{println .}}{{end}}')"
+          grep -Fx -- "$APP_IMAGE" <<< "$repo_digests"
+          image_revision="$(docker image inspect "$APP_IMAGE" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')"
+          image_version="$(docker image inspect "$APP_IMAGE" --format '{{ index .Config.Labels "org.opencontainers.image.version" }}')"
+          [[ "$image_revision" == "$APP_SOURCE_REVISION" ]]
+          [[ "$image_version" == "$APP_APPLICATION_VERSION" ]]
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install --global npm@10.9.4
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Start candidate app and database in an isolated Compose project
+        run: docker compose -f docker-compose.shared-app.yml up --detach
+      - name: Verify candidate app readiness and exact identity
+        run: node scripts/wait-shared-app.mjs
+      - name: Run shared application UI pilot against the candidate
+        id: native-tests
+        run: npm run test:shared-app
+      - name: Collect candidate native execution evidence
+        if: always() && steps.release.outcome == 'success'
+        env:
+          EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
+          EVIDENCE_TARGET_IDENTITY: quality-reference-application
+          EVIDENCE_TARGET_REVISION: oci:${{ steps.release.outputs.image_digest }}
+          EVIDENCE_FIXTURE_VERSION: ${{ steps.release.outputs.fixture_version }}
+          EVIDENCE_TARGET_ENVIRONMENT: isolated-github-actions
+        run: node scripts/evidence/collect.mjs
+      - name: Upload candidate APP UI evidence and reports
+        if: always() && steps.release.outcome == 'success'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: reports-shared-app-ui
+          path: |
+            allure-results/
+            test-results/
+            playwright-report/shared-app/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Stop candidate app and remove run data
         if: always()
         run: docker compose -f docker-compose.shared-app.yml down --volumes --remove-orphans
 
@@ -565,6 +686,7 @@ jobs:
         test-accessibility,
         test-selector-contract,
         shared-app-ui,
+        candidate-shared-app-ui,
         shared-app-rollback,
         test-cross-browser,
       ]
@@ -622,6 +744,7 @@ jobs:
         test-accessibility,
         test-selector-contract,
         shared-app-ui,
+        candidate-shared-app-ui,
         shared-app-rollback,
         test-cross-browser,
         scheduled-full-cross-browser,

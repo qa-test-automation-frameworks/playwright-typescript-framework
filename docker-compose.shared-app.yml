@@ -21,7 +21,7 @@ services:
       DATABASE_URL: postgres://reference_app:${APP_POSTGRES_PASSWORD:?Set a unique synthetic APP_POSTGRES_PASSWORD}@db:5432/reference_app
       APP_NAMESPACE: ${APP_NAMESPACE:?Set a unique APP_NAMESPACE for this run}
       APP_SOURCE_SHA: ${APP_SOURCE_REVISION:?Set an immutable APP_SOURCE_REVISION}
-      SEED_VERSION: v0.1.0
+      SEED_VERSION: ${APP_FIXTURE_VERSION:-v0.1.0}
       TEST_MODE: 'true'
     command:
       - sh
