@@ -89,10 +89,7 @@ test('removing row focus restoration is caught after a reviewer update @keyboard
   page,
 }) => {
   await page.addInitScript(() => {
-    const nativeFocus = Reflect.get(HTMLElement.prototype, 'focus') as (
-      this: HTMLElement,
-      options?: FocusOptions,
-    ) => void;
+    const nativeFocus = Reflect.get<HTMLElement, 'focus'>(HTMLElement.prototype, 'focus');
     HTMLElement.prototype.focus = function patchedFocus(
       this: HTMLElement,
       options?: FocusOptions,
