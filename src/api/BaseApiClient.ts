@@ -16,6 +16,42 @@ export class ApiError extends Error {
   }
 }
 
+export class ApiSchemaValidationError extends ApiError {
+  public readonly code = 'API_RESPONSE_SCHEMA_INVALID';
+
+  constructor(
+    status: number,
+    public readonly method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    public readonly path: string,
+  ) {
+    super(
+      status,
+      'Schema validation failed',
+      '',
+      `API response schema validation failed for ${method} ${path}`,
+    );
+    this.name = 'ApiSchemaValidationError';
+  }
+
+  public toDiagnosticRecord(): {
+    schemaVersion: 1;
+    code: string;
+    failureOrigin: 'response-schema';
+    method: string;
+    path: string;
+    status: number;
+  } {
+    return {
+      schemaVersion: 1,
+      code: this.code,
+      failureOrigin: 'response-schema',
+      method: this.method,
+      path: this.path,
+      status: this.status,
+    };
+  }
+}
+
 export class BaseApiClient {
   private token: string | null = null;
 
@@ -149,13 +185,9 @@ export class BaseApiClient {
     try {
       return schema.parse(parsedJson);
     } catch {
-      const error = new ApiError(
-        status,
-        'Schema validation failed',
-        this.redactResponseBody(responseText),
-        `Zod Schema Validation failed for ${method} ${diagnosticUrl}`,
-      );
-      Logger.error(error.message, error, { status });
+      const diagnosticPath = parsedUrl.pathname.replace(/^\/api/, '') || '/';
+      const error = new ApiSchemaValidationError(status, method, diagnosticPath);
+      Logger.error(error.message, error, error.toDiagnosticRecord());
       throw error;
     }
   }

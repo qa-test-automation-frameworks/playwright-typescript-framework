@@ -6,7 +6,34 @@ export type CleanupFailure = {
   resourceType: string;
   resourceId: string;
   error: string;
+  status?: number;
 };
+
+export class CleanupAggregateError extends Error {
+  public readonly code = 'CLEANUP_FAILURE';
+
+  constructor(public readonly failures: CleanupFailure[]) {
+    super(`Cleanup failed for ${failures.length} resource(s).`);
+    this.name = 'CleanupAggregateError';
+  }
+
+  public toDiagnosticRecord(): {
+    schemaVersion: 1;
+    code: string;
+    failureOrigin: 'test-fixture-teardown';
+    failures: Array<{ resourceType: string; status: number | null }>;
+  } {
+    return {
+      schemaVersion: 1,
+      code: this.code,
+      failureOrigin: 'test-fixture-teardown',
+      failures: this.failures.map(({ resourceType, status }) => ({
+        resourceType,
+        status: status ?? null,
+      })),
+    };
+  }
+}
 
 type CleanupAction = {
   resourceType: string;
@@ -60,6 +87,7 @@ export class CleanupRegistry {
             resourceType,
             resourceId,
             error: error instanceof Error ? error.message : String(error),
+            ...(error instanceof ApiError ? { status: error.status } : {}),
           };
           this.failures.push(failure);
           Logger.error('Cleanup failed', error instanceof Error ? error : undefined, failure);
@@ -73,6 +101,6 @@ export class CleanupRegistry {
       return;
     }
 
-    throw new Error(`Cleanup failed for resources: ${JSON.stringify(this.failures, null, 2)}`);
+    throw new CleanupAggregateError(this.failures);
   }
 }

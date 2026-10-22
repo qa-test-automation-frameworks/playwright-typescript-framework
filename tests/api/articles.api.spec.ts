@@ -4,7 +4,7 @@ import { CommentBuilder } from '@src/builders/CommentBuilder';
 import { MalformedPayloadBuilder } from '@src/builders/MalformedPayloadBuilder';
 import { PaginationQueryBuilder } from '@src/builders/PaginationQueryBuilder';
 import { UserBuilder } from '@src/builders/UserBuilder';
-import { BaseApiClient } from '@src/api/BaseApiClient';
+import { ApiSchemaValidationError, BaseApiClient } from '@src/api/BaseApiClient';
 import { AuthApiClient } from '@src/api/clients/AuthApiClient';
 import { ArticleApiClient } from '@src/api/clients/ArticleApiClient';
 import { expectApiError } from '@src/utils/api-assertions';
@@ -105,7 +105,7 @@ test.describe('API: Articles & Comments', { tag: ['@api'] }, () => {
     expect(favorited.article.favoritesCount).toBe(1);
   });
 
-  test('List articles with tag filter @api', async ({ articleApi, cleanup }) => {
+  test('List articles with tag filter @api', async ({ articleApi, cleanup }, testInfo) => {
     // Arrange
     const uniqueTag = `tag-${Date.now()}`;
     const articleData = new ArticleBuilder().withTags([uniqueTag]).build();
@@ -118,7 +118,18 @@ test.describe('API: Articles & Comments', { tag: ['@api'] }, () => {
     const pagination = new PaginationQueryBuilder().withLimit(20).withOffset(0).build();
 
     // Act
-    const list = await articleApi.listArticles({ tag: uniqueTag, ...pagination });
+    let list;
+    try {
+      list = await articleApi.listArticles({ tag: uniqueTag, ...pagination });
+    } catch (error) {
+      if (error instanceof ApiSchemaValidationError) {
+        await testInfo.attach('api-response-schema-failure.json', {
+          body: JSON.stringify(error.toDiagnosticRecord()),
+          contentType: 'application/json',
+        });
+      }
+      throw error;
+    }
 
     // Assert
     expect(list.articlesCount).toBeGreaterThanOrEqual(1);
