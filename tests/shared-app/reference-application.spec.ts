@@ -11,18 +11,28 @@ async function startSession(
   await page.goto('/');
   await page.getByLabel('Sign in as').selectOption(identity);
   await page.getByRole('button', { name: 'Start session' }).click();
-  await expect(page.getByRole('status').filter({ hasText: 'Active as' })).toBeVisible();
+  await expect(page.locator('#session-status')).toContainText('Active as');
   await expect(page.getByRole('heading', { name: 'Claims', exact: true })).toBeVisible();
 }
 
 async function submitClaim(page: Page, amount: string): Promise<string> {
   await page.getByLabel('Requested amount (USD)').fill(amount);
   await page.getByLabel('Category').selectOption('auto');
+  const createResponsePromise = page.waitForResponse((response) => {
+    return (
+      new URL(response.url()).pathname === '/api/v2/claims' &&
+      response.request().method() === 'POST'
+    );
+  });
   await page.getByRole('button', { name: 'Submit claim' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'claim was submitted' })).toBeVisible();
-  const row = page.getByRole('row').filter({ hasText: `$${amount}` });
+  const createResponse = await createResponsePromise;
+  expect(createResponse.ok()).toBe(true);
+  const responseBody = (await createResponse.json()) as { claim: { id: string } };
+  const claimId = responseBody.claim.id;
+  const row = page.locator(`#claims-body tr[data-claim-id="${claimId}"]`);
   await expect(row).toContainText('submitted');
-  return (await row.locator('td').first().innerText()).trim();
+  return claimId;
 }
 
 async function withFreshPage(browser: Browser): Promise<{ context: BrowserContext; page: Page }> {
