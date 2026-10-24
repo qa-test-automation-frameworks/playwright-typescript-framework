@@ -68,7 +68,7 @@ jobs:
           EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
         run: node scripts/evidence/collect.mjs test-results/framework-unit/results.json test-results/framework-unit/evidence-v3.json
       - run: node --test scripts/evidence/*.test.mjs
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: framework-unit-evidence
@@ -109,7 +109,7 @@ jobs:
         env:
           EVIDENCE_TEST_OUTCOME: ${{ steps.native-tests.outcome }}
         run: node scripts/evidence/assert-control.mjs
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: evidence-negative-control
@@ -138,7 +138,7 @@ jobs:
         env:
           NATIVE_TEST_OUTCOME: ${{ steps.browser-tests.outcome }}
         run: node scripts/evidence/validate-browser-trace-control.mjs
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: browser-trace-contract
@@ -175,7 +175,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: reports-api
@@ -222,7 +222,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: reports-e2e-${{ matrix.shard_id }}
@@ -268,7 +268,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: reports-visual-${{ matrix.shard_id }}
@@ -305,7 +305,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: reports-accessibility
@@ -342,7 +342,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: reports-selector-contract
@@ -408,7 +408,7 @@ jobs:
         run: node scripts/evidence/collect.mjs
       - name: Upload APP UI evidence, screenshot, and reports
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: reports-shared-app-ui
           path: |
@@ -516,7 +516,7 @@ jobs:
         run: node scripts/evidence/collect.mjs
       - name: Upload candidate APP UI evidence and reports
         if: always() && steps.release.outcome == 'success'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: reports-shared-app-ui
           path: |
@@ -558,7 +558,7 @@ jobs:
         run: docker compose -f docker-compose.shared-app.yml up --detach
       - name: Verify the previous pinned image preserves the v1 contract
         run: node scripts/test-shared-app-rollback.mjs
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: shared-app-rollback-proof
@@ -585,7 +585,7 @@ jobs:
         run: npm run reliability:faults
       - name: Collect 20 independent clean target runs
         run: npm run reliability:repeat
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: playwright-reliability-lab
@@ -619,7 +619,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: reports-cross-browser
@@ -662,7 +662,7 @@ jobs:
         if: always()
       - run: npm run flake:check
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: reports-${{ matrix.project }}
@@ -724,7 +724,7 @@ jobs:
           REPORT_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           node -e "require('fs').writeFileSync('allure-report/source.json', JSON.stringify({sourceSha:process.env.REPORT_SOURCE_SHA,runUrl:process.env.REPORT_RUN_URL,runAttempt:process.env.GITHUB_RUN_ATTEMPT},null,2))"
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: rendered-allure-report
           path: allure-report/
