@@ -40,7 +40,8 @@ jobs:
               core.notice('Failure reached repository or test steps; no automatic rerun.');
               return;
             }
-            await github.rest.actions.reRunWorkflowFailedJobs({
+            // Full re-run: the publisher rejects bundles that mix attempt identities.
+            await github.rest.actions.reRunWorkflow({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: run.id,
