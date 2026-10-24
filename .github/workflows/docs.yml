@@ -29,4 +29,3 @@ jobs:
         run: |
           bash scripts/check-local-identifiers.sh
           bash scripts/check-neutral-evidence-paths.sh
-
