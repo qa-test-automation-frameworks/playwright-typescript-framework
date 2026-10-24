@@ -1,40 +1,55 @@
 import { test, expect } from '@src/fixtures';
 import { ArticleBuilder } from '@src/builders/ArticleBuilder';
 import { appRoutes } from '@src/routes/app-routes';
+import { expectApiError } from '@src/utils/api-assertions';
+import { escapeRegExp } from '@src/utils/strings';
 import { observedStep } from '@src/observability/observed-step';
 
 test.describe('E2E: Article Lifecycle', { tag: ['@ui'] }, () => {
   test(
     'Create article via UI and verify published article page @smoke @ui @critical',
     { tag: ['@smoke', '@ui', '@critical'] },
-    async ({ articleEditorPage, articlePage, articleApi, cleanup }) => {
+    async ({ page, articleEditorPage, articlePage, articleApi, cleanup }) => {
       const article = new ArticleBuilder().build();
 
       await observedStep('Open authenticated article editor', async () => {
         await articleEditorPage.navigate();
       });
 
-      await observedStep('Create article through the editor UI', async () => {
+      const slug = await observedStep('Create article through the editor UI', async () => {
         await articleEditorPage.fillTitle(article.article.title);
         await articleEditorPage.fillDescription(article.article.description);
         await articleEditorPage.fillBody(article.article.body);
         for (const tag of article.article.tagList || []) {
           await articleEditorPage.addTag(tag);
         }
+        const created = page.waitForResponse(
+          (response) =>
+            response.request().method() === 'POST' &&
+            new URL(response.url()).pathname === '/api/articles',
+        );
         await articleEditorPage.submit();
+        const response = await created;
+        const { article: published } = await response.json();
+        expect(published.slug).toBeTruthy();
+        cleanup.registerResource('article', published.slug, () =>
+          articleApi.deleteArticle(published.slug),
+        );
+        return published.slug as string;
       });
 
-      await observedStep('Verify published article and register cleanup', async () => {
+      await observedStep('Verify published article through the UI and API', async () => {
+        await expect(page).toHaveURL(new RegExp(`/article/${escapeRegExp(slug)}$`));
+        const { article: persisted } = await articleApi.getArticle(slug);
+        expect(persisted).toMatchObject({
+          title: article.article.title,
+          description: article.article.description,
+          body: article.article.body,
+        });
+        expect(persisted.tagList).toEqual(expect.arrayContaining(article.article.tagList || []));
         await expect(articlePage.titleHeading).toBeVisible({ timeout: 10_000 });
         await expect(articlePage.titleHeading).toHaveText(article.article.title);
       });
-
-      const slug = articlePage.getUrl().split('/').pop() || '';
-      if (slug) {
-        cleanup.registerResource('article', slug, () => articleApi.deleteArticle(slug));
-      }
-
-      expect(articlePage.getUrl()).toContain(`/article/${slug}`);
     },
   );
 
@@ -61,12 +76,26 @@ test.describe('E2E: Article Lifecycle', { tag: ['@ui'] }, () => {
     });
 
     const updatedTitle = `Updated UI - ${Date.now()}`;
-    await observedStep('Submit updated article title through UI', async () => {
+    const updatedSlug = await observedStep('Submit updated article title through UI', async () => {
       await articleEditorPage.fillTitle(updatedTitle);
+      const updated = page.waitForResponse(
+        (response) =>
+          response.request().method() === 'PUT' &&
+          new URL(response.url()).pathname === `/api/articles/${created.article.slug}`,
+      );
       await articleEditorPage.update();
+      const { article: persisted } = await (await updated).json();
+      expect(persisted.slug).toBeTruthy();
+      if (persisted.slug !== created.article.slug)
+        cleanup.registerResource('article', persisted.slug, () =>
+          articleApi.deleteArticle(persisted.slug),
+        );
+      return persisted.slug as string;
     });
 
-    await observedStep('Verify updated article title', async () => {
+    await observedStep('Verify updated article title through the API and UI', async () => {
+      const { article: persisted } = await articleApi.getArticle(updatedSlug);
+      expect(persisted.title).toBe(updatedTitle);
       await expect(articlePage.titleHeading).toBeVisible({ timeout: 10_000 });
       await expect(articlePage.titleHeading).toHaveText(updatedTitle);
     });
@@ -77,11 +106,16 @@ test.describe('E2E: Article Lifecycle', { tag: ['@ui'] }, () => {
     articleApi,
     articlePage,
     feedPage,
+    cleanup,
   }) => {
     const article = new ArticleBuilder().build();
-    const created = await observedStep('Create article fixture through API', async () =>
-      articleApi.createArticle(article),
-    );
+    const created = await observedStep('Create article fixture through API', async () => {
+      const response = await articleApi.createArticle(article);
+      cleanup.registerResource('article', response.article.slug, () =>
+        articleApi.deleteArticle(response.article.slug),
+      );
+      return response;
+    });
 
     await observedStep('Delete article through UI', async () => {
       await page.goto(appRoutes.article(created.article.slug));
@@ -89,7 +123,8 @@ test.describe('E2E: Article Lifecycle', { tag: ['@ui'] }, () => {
       await articlePage.deleteArticle();
     });
 
-    await observedStep('Verify deleted article is absent from global feed', async () => {
+    await observedStep('Verify deleted article is absent through the API and feed', async () => {
+      await expectApiError(articleApi.getArticle(created.article.slug), 404);
       await expect(page).toHaveURL(/\/#?\/?$/);
       await feedPage.switchToGlobalFeed();
       await expect(feedPage.articleCard(article.article.title)).toHaveCount(0);
