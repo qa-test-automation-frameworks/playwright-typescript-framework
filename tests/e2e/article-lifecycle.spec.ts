@@ -1,4 +1,5 @@
 import { test, expect } from '@src/fixtures';
+import { ArticleResponseSchema } from '@src/api/models/article.model';
 import { ArticleBuilder } from '@src/builders/ArticleBuilder';
 import { appRoutes } from '@src/routes/app-routes';
 import { expectApiError } from '@src/utils/api-assertions';
@@ -30,12 +31,12 @@ test.describe('E2E: Article Lifecycle', { tag: ['@ui'] }, () => {
         );
         await articleEditorPage.submit();
         const response = await created;
-        const { article: published } = await response.json();
+        const { article: published } = ArticleResponseSchema.parse(await response.json());
         expect(published.slug).toBeTruthy();
         cleanup.registerResource('article', published.slug, () =>
           articleApi.deleteArticle(published.slug),
         );
-        return published.slug as string;
+        return published.slug;
       });
 
       await observedStep('Verify published article through the UI and API', async () => {
@@ -84,13 +85,13 @@ test.describe('E2E: Article Lifecycle', { tag: ['@ui'] }, () => {
           new URL(response.url()).pathname === `/api/articles/${created.article.slug}`,
       );
       await articleEditorPage.update();
-      const { article: persisted } = await (await updated).json();
+      const { article: persisted } = ArticleResponseSchema.parse(await (await updated).json());
       expect(persisted.slug).toBeTruthy();
       if (persisted.slug !== created.article.slug)
         cleanup.registerResource('article', persisted.slug, () =>
           articleApi.deleteArticle(persisted.slug),
         );
-      return persisted.slug as string;
+      return persisted.slug;
     });
 
     await observedStep('Verify updated article title through the API and UI', async () => {
