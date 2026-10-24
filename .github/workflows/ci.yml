@@ -2,11 +2,11 @@ name: CI
 
 on:
   push:
-    branches: [main, master, develop]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
   schedule:
-    - cron: '0 6 * * 1-5'
+    - cron: '0 6 * * *'
   workflow_dispatch:
     inputs:
       candidate_run_id:
@@ -768,7 +768,7 @@ jobs:
       !cancelled() &&
       needs.generate-allure-report.result == 'success' &&
       needs.required-ci.result == 'success' &&
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
