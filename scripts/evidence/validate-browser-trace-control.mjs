@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 
-const output = process.env.BROWSER_TRACE_CONTROL_OUT ?? 'work/audit-2026-10-21/B2/trace-control';
+const output = process.env.BROWSER_TRACE_CONTROL_OUT ?? 'work/evidence/browser-trace-control';
 const resultsPath = path.join(output, 'results.json');
 const artifactRoot = path.join(output, 'artifacts');
 const failureTitle = 'synthetic failure retains a trace after the expected action';
