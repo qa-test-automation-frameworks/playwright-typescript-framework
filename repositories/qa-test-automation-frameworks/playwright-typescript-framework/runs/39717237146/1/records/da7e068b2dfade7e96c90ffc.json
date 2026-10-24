@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 3,
+  "kind": "execution",
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "sourceSha": "bef9f91d179ff46aba934b307561a11fd2f660b9",
+  "workflow": {
+    "id": "ci.yml",
+    "name": "CI",
+    "runId": "39717237146",
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39717237146",
+    "trigger": "push",
+    "branch": "main"
+  },
+  "scope": {
+    "id": "framework-unit",
+    "required": true,
+    "evidenceClass": "hermetic",
+    "freshnessPolicy": "daily_gate_v1"
+  },
+  "target": {
+    "identity": "framework-unit-fakes",
+    "revision": "git:bef9f91d179ff46aba934b307561a11fd2f660b9",
+    "fixtureVersion": "git-bef9f91d179ff46aba934b307561a11fd2f660b9",
+    "environment": "github_actions_linux",
+    "profile": "framework-unit",
+    "tools": {
+      "node": "24.21.0",
+      "playwright": "1.64.0"
+    }
+  },
+  "execution": {
+    "disposition": "passed",
+    "reason": null,
+    "startedAt": "2026-10-22T03:31:47.906Z",
+    "completedAt": "2026-10-22T03:31:49.278Z",
+    "integrity": "complete",
+    "counts": {
+      "unit": "parameter_case",
+      "selected": 38,
+      "executed": 38,
+      "passed": 38,
+      "failed": 0,
+      "skipped": 0,
+      "retried": 0,
+      "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts."
+    },
+    "measurements": [],
+    "shards": {
+      "expected": [
+        "shard-1-of-1"
+      ],
+      "received": [
+        "shard-1-of-1"
+      ]
+    }
+  },
+  "publication": {
+    "disposition": "pending",
+    "reason": null,
+    "publishedAt": null,
+    "reportUrl": null,
+    "artifacts": []
+  },
+  "generator": {
+    "name": "playwright_native_v3",
+    "version": "3.0.0"
+  },
+  "limitations": [
+    "Native duration rounded to millisecond manifest precision.",
+    "Hermetic fakes/probe are versioned in the tested source; no target service or browser is contacted."
+  ]
+}

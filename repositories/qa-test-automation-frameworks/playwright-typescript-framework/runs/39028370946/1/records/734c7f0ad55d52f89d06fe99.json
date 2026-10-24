@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 3,
+  "kind": "execution",
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "sourceSha": "4033f5a09e30e72012581a1f321faab0929fdbb5",
+  "workflow": {
+    "id": "ci.yml",
+    "name": "CI",
+    "runId": "39028370946",
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39028370946",
+    "trigger": "push",
+    "branch": "main"
+  },
+  "scope": {
+    "id": "shared-app-ui",
+    "required": true,
+    "evidenceClass": "controlled",
+    "freshnessPolicy": "daily_gate_v1"
+  },
+  "target": {
+    "identity": "quality-reference-application",
+    "revision": "oci:sha256:88d550587cdb0f07cf5c3b5afad1162641196f07e70afae25f568fb402d73c26",
+    "fixtureVersion": "v0.1.0",
+    "environment": "isolated-github-actions",
+    "profile": "shared-app-ui",
+    "tools": {
+      "node": "24.21.0",
+      "playwright": "1.64.0"
+    }
+  },
+  "execution": {
+    "disposition": "passed",
+    "reason": null,
+    "startedAt": "2026-10-17T11:23:20.759Z",
+    "completedAt": "2026-10-17T11:23:23.719Z",
+    "integrity": "complete",
+    "counts": {
+      "unit": "parameter_case",
+      "selected": 5,
+      "executed": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "retried": 0,
+      "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts. Aggregate includes independently executed setup/teardown per shard; business-project cases cannot overlap."
+    },
+    "measurements": [],
+    "shards": {
+      "expected": [
+        "shard-1-of-1"
+      ],
+      "received": [
+        "shard-1-of-1"
+      ]
+    }
+  },
+  "publication": {
+    "disposition": "pending",
+    "reason": null,
+    "publishedAt": null,
+    "reportUrl": null,
+    "artifacts": []
+  },
+  "generator": {
+    "name": "playwright_native_v3",
+    "version": "3.0.0"
+  },
+  "limitations": [
+    "Publication pending; E03 artifact references and retention not certified.",
+    "Native duration rounded to millisecond manifest precision.",
+    "Target digest covers owned target files, seed implementation and dependency lock; target is co-versioned with the framework, not independently deployed.",
+    "Shared reference target is an independently pinned OCI image; the workflow checks readiness source and fixture before browser tests."
+  ]
+}

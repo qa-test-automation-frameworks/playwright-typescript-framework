@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 3,
+  "kind": "execution",
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "sourceSha": "9b5a63fbf571884b2b12be5b62549da1ccd5adf1",
+  "workflow": {
+    "id": "ci.yml",
+    "name": "CI",
+    "runId": "39711075216",
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39711075216",
+    "trigger": "push",
+    "branch": "main"
+  },
+  "scope": {
+    "id": "cross-browser",
+    "required": true,
+    "evidenceClass": "controlled",
+    "freshnessPolicy": "daily_gate_v1"
+  },
+  "target": {
+    "identity": "owned-conduit-target",
+    "revision": "sha256:88bcd0bbcd91953d496dcd78d515306c068d514977fea774ebe421d777506f8a",
+    "fixtureVersion": "sha256-a3835e06c88f6a0b49ecebc008c3187a328ae5d2bdf32288af999559cc9eea1a",
+    "environment": "github_actions_linux",
+    "profile": "cross-browser",
+    "tools": {
+      "node": "24.21.0",
+      "playwright": "1.64.0"
+    }
+  },
+  "execution": {
+    "disposition": "passed",
+    "reason": null,
+    "startedAt": "2026-10-22T02:28:09.167Z",
+    "completedAt": "2026-10-22T02:28:22.086Z",
+    "integrity": "complete",
+    "counts": {
+      "unit": "parameter_case",
+      "selected": 14,
+      "executed": 14,
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "retried": 0,
+      "semantics": "Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts. Aggregate includes independently executed setup/teardown per shard; business-project cases cannot overlap."
+    },
+    "measurements": [],
+    "shards": {
+      "expected": [
+        "shard-1-of-1"
+      ],
+      "received": [
+        "shard-1-of-1"
+      ]
+    }
+  },
+  "publication": {
+    "disposition": "pending",
+    "reason": null,
+    "publishedAt": null,
+    "reportUrl": null,
+    "artifacts": []
+  },
+  "generator": {
+    "name": "playwright_native_v3",
+    "version": "3.0.0"
+  },
+  "limitations": [
+    "Native duration rounded to millisecond manifest precision.",
+    "Target digest covers owned target files, seed implementation and dependency lock; target is co-versioned with the framework, not independently deployed."
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "run": {
+    "id": "39230687804",
+    "attempt": 1,
+    "sourceSha": "caebfb104223c2ef285c451c0ab75532655d0d44",
+    "event": "push",
+    "branch": "main",
+    "workflowName": "CI",
+    "conclusion": "success",
+    "completedAt": "2026-10-19T09:36:52.000Z",
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39230687804"
+  },
+  "records": [
+    {
+      "scope": "api",
+      "evidenceClass": "controlled",
+      "execution": "passed",
+      "integrity": "complete",
+      "path": "records/14c2529eb4498c5d1ffd6915.json",
+      "sha256": "d084a2e39c74837311531cd8eb88ca01a33c9d1e23e838ed036f40543979e1f1"
+    },
+    {
+      "scope": "e2e",
+      "evidenceClass": "controlled",
+      "execution": "passed",
+      "integrity": "complete",
+      "path": "records/6d8749c4fe00b757c1bc1c37.json",
+      "sha256": "6d314ddf5da8a7a4a7069aad18ad552ae58995aece1fa0de4883456b655ffd46"
+    },
+    {
+      "scope": "visual",
+      "evidenceClass": "controlled",
+      "execution": "passed",
+      "integrity": "complete",
+      "path": "records/a5961f3f5ac8a594d1c084d5.json",
+      "sha256": "5534a77e9958053903e747f07962da78131b8816354510d5dc803c0578b377aa"
+    },
+    {
+      "scope": "accessibility",
+      "evidenceClass": "controlled",
+      "execution": "passed",
+      "integrity": "complete",
+      "path": "records/714db89df42bdb7ce4beb63d.json",
+      "sha256": "e182be4f74be0059ac9125f63de4d22ca5d28a3c0c5c7c8a475eb2c00fe97a5c"
+    },
+    {
+      "scope": "selector-contract",
+      "evidenceClass": "controlled",
+      "execution": "passed",
+      "integrity": "complete",
+      "path": "records/10a784eb77b8473bc7368f8b.json",
+      "sha256": "e5131428a9b862d90edec9f4a2a7a8c4ceb38f343857dbca326764375538f222"
+    },
+    {
+      "scope": "shared-app-ui",
+      "evidenceClass": "controlled",
+      "execution": "passed",
+      "integrity": "complete",
+      "path": "records/734c7f0ad55d52f89d06fe99.json",
+      "sha256": "093e16451142f7fa4fa4acb2e802aaa720c792b36c2a84b53ce2399b0efc1152"
+    },
+    {
+      "scope": "cross-browser",
+      "evidenceClass": "controlled",
+      "execution": "passed",
+      "integrity": "complete",
+      "path": "records/2c9e294caa2c9ba9e01787c3.json",
+      "sha256": "363b5ff6652a8afa19c49c0192a62030ffb5aa258c02f9446a147efaad4ddb72"
+    },
+    {
+      "scope": "evidence-negative-control",
+      "evidenceClass": "hermetic",
+      "execution": "failed",
+      "integrity": "complete",
+      "path": "records/70c2d15b1e2ccd96686ff07d.json",
+      "sha256": "a1c2e9bcb463fa8aa1364e47a0dd46e84304292a0d9e54aa0ea0ac390c0da486"
+    },
+    {
+      "scope": "framework-unit",
+      "evidenceClass": "hermetic",
+      "execution": "passed",
+      "integrity": "complete",
+      "path": "records/da7e068b2dfade7e96c90ffc.json",
+      "sha256": "8b0cabdec592e110e0b2db58b3885500a5c26515c9f1ebe8339b0f59044eb7a1"
+    }
+  ]
+}
