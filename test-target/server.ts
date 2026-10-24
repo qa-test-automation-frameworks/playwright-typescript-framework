@@ -364,7 +364,7 @@ const handleApi = async (req: IncomingMessage, res: ServerResponse, url: URL) =>
       const body = await readBody(req, res);
       if (!body) return;
       const input = body.article || {};
-      if (input.title) article.title = input.title;
+      // Deliberate negative control: ignore title updates to prove the persisted-state oracle.
       if (input.description) article.description = input.description;
       if (input.body) article.body = input.body;
       if (input.tagList) article.tagList = input.tagList;
