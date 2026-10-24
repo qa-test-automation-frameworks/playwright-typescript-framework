@@ -1,0 +1,1 @@
+scripts/check-local-identifiers.sh # Scanner patterns include rejected identifiers; explicit roadmap self-exclusion.

@@ -38,10 +38,10 @@ revision and contact no target service. The target remains co-versioned with thi
 framework; this is not the independently pinned shared application planned in A01.
 
 Publication remains pending in the execution record. Uploading CI artifacts does
-not prove durable publication or retention beyond expiry; E03 will add trusted
+not prove durable publication or retention beyond expiry; the trusted publisher adds
 artifact references/checksums and immutable bundles. Required aggregate manifests
 are copied into the rendered report without changing report download layout.
-Local schema/semantic checker is a self-contained copy of the organization E01
+Local schema/semantic checker is a self-contained copy of the organization evidence
 contract with local paths and formatting adapted; origin/version/source hashes
 are in scripts/evidence/vendor-provenance.json. No cross-repository runtime fetch.
 

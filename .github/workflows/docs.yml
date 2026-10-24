@@ -21,3 +21,11 @@ jobs:
           set -euo pipefail
           ! grep -RInE 'file:///' --include='*.md' .
           ! grep -RInE 'production-grade|enterprise-grade|expert-level|staff-level|bulletproof' --include='*.md' .
+      - name: Test local identifier and evidence path guards
+        run: |
+          bash scripts/test-check-local-identifiers.sh
+          bash scripts/test-check-neutral-evidence-paths.sh
+      - name: Check local identifiers and evidence paths
+        run: |
+          bash scripts/check-local-identifiers.sh
+          bash scripts/check-neutral-evidence-paths.sh

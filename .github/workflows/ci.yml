@@ -119,7 +119,7 @@ jobs:
   browser-trace-contract:
     runs-on: ubuntu-latest
     env:
-      BROWSER_TRACE_CONTROL_OUT: work/audit-2026-10-21/B2/trace-control
+      BROWSER_TRACE_CONTROL_OUT: work/evidence/browser-trace-control
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
@@ -142,7 +142,7 @@ jobs:
         if: always()
         with:
           name: browser-trace-contract
-          path: work/audit-2026-10-21/B2/trace-control/
+          path: work/evidence/browser-trace-control/
           if-no-files-found: error
           retention-days: 7
 
