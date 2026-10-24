@@ -705,7 +705,7 @@ jobs:
           java-version: '21'
       - run: npm install --global npm@10.9.4
       - run: npm ci
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           pattern: reports-*
           merge-multiple: false
@@ -775,7 +775,7 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: rendered-allure-report
           path: allure-report
